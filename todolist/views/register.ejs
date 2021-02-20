@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="./reg.css">
+    <link rel="stylesheet" href="./style/reg.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +12,9 @@
         <h2 class="title">
             Registration
         </h2>
-        <form action="" class="form-reg">
+        <form action="/register" class="form-reg" method="POST">
             <div class="input-box">
-                <input type="text" id="reg" class="form-reg__input" required='' name="reg">
+                <input type="text" id="reg" class="form-reg__input" required='' name="mail">
                 <label for="form-reg__input" class="form-reg__label">
                     Введите email
                 </label>
@@ -49,9 +49,10 @@
                     Введите отчество
                 </label>
             </div>
+            <%- include ('./partials/messages') %>
             <input class="form-reg__submit" type="submit" value="Войти">
         </form>
-        <a href="/todolist/login/login.html" class="link-on-login">
+        <a href="/login" class="link-on-login">
             <span>У</span>
             <span>ж</span>
             <span>е</span>
