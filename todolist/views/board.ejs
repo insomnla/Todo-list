@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style/board.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Oswald:wght@300;600&display=swap" rel="stylesheet">
     <title>Main page</title>
 </head>
 <body>
@@ -58,14 +60,13 @@
                             <img src="./img/bell.png" alt="" class="img img--notif">
                         </a>
                         <a href="" class="nav-item">
-                            <img src="./img/enter.png" alt="" class="modal-login">
-                        </a>
-                        <!-- когда пользователь авторизовался -->
-                        <!-- <a href="" class="nav-item">
-                            <img src="/todolist/img/defaultUser.png" alt="" class="img img--avatar">
+                            <img src="./img/defaultUser.png" alt="" class="img img--avatar">
                             <div class="text text--header">
-                                Шило Сергей
+                                <%= info %>
                             </div>
+                        </a>
+                        <!-- <a href="" class="nav-item">
+                            <img src="./img/enter.png" alt="" class="modal-login">
                         </a> -->
                     </nav>
 
@@ -113,10 +114,10 @@
                 <% for (var key in tasks) { %>
                     <div class="tasks-card">
                         <div class="type">
-                            Работа
+                            #Вытащи сюда категории
                         </div>
                         <div class="description">
-                           <%= tasks[key].desc %>
+                            <%= tasks[key].desc %>
                         </div>
                         <!-- Если эта функция нужна будет -->
                         <div class="workers">
@@ -124,6 +125,31 @@
                         </div>
                     </div>
                     <% } %>
+                    <div class="modal modal--tasks">
+                        <div class="modal-window">
+                            <div class="mw-top">
+                                <div class="mw-top__title work">
+                                    Task // Имя задачи
+                                </div>
+                                <div class="mw-top__deadline">
+                                    2021-02-21
+                                </div>
+                            </div>
+                            <div class="mw-content">
+                                <div class="mw-content__description">
+                                    Принтер подключи!
+                                </div>
+                            </div>
+                            <div class="mw-bottom">
+                                <div class="mw-bottom__workers">
+                                    <img src="./img/defaultUser.png" alt="">
+                                </div>
+                                <button class="mw-bottom__exit">
+                                    Выйти
+                                </button>
+                            </div>
+                        </div>
+                    </div>
             </section>
 
         </div>

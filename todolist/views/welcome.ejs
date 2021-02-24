@@ -2,58 +2,50 @@
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="./style/login.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Oswald:wght@300;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diplom</title>
+    <title>Auth</title>
 </head>
 <body>
-    <section class="login">
-        <h2 class="title">
-            Login
-        </h2>
-        <form action="/login" class="form-login" method="POST">
-            <div class="input-box">
-                <input type="text" name="login" class="form-login__input" required="">
-                <label for="form-login__input" class="form-login__label">
-                    Введите логин
-                </label>
+    <section class="main-content">
+        <section class="login">
+            <h2 class="title">
+                Авторизоваться
+            </h2>
+            <form action="/login" class="form-login" method="POST">
+                <div class="input-box">
+                    <input type="text" name="login" class="form-login__input error" required="">
+                    <label for="form-login__input" class="form-login__label">
+                        Введите email
+                    </label>
+                    <label for="form-login__input" class="form-login__error">
+                        Я тебя не знаю
+                    </label>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" class="form-login__input error" required="">
+                    <label for="form-login__input" class="form-login__label">
+                        Введите пароль
+                    </label>
+                    <label for="form-login__input" class="form-login__error">
+                        Куда ты лезешь?
+                    </label>
+                </div>
+                <input class="form-login__submit" type="submit" value="Войти">
+                <%- include ('./partials/messages') %>
+            </form>
+        </section>
+        <div class="subtitle">
+            <div class="title">
+                Ещё не<br> зарегистрированы?
             </div>
-            <div class="input-box">
-                <input type="password" name="password" class="form-login__input" required="">
-                <label for="form-login__input" class="form-login__label">
-                    Введите пароль
-                </label>
-            </div>
-            <input class="form-login__submit" type="submit" value="Войти">
-            <%- include ('./partials/messages') %>
-        </form>
-        <a href="/register" class="link-on-reg">
-            <span>Е</span>
-            <span>щ</span>
-            <span>ё</span>
-            &nbsp;
-            <span>н</span>
-            <span>е</span>
-            &nbsp;
-            <span>з</span>
-            <span>а</span>
-            <span>р</span>
-            <span>е</span>
-            <span>г</span>
-            <span>и</span>
-            <span>с</span>
-            <span>т</span>
-            <span>р</span>
-            <span>и</span>
-            <span>р</span>
-            <span>о</span>
-            <span>в</span>
-            <span>а</span>
-            <span>н</span>
-            <span>ы</span>
-            &nbsp;
-            <span>?</span>
-        </a>
+            <a href="/register">
+                <button class="subtitle-button">
+                    Зарегистрироваться
+                </button>
+            </a>
+        </div>
     </section>
 
 </body></html>

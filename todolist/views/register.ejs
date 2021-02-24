@@ -2,80 +2,86 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="./style/reg.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Oswald:wght@300;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
 </head>
 <body>
-    <section class="reg">
-        <h2 class="title">
-            Registration
-        </h2>
-        <form action="/register" class="form-reg" method="POST">
-            <div class="input-box">
-                <input type="text" id="reg" class="form-reg__input" required='' name="mail">
-                <label for="form-reg__input" class="form-reg__label">
-                    Введите email
-                </label>
+    <section class="main-content">
+        <section class="reg">
+            <h2 class="title">
+                Зарегистрироваться
+            </h2>
+            <form action="/register" class="form-reg" method="POST">
+                <div class="input-box">
+                    <input type="text" id="reg" class="form-reg__input error" required='' name="mail">
+                    <label for="form-reg__input" class="form-reg__label">
+                        Введите email
+                    </label>
+                    <label for="form-login__input" class="form-login__error">
+                        Что ты мне втираешь?
+                    </label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="password" class="form-reg__input error" required='' name="pass">
+                    <label for="form-reg__input" class="form-reg__label">
+                        Придумайте пароль
+                    </label>
+                    <label for="form-login__input" class="form-login__error">
+                        Что то не сходится 
+                    </label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="validPass" class="form-reg__input error" required='' name="validPass">
+                    <label for="form-reg__input" class="form-reg__label">
+                        Повторите пароль
+                    </label>
+                    <label for="form-login__input" class="form-login__error">
+                        Сколько сколько у тебя IQ?
+                    </label>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="fname" class="form-reg__input error" required='' name="fname">
+                    <label for="form-reg__input" class="form-reg__label">
+                        Введите имя
+                    </label>
+                    <label for="form-login__input" class="form-login__error">
+                        Ну не знаю
+                    </label>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="lname" class="form-reg__input error" required='' name="lname">
+                    <label for="form-reg__input" class="form-reg__label">
+                        Введите фамилию
+                    </label>
+                    <label for="form-login__input" class="form-login__error">
+                        Что тут можно придумать?
+                    </label>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="mname" class="form-reg__input error" required='' name="mname">
+                    <label for="form-reg__input" class="form-reg__label">
+                        Введите отчество
+                    </label>
+                    <label for="form-login__input" class="form-login__error">
+                        ...
+                    </label>
+                </div>
+                <%- include ('./partials/messages') %>
+                <input class="form-reg__submit" type="submit" value="Войти">
+            </form>
+        </section>
+        <div class="subtitle">
+            <div class="title">
+                Уже<br> зарегистрированы?
             </div>
-            <div class="input-box">
-                <input type="password" id="password" class="form-reg__input" required='' name="pass">
-                <label for="form-reg__input" class="form-reg__label">
-                    Придумайте пароль
-                </label>
-            </div>
-            <div class="input-box">
-                <input type="password" id="validPass" class="form-reg__input" required='' name="validPass">
-                <label for="form-reg__input" class="form-reg__label">
-                    Повторите пароль
-                </label>
-            </div>
-            <div class="input-box">
-                <input type="text" id="fname" class="form-reg__input" required='' name="fname">
-                <label for="form-reg__input" class="form-reg__label">
-                    Введите имя
-                </label>
-            </div>
-            <div class="input-box">
-                <input type="text" id="lname" class="form-reg__input" required='' name="lname">
-                <label for="form-reg__input" class="form-reg__label">
-                    Введите фамилию
-                </label>
-            </div>
-            <div class="input-box">
-                <input type="text" id="mname" class="form-reg__input" required='' name="mname">
-                <label for="form-reg__input" class="form-reg__label">
-                    Введите отчество
-                </label>
-            </div>
-            <%- include ('./partials/messages') %>
-            <input class="form-reg__submit" type="submit" value="Войти">
-        </form>
-        <a href="/login" class="link-on-login">
-            <span>У</span>
-            <span>ж</span>
-            <span>е</span>
-            &nbsp;
-            <span>з</span>
-            <span>а</span>
-            <span>р</span>
-            <span>е</span>
-            <span>г</span>
-            <span>и</span>
-            <span>с</span>
-            <span>т</span>
-            <span>р</span>
-            <span>и</span>
-            <span>р</span>
-            <span>о</span>
-            <span>в</span>
-            <span>а</span>
-            <span>н</span>
-            <span>ы</span>
-            &nbsp;
-            <span>?</span>
-        </a>
+            <a href="/login">
+                <button class="subtitle-button">
+                    Авторизоваться
+                </button>
+            </a>
+        </div>
     </section>
 </body>
 </html>

@@ -1,0 +1,20 @@
+Добавь в свою бд:
+
+CREATE TABLE `test`.`categories` (
+  `id_categories` INT NOT NULL AUTO_INCREMENT,
+  `categories` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_categoris`));
+
+ALTER TABLE `test`.`task` 
+ADD COLUMN `fk_id_categories` INT NULL AFTER `id_task`,
+ADD INDEX `fk_id_categories_idx` (`fk_id_categories` ASC);
+;
+ALTER TABLE `test`.`task` 
+ADD CONSTRAINT `fk_id_categories`
+  FOREIGN KEY (`fk_id_categories`)
+  REFERENCES `test`.`categoris` (`id_categories`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+INSERT INTO `test`.`categories` (`categories`) VALUES ('work');
+
