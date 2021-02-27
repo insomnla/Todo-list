@@ -334,6 +334,7 @@ body {
 }
 
 .modal--tasks {
+    display: none;
 }
 
 .modal-window {
@@ -392,9 +393,6 @@ body {
 
 
 
-.dn {
-    display: none;
-}
 
 
 
@@ -416,7 +414,7 @@ body {
     }
 
     .bp-item, .bp-item .text {
-        font-size: 22px;
+        font-size: 18px;
     }
 
     .bp-item {
@@ -430,35 +428,5 @@ body {
 
     .tasks-card {
         width: calc(33.333% - 50px);
-    }
-}
-
-@media (max-width: 1400px) {
-    .aside {
-        max-width: 100px;
-    }
-    
-    .modal-aside {
-        max-width: 200px;
-    }
-
-    .title {
-        font-size: 30px;
-    }
-
-    .categoris-item {
-        font-size: 20px;
-    }
-
-    .categoris-item .text {
-        font-size: 25px;
-    }
-
-    .counter {
-        font-size: 18px;
-    }
-
-    .main-content {
-        width: calc(100% - 300px);
     }
 }
