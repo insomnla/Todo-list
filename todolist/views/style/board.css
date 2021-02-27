@@ -333,13 +333,9 @@ body {
     align-items: center;
 }
 
-.modal--tasks {
-    display: none;
-}
-
 .modal-window {
     width: 400px;
-    min-height: 40vh;
+    min-height: 50vh;
     background: #fff;
     padding: 20px;
     display: flex;
@@ -361,10 +357,14 @@ body {
     color: var(--colorForWork);
     border-radius: 10px;
     padding: 4px 8px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 25px;
 }
 
 .mw-content {
     width: 100%;
+    margin-bottom: 20px;
+    overflow: auto;
 }
 
 .mw-bottom {
@@ -375,6 +375,65 @@ body {
 }
 
 .mw-bottom__exit {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    color: #F5F5F5;
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: var(--colorForWork);
+}
+
+.modal-window--newTasks {
+    min-width: 700px;
+    max-width: 900px;
+}
+
+.form--newTasks {
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: auto;
+}
+
+.mw-top__button {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    color: #F5F5F5;
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: var(--colorForWork);
+}
+
+.mw-content--newTasks {
+    height: calc(50vh - 126px);
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.mw-content__item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mw-content-item__left {
+    display: flex;
+    column-gap: 20px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 25px;
+}
+
+.mw-bottom__add {
+    font-family: 'Oswald', sans-serif;
     font-size: 20px;
     color: #F5F5F5;
     padding: 10px 20px;
@@ -393,6 +452,9 @@ body {
 
 
 
+.dn {
+    display: none;
+}
 
 
 
@@ -414,7 +476,7 @@ body {
     }
 
     .bp-item, .bp-item .text {
-        font-size: 18px;
+        font-size: 22px;
     }
 
     .bp-item {
@@ -428,5 +490,35 @@ body {
 
     .tasks-card {
         width: calc(33.333% - 50px);
+    }
+}
+
+@media (max-width: 1400px) {
+    .aside {
+        max-width: 100px;
+    }
+    
+    .modal-aside {
+        max-width: 200px;
+    }
+
+    .title {
+        font-size: 30px;
+    }
+
+    .categoris-item {
+        font-size: 20px;
+    }
+
+    .categoris-item .text {
+        font-size: 25px;
+    }
+
+    .counter {
+        font-size: 18px;
+    }
+
+    .main-content {
+        width: calc(100% - 300px);
     }
 }

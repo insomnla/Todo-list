@@ -18,3 +18,5 @@ ADD CONSTRAINT `fk_id_categories`
 
 INSERT INTO `test`.`categories` (`categories`) VALUES ('work');
 
+
+INSERT INTO `test`.`categories` (`categories`) VALUES ('gosTask'); //если хочешь переименуй
