@@ -10,7 +10,8 @@ const session = require('express-session');
 const { SSL_OP_NO_QUERY_MTU } = require("constants");
 const passport = require("passport");
 var MySQLStore = require('express-mysql-session')(session);
-const {ensureAuthenticated} = require('./config/auth') 
+const {ensureAuthenticated} = require('./config/auth'); 
+const { connect } = require("http2");
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
 require('./config/passport')(passport)
@@ -110,8 +111,12 @@ app.post('/register', (req, res) => {
 })
 
 app.get('/board', ensureAuthenticated , (req, res) => {
-    connection.query("select * from task inner join worker on id_tasklist2 = worker.id_tasklist1 where worker.id_worker= ?", [req.session.userid], function(error, results, fields) {
+    connection.query("select * from task", function(error, results, fields){
+        all_tasks = results;
+    })
+    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as deadline from task inner join worker on id_tasklist2 = worker.id_tasklist1 inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
         res.render('board', {
+            all_tasks : all_tasks,
             tasks : results,
             info : req.session.username,
             id: req.session.userid

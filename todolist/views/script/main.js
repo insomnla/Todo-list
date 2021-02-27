@@ -1,35 +1,39 @@
-let tasksCard = document.querySelectorAll(".tasks-card");
-let modalTasks = document.querySelector(".modal--tasks");
-let buttonExit = document.querySelectorAll(".mw-bottom__exit");
-let formNewTasks = document.querySelector(".form--newTasks");
-let btnNewTask = document.querySelector(".bp-item--new-task");
-let modalNewTasks = document.querySelector(".modal--newTasks")
+let tasksCard = document.querySelectorAll(".tasks-card"),
+    tasksCard_array = Array.from(tasksCard), // переводим в нормальный массив для сравнения task == task[0]
+    modalTasks = Array.from(document.querySelectorAll(".modal--tasks")),
+    buttonExit = document.querySelectorAll(".mw-bottom__exit"),
+    formNewTasks = document.querySelector(".form--newTasks"),
+    btnNewTask = document.querySelector(".bp-item--new-task"),
+    modalNewTasks = document.querySelector(".modal--newTasks");
 
 
 
 
 tasksCard.forEach((elem)=>{
     elem.addEventListener('click', ()=>{
-        modalTasks.classList.remove('dn');
+        for (var i = 0; i < tasksCard_array.length; i++){
+            if (tasksCard_array[i] == elem){
+                modalTasks[i].classList.remove('dn');
+            }
+        }
     });
 });
 
 buttonExit.forEach((elem)=>{
-    elem.addEventListener('click', ()=>{
-        if(!modalTasks.classList.contains('dn')){
-            modalTasks.classList.add('dn');
-        };
-        if(!modalNewTasks.classList.contains('dn')){
-            modalNewTasks.classList.add('dn');
-        };
+    elem.addEventListener('click', (event)=>{
+        modalWindow = event.target.parentElement.parentElement.parentElement; // ДА КРИНЖ И ЧТО :OKEK:
+        if (modalWindow.parentElement == modalNewTasks){
+            modalWindow.parentElement.classList.toggle('dn');
+        }
+        else modalWindow.classList.toggle('dn');
     });
-});
+}); 
 
 formNewTasks.addEventListener('submit', (event)=>{
     event.preventDefault();
 });
 
 btnNewTask.addEventListener('click', ()=>{
-    modalNewTasks.classList.remove('dn');
+    modalNewTasks.classList.toggle('dn');
 });
 

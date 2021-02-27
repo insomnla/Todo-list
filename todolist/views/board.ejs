@@ -114,7 +114,7 @@
                 <% for (var key in tasks) { %>
                     <div class="tasks-card">
                         <div class="type">
-                            #Вытащи сюда категории
+                            <%= tasks[key].categories %>
                         </div>
                         <div class="description">
                             <%= tasks[key].desc %>
@@ -126,19 +126,20 @@
                     </div>
                     <% } %>
             </section>
+            <% for (var key in tasks) { %>
             <div class="modal modal--tasks dn">
                 <div class="modal-window">
                     <div class="mw-top">
                         <div class="mw-top__title work">
-                            Task // Имя задачи
+                            <%= tasks[key].name %>
                         </div>
                         <div class="mw-top__deadline">
-                            2021-02-21
+                            <%= tasks[key].deadline %>
                         </div>
                     </div>
                     <div class="mw-content">
                         <div class="mw-content__description">
-                            Принтер подключи!
+                            <%= tasks[key].desc %>
                         </div>
                     </div>
                     <div class="mw-bottom">
@@ -151,6 +152,7 @@
                     </div>
                 </div>
             </div>
+            <% } %>
             <div class="modal modal--newTasks dn">
                 <div class="modal-window modal-window--newTasks">
                     <form action="" class="form form--newTasks">
@@ -163,66 +165,23 @@
                             </button>
                         </div>
                         <div class="mw-content mw-content--newTasks">
+                            <% for (var n=0; n<(all_tasks.length); n++) { %>
                             <div class="mw-content__item">
                                 <div class="mw-content-item__left">
                                     <div class="count">
-                                        1.
+                                        <%=n + 1  %>
                                     </div>
                                     <div class="task">
-                                        Завершить годовой отчёт
+                                        <%= all_tasks[n].name%>
                                     </div>
                                 </div>
                                 <div class="mw-content-item__right">
                                     <div class="task-check">
-                                        <input type="checkbox">
+                                        <input type="checkbox" id="task" name='<%= all_tasks[n].task_id%>'>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mw-content__item">
-                                <div class="mw-content-item__left">
-                                    <div class="count">
-                                        1.
-                                    </div>
-                                    <div class="task">
-                                        Завершить годовой отчёт
-                                    </div>
-                                </div>
-                                <div class="mw-content-item__right">
-                                    <div class="task-check">
-                                        <input type="checkbox">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mw-content__item">
-                                <div class="mw-content-item__left">
-                                    <div class="count">
-                                        1.
-                                    </div>
-                                    <div class="task">
-                                        Завершить годовой отчёт
-                                    </div>
-                                </div>
-                                <div class="mw-content-item__right">
-                                    <div class="task-check">
-                                        <input type="checkbox">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mw-content__item">
-                                <div class="mw-content-item__left">
-                                    <div class="count">
-                                        1.
-                                    </div>
-                                    <div class="task">
-                                        Завершить годовой отчёт
-                                    </div>
-                                </div>
-                                <div class="mw-content-item__right">
-                                    <div class="task-check">
-                                        <input type="checkbox">
-                                    </div>
-                                </div>
-                            </div>
+                            <% } %>
                         </div>
                         <div class="mw-bottom">
                             <button class="mw-bottom__add">
