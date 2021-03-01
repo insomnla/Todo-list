@@ -165,23 +165,52 @@
                             </button>
                         </div>
                         <div class="mw-content mw-content--newTasks">
-                            <% for (var n=0; n<(all_tasks.length); n++) { %>
                             <div class="mw-content__item">
-                                <div class="mw-content-item__left">
-                                    <div class="count">
-                                        <%=n + 1  %>
-                                    </div>
+                                <div class="mw-content-item__text">
                                     <div class="task">
-                                        <%= all_tasks[n].name%>
+                                        <div class="count">1.</div>
+                                        <div class="task__text">
+                                            Задача
+                                        </div>
                                     </div>
+                                    <div class="symbol"><img src="./img/plus.svg" alt="" class="symbol-img"></div>
                                 </div>
                                 <div class="mw-content-item__right">
                                     <div class="task-check">
-                                        <input type="checkbox" id="task" name='<%= all_tasks[n].task_id%>'>
+                                        <div class="task-chek__deadline">
+                                            01.03.2021
+                                        </div>
+                                        <input type="checkbox" id="task">
                                     </div>
                                 </div>
                             </div>
-                            <% } %>
+                            <div class="mw-content__hidden-item dn" data-key="1">
+                                515
+                            </div>
+                            <div class="mw-content__item">
+                                <div class="mw-content-item__text">
+                                    <div class="task">
+                                        <div class="count">2.</div>
+                                        <div class="task__text">
+                                            Задача
+                                        </div>
+                                    </div>
+                                    <div class="symbol"><img src="./img/plus.svg" alt="" class="symbol-img"></div>
+                                </div>
+                                <div class="mw-content-item__right">
+                                    <div class="task-check">
+                                        <div class="task-chek__deadline">
+                                            01.03.2021
+                                        </div>
+                                        <input type="checkbox" id="task">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mw-content__hidden-item dn" data-key="2">
+                                <div class="mw-content-hidden-item__text">
+                                    515
+                                </div>
+                            </div>
                         </div>
                         <div class="mw-bottom">
                             <button class="mw-bottom__add">
