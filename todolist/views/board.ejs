@@ -112,12 +112,12 @@
             </div>
             <section class="tasks">
                 <% for (var key in tasks) { %>
-                    <div class="tasks-card">
+                    <div class="tasks-card" data-key="<%= tasks[key].name %>" data-desc="<%= tasks[key].desc %>" data-date="<%= tasks[key].deadline %>">
                         <div class="type">
                             <%= tasks[key].categories %>
                         </div>
                         <div class="description">
-                            <%= tasks[key].desc %>
+                            <%= tasks[key].name %>
                         </div>
                         <!-- Если эта функция нужна будет -->
                         <div class="workers">
@@ -126,21 +126,14 @@
                     </div>
                     <% } %>
             </section>
-            <% for (var key in tasks) { %>
             <div class="modal modal--tasks dn">
                 <div class="modal-window">
                     <div class="mw-top">
-                        <div class="mw-top__title work">
-                            <%= tasks[key].name %>
-                        </div>
-                        <div class="mw-top__deadline">
-                            <%= tasks[key].deadline %>
-                        </div>
+                        <div class="mw-top__title work"></div>
+                        <div class="mw-top__deadline"></div>
                     </div>
                     <div class="mw-content">
-                        <div class="mw-content__description">
-                            <%= tasks[key].desc %>
-                        </div>
+                        <div class="mw-content__description"></div>
                     </div>
                     <div class="mw-bottom">
                         <div class="mw-bottom__workers">
@@ -152,7 +145,6 @@
                     </div>
                 </div>
             </div>
-            <% } %>
             <div class="modal modal--newTasks dn">
                 <div class="modal-window modal-window--newTasks">
                     <form action="" class="form form--newTasks">
@@ -166,49 +158,55 @@
                         </div>
                         <div class="mw-content mw-content--newTasks">
                             <div class="mw-content__item">
-                                <div class="mw-content-item__text">
-                                    <div class="task">
-                                        <div class="count">1.</div>
-                                        <div class="task__text">
-                                            Задача
+                                <div class="wrapper">
+                                    <div class="mw-content-item__text">
+                                        <div class="task">
+                                            <div class="count">1.</div>
+                                            <div class="task__text">
+                                                Задача
+                                            </div>
+                                        </div>
+                                        <div class="symbol" data-key="1"><img src="./img/plus.svg" alt="" class="symbol-img"></div>
+                                    </div>
+                                    <div class="mw-content-item__right">
+                                        <div class="task-check">
+                                            <div class="task-chek__deadline">
+                                                01.03.2021
+                                            </div>
+                                            <input type="checkbox" id="task">
                                         </div>
                                     </div>
-                                    <div class="symbol"><img src="./img/plus.svg" alt="" class="symbol-img"></div>
                                 </div>
-                                <div class="mw-content-item__right">
-                                    <div class="task-check">
-                                        <div class="task-chek__deadline">
-                                            01.03.2021
-                                        </div>
-                                        <input type="checkbox" id="task">
+                                <div class="mw-content__hidden-item dn" data-key="1">
+                                    <div class="mw-content-hidden-item__text">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate consectetur corporis quibusdam? Atque error tenetur odio ut tempore placeat? Nemo voluptatem perferendis repellendus aperiam? Error odit autem molestias soluta nisi.
                                     </div>
                                 </div>
-                            </div>
-                            <div class="mw-content__hidden-item dn" data-key="1">
-                                515
                             </div>
                             <div class="mw-content__item">
-                                <div class="mw-content-item__text">
-                                    <div class="task">
-                                        <div class="count">2.</div>
-                                        <div class="task__text">
-                                            Задача
+                                <div class="wrapper">
+                                    <div class="mw-content-item__text">
+                                        <div class="task">
+                                            <div class="count">2.</div>
+                                            <div class="task__text">
+                                                Задача
+                                            </div>
+                                        </div>
+                                        <div class="symbol" data-key="2"><img src="./img/plus.svg" alt="" class="symbol-img"></div>
+                                    </div>
+                                    <div class="mw-content-item__right">
+                                        <div class="task-check">
+                                            <div class="task-chek__deadline">
+                                                01.03.2021
+                                            </div>
+                                            <input type="checkbox" id="task">
                                         </div>
                                     </div>
-                                    <div class="symbol"><img src="./img/plus.svg" alt="" class="symbol-img"></div>
                                 </div>
-                                <div class="mw-content-item__right">
-                                    <div class="task-check">
-                                        <div class="task-chek__deadline">
-                                            01.03.2021
-                                        </div>
-                                        <input type="checkbox" id="task">
+                                <div class="mw-content__hidden-item dn" data-key="2">
+                                    <div class="mw-content-hidden-item__text">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate consectetur corporis quibusdam? Atque error tenetur odio ut tempore placeat? Nemo voluptatem perferendis repellendus aperiam? Error odit autem molestias soluta nisi.
                                     </div>
-                                </div>
-                            </div>
-                            <div class="mw-content__hidden-item dn" data-key="2">
-                                <div class="mw-content-hidden-item__text">
-                                    515
                                 </div>
                             </div>
                         </div>
