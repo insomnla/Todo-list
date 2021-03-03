@@ -42,7 +42,7 @@ buttonExit.forEach((elem)=>{
 });
 
 formNewTasks.addEventListener('submit', (event)=>{
-    event.preventDefault();
+   // event.preventDefault(); - :okek:
 });
 
 buttonNewTask.addEventListener('click', ()=>{
@@ -51,7 +51,7 @@ buttonNewTask.addEventListener('click', ()=>{
 
 buttonAdd.addEventListener('click', ()=>{
     modalError.classList.remove('dn');
-});
+}); 
 
 
 

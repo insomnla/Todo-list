@@ -1,0 +1,27 @@
+Добавь в свою бд:
+
+CREATE TABLE `test`.`categories` (
+  `id_categories` INT NOT NULL AUTO_INCREMENT,
+  `categories` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_categoris`));
+
+ALTER TABLE `test`.`task` 
+ADD COLUMN `fk_id_categories` INT NULL AFTER `id_task`,
+ADD INDEX `fk_id_categories_idx` (`fk_id_categories` ASC);
+;
+ALTER TABLE `test`.`task` 
+ADD CONSTRAINT `fk_id_categories`
+  FOREIGN KEY (`fk_id_categories`)
+  REFERENCES `test`.`categoris` (`id_categories`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+INSERT INTO `test`.`categories` (`categories`) VALUES ('work');
+
+
+INSERT INTO `test`.`categories` (`categories`) VALUES ('gosTask'); //если хочешь переименуй
+////////////////////////////////////////////////////////////////////// 03.03.2021
+INSERT INTO `test`.`categories` (`id_categories`, `categories`) VALUES ('3', 'Государственная'); - значение для гос задач, если хочешь обнови первую и вторую категорию чтобы разницу было видно
+INSERT INTO `test`.`task` (`id_task`, `fk_id_categories`, `name`, `desc`, `deadline`, `id_tasklist2`) VALUES ('4', '3', 'Гос задача 1', 'описание гос задачи 1', '2019-12-12', '');
+INSERT INTO `test`.`task` (`id_task`, `fk_id_categories`, `name`, `desc`, `deadline`, `id_tasklist2`) VALUES ('5', '3', 'Гос задача 2', 'описание гос задачи 2', '2021-03-20', '1');
+гос задачи для проверки работы, в одной нет ID у тасклиста т.к. она никому не принадлежит(поэтому появлется в менюшке), вторая не появляется в менюшке но появляется в таск листе человека

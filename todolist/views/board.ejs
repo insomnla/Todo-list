@@ -147,7 +147,7 @@
             </div>
             <div class="modal modal--newTasks dn">
                 <div class="modal-window modal-window--newTasks">
-                    <form action="" class="form form--newTasks">
+                    <form action="/board" class="form form--newTasks" method="GET">
                         <div class="mw-top">
                             <div class="mw-top__title">
                                 Государственные задачи
@@ -157,13 +157,14 @@
                             </button>
                         </div>
                         <div class="mw-content mw-content--newTasks">
+                            <% for(var i=0; i < gov_tasks.length; i++) {%>
                             <div class="mw-content__item">
                                 <div class="wrapper">
                                     <div class="mw-content-item__text">
                                         <div class="task">
-                                            <div class="count">1.</div>
+                                            <div class="count"><%= i + 1 %></div>
                                             <div class="task__text">
-                                                Задача
+                                                <%= gov_tasks[i].name%>
                                             </div>
                                         </div>
                                         <div class="symbol" data-key="1"><img src="./img/plus.svg" alt="" class="symbol-img"></div>
@@ -171,49 +172,23 @@
                                     <div class="mw-content-item__right">
                                         <div class="task-check">
                                             <div class="task-chek__deadline">
-                                                01.03.2021
+                                                <%= gov_tasks[i].dline%>
                                             </div>
-                                            <input type="checkbox" id="task">
+                                            <input type="checkbox" id="task" value="<%= gov_tasks[i].id_task%>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mw-content__hidden-item dn" data-key="1">
                                     <div class="mw-content-hidden-item__text">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate consectetur corporis quibusdam? Atque error tenetur odio ut tempore placeat? Nemo voluptatem perferendis repellendus aperiam? Error odit autem molestias soluta nisi.
+                                        <%= gov_tasks[i].desc%>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mw-content__item">
-                                <div class="wrapper">
-                                    <div class="mw-content-item__text">
-                                        <div class="task">
-                                            <div class="count">2.</div>
-                                            <div class="task__text">
-                                                Задача
-                                            </div>
-                                        </div>
-                                        <div class="symbol" data-key="2"><img src="./img/plus.svg" alt="" class="symbol-img"></div>
-                                    </div>
-                                    <div class="mw-content-item__right">
-                                        <div class="task-check">
-                                            <div class="task-chek__deadline">
-                                                01.03.2021
-                                            </div>
-                                            <input type="checkbox" id="task">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mw-content__hidden-item dn" data-key="2">
-                                    <div class="mw-content-hidden-item__text">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate consectetur corporis quibusdam? Atque error tenetur odio ut tempore placeat? Nemo voluptatem perferendis repellendus aperiam? Error odit autem molestias soluta nisi.
-                                    </div>
-                                </div>
-                            </div>
+                            <% }%>
                         </div>
                         <div class="mw-bottom">
-                            <button class="mw-bottom__add">
-                                Добавить себе
-                            </button>
+                            <input type="submit" class="mw-bottom__add" value="Добавить себе" >
+                            </input>
                             <button class="mw-bottom__exit">
                                 Выйти
                             </button>
