@@ -80,6 +80,12 @@ app.get('/login', (req, res) => {
     res.render('welcome')
 })
 
+app.get('/vacation',  ensureAuthenticated, (req, res) => {
+    res.render('vacation', {
+        info: req.session.username
+    })
+})
+
 app.post('/register', (req, res) => {
     const info = req.body;
     let errors = [];

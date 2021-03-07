@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="board.css">
+    <title>Отпуск</title>
+</head>
+<body>
+    <main class="main">
+        <aside class="aside">
+            <div class="aside-item">
+                <img src="./img/asideUser.png" alt="" class="img img--aside">
+            </div>
+            <div class="aside-item">
+                <a href="/board"><img src="./img/to-do.png" alt="" class="img img--aside"></a>
+            </div>
+            <div class="aside-item aside-item--active">
+                <img src="./img/luggage.png" alt="" class="img img--aside">
+            </div>
+        </aside>
+        <div class="mainContent">
+            <header class="header header--top">
+                <div class="header__inner">
+                    <div class="current-date">
+                        <div class="current-date__item">
+                            25.02
+                        </div>
+                        <div class="current-date__item">
+                            <img class="cd-item__img" src="./img/snow.svg" alt="">
+                        </div>
+                    </div>
+                    <nav class="nav">
+                        <a href="" class="nav-item">
+                            <img src="./img/bell.png" alt="" class="img img--notif">
+                        </a>
+                        <a href="" class="nav-item">
+                            <img src="./img/defaultUser.png" alt="" class="img img--avatar">
+                            <div class="text text--header">
+                                <%= info%>
+                            </div>
+                        </a>
+                    </nav>
+                </div>
+            </header>
+            <div class="afterHeader">
+                <div class="year-switcher">
+                    <div class="left-arrow">
+                        <img src="./img/left-arrow.svg" alt="" class="ys-item__img">
+                    </div>
+                    <div class="year">
+                        2021
+                    </div>
+                    <div class="right-arrow">
+                        <img src="./img/next.svg" alt="" class="ys-item__img">
+                    </div>
+                </div>
+            </div>
+            <div class="line">
+                <div class="blod-line">
+                    <div class="line-text">
+                        Календарь
+                    </div>
+                </div>
+                <div class="line2"></div>
+            </div>
+            <div class="months">
+                <div class="months-top">
+                    <img src="./img/left-arrow-long.svg" alt="" class="back-button">
+                    <div class="selected-months">
+                        Месяц
+                    </div>
+                </div>
+                <div class="tasks">
+                    <div class="tasks-card">
+                        <div class="description">
+                            Январь
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Февраль
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Март
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Апрель
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Май
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Июнь
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Июль
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Август
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Сентябрь
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Октябрь
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Ноябрь
+                        </div>
+                    </div>
+                    <div class="tasks-card">
+                        <div class="description">
+                            Декабрь
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
