@@ -124,6 +124,29 @@ app.get('/board', ensureAuthenticated , (req, res) => {
     })
 })
 
+app.post('/board', ensureAuthenticated , (req, res) => {
+    if (typeof req.body.task == "string"){
+        connection.query("update task set id_tasklist2 = ? where id_task = ?", [req.session.userid, req.body.task]);
+    }
+    if (typeof req.body.task == "object"){
+        console.log("object pars")
+        for (var key in req.body.task){
+            connection.query("update task set id_tasklist2 = ? where id_task = ?", [req.session.userid, req.body.task[key]]);
+        }
+    }
+    connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and id_tasklist2 is null", function(error, results, fields){
+        gov_tasks = results;
+    })
+    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as deadline from task inner join worker on id_tasklist2 = worker.id_tasklist1 inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
+        res.render('board', {
+            gov_tasks : gov_tasks,
+            tasks : results,
+            info : req.session.username,
+            id: req.session.userid
+           })
+    })
+})
+
 app.get('/register', (req, res) => {
     res.render('register')
 })

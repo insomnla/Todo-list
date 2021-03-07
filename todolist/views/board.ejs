@@ -147,7 +147,7 @@
             </div>
             <div class="modal modal--newTasks dn">
                 <div class="modal-window modal-window--newTasks">
-                    <form action="/board" class="form form--newTasks" method="GET">
+                    <form action="/board" class="form form--newTasks" method="POST">
                         <div class="mw-top">
                             <div class="mw-top__title">
                                 Государственные задачи
@@ -174,7 +174,7 @@
                                             <div class="task-chek__deadline">
                                                 <%= gov_tasks[i].dline%>
                                             </div>
-                                            <input type="checkbox" id="task" value="<%= gov_tasks[i].id_task%>">
+                                            <input type="checkbox" name="task" id="task" value="<%= gov_tasks[i].id_task%>">
                                         </div>
                                     </div>
                                 </div>
