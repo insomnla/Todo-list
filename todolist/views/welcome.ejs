@@ -19,21 +19,15 @@
                     <label for="form-login__input" class="form-login__label">
                         Введите email
                     </label>
-                    <label for="form-login__input" class="form-login__error">
-                        Неверный email
-                    </label>
                 </div>
                 <div class="input-box">
                     <input type="password" name="password" class="form-login__input error" required="">
                     <label for="form-login__input" class="form-login__label">
                         Введите пароль
                     </label>
-                    <label for="form-login__input" class="form-login__error">
-                        Неверный пароль
-                    </label>
                 </div>
                 <input class="form-login__submit" type="submit" value="Войти">
-                <%- include ('./partials/messages') %>
+                <label class="form-login__error"><%- include ('./partials/messages')%></label>
             </form>
         </section>
         <div class="subtitle">

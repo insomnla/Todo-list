@@ -117,11 +117,15 @@ app.post('/register', (req, res) => {
 })
 
 app.get('/board', ensureAuthenticated , (req, res) => {
-    connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and id_tasklist2 is null", function(error, results, fields){
+    connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
+        categories = results;
+    })
+    connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and fk_id_worker is null", function(error, results, fields){
         gov_tasks = results;
     })
-    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as deadline from task inner join worker on id_tasklist2 = worker.id_tasklist1 inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
+    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
         res.render('board', {
+            categories : categories,
             gov_tasks : gov_tasks,
             tasks : results,
             info : req.session.username,
@@ -132,19 +136,23 @@ app.get('/board', ensureAuthenticated , (req, res) => {
 
 app.post('/board', ensureAuthenticated , (req, res) => {
     if (typeof req.body.task == "string"){
-        connection.query("update task set id_tasklist2 = ? where id_task = ?", [req.session.userid, req.body.task]);
+        connection.query("update task set fk_id_worker = ? where id_task = ?", [req.session.userid, req.body.task]);
     }
     if (typeof req.body.task == "object"){
         console.log("object pars")
         for (var key in req.body.task){
-            connection.query("update task set id_tasklist2 = ? where id_task = ?", [req.session.userid, req.body.task[key]]);
+            connection.query("update task set fk_id_worker = ? where id_task = ?", [req.session.userid, req.body.task[key]]);
         }
     }
-    connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and id_tasklist2 is null", function(error, results, fields){
+    connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
+        categories = results;
+    })
+    connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and fk_id_worker is null", function(error, results, fields){
         gov_tasks = results;
     })
-    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as deadline from task inner join worker on id_tasklist2 = worker.id_tasklist1 inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
+    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
         res.render('board', {
+            categories : categories,
             gov_tasks : gov_tasks,
             tasks : results,
             info : req.session.username,
@@ -170,13 +178,13 @@ app.post('/login', (req, res) => {
                 req.session.userid = results[0].id_worker;
 				res.redirect('/board');
 			} else {
-				res.send('Incorrect Username and/or Password!');
+                req.flash('error_msg' , 'Введите правильную почту и пароль');
+                res.redirect('/login');
 			}			
-			res.end();
 		});
 	} else {
-		res.send('Please enter Username and Password!');
-		res.end();
+        req.flash('error_msg' , 'Введите почту и пароль');
+        res.redirect('/login');
 	}
 })
 

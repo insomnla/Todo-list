@@ -27,24 +27,14 @@
                 Мои задачи
             </div>
             <div class="categoris">
+                <% for (var key in categories) { %>
                 <div class="categoris-item">
-                    <div class="text">Все задачи</div>
+                    <div class="text"><%= categories[key].categories%></div>
                     <div class="counter all-tasks">
-                        350
+                        <%= categories[key].count%>
                     </div>
                 </div>
-                <div class="categoris-item">
-                    Работа
-                    <div class="counter" id="work">
-                        50
-                    </div>
-                </div>
-                <div class="categoris-item">
-                    Что-то ещё
-                    <div class="counter" id="something-else">
-                        300
-                    </div>
-                </div>
+                <% } %>
             </div>
         </div>
         <div class="main-content">
@@ -109,7 +99,7 @@
             </div>
             <section class="tasks">
                 <% for (var key in tasks) { %>
-                    <div class="tasks-card" data-key="<%= tasks[key].name %>" data-desc="<%= tasks[key].desc %>" data-date="<%= tasks[key].deadline %>">
+                    <div class="tasks-card" data-key="<%= tasks[key].name %>" data-desc="<%= tasks[key].desc %>" data-date="<%= tasks[key].dline %>">
                         <div class="type">
                             <%= tasks[key].categories %>
                         </div>
