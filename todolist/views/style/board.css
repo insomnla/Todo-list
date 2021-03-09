@@ -341,6 +341,29 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    /* animation: popUp .4s ease-in-out forwards; */
+}
+
+@keyframes popUp {
+    0%
+    {
+        transform: scale(0);
+    }
+    100%
+    {
+        transform: scale(1);
+    }
+}
+
+@keyframes popDown {
+    0%
+    {
+        transform: scale(1);
+    }
+    100%
+    {
+        transform: scale(0);
+    }
 }
 
 .mw-top {
@@ -387,11 +410,21 @@ body {
 }
 
 .modal-window--newTasks {
-    min-width: 700px;
-    max-width: 900px;
+    width: 700px;
+    overflow: hidden;
+}
+
+.slider-line {
+    display: flex;
+    flex-direction: row;
+    column-gap: 50px;
+    position: relative;
+    right: 0;
+    transition: all .6s ease;
 }
 
 .form--newTasks {
+    min-width: 100%;
     height: 50vh;
     display: flex;
     flex-direction: column;
@@ -490,6 +523,35 @@ body {
     font-size: 25px;
 }
 
+#task {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#task {
+    border: 2px solid #1560BD;
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+
+#task:checked::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: 10px;
+    height: 10px;
+    border-radius: 1px;
+    background: #1560BD;
+    opacity: 1;
+}
+
 .mw-content__hidden-item {
     width: 100%;
     min-height: auto;
@@ -529,6 +591,91 @@ body {
     }
 }
 
+.form-createTask {
+    min-width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.mw-top__button-back{
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    color: #F5F5F5;
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: var(--colorForWork);
+}
+
+.mw-top-button__img {
+    width: 30px;
+    height: 24px;
+}
+
+.mw-content--createTasks {
+    margin-top: 30px;
+    height: calc(50vh - 126px);
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    overflow: visible;
+}
+
+.form-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative
+}
+
+.form-item__input {
+    width: 100%;
+    color: #1560BD;
+    border: none;
+    border-bottom: 2px solid #1560BD;
+    margin-top: 20px;
+    font-weight: regular;
+    font-size: 25px;
+    background: transparent;
+    z-index: 1;
+}
+
+.form-item__label {
+    color: #1560BD;
+    position: absolute;
+    top: 15px;
+    left: 0;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: regular;
+    font-size: 25px;
+    transition: all .5s ease;
+    z-index: 0;
+}
+
+.form-item__input:focus ~ .form-item__label, .form-item__input:valid ~ .form-item__label {
+    top: -15px;
+    font-size: 20px;
+}
+
+.mw-content-input__submit {
+    width: 300px;
+    padding: 15px 30px;
+    margin: 0 auto;
+    font-size: 25px;
+    border: 2px solid #1560BD;
+    cursor: pointer;
+    background: transparent;
+    color: #1560BD;
+}
+
+
+
+
+
 .mw-bottom__add {
     font-family: 'Oswald', sans-serif;
     font-size: 20px;
@@ -541,6 +688,109 @@ body {
     background: var(--colorForWork);
 }
 
+
+
+
+
+
+
+/* Vacation */
+
+.mainContent {
+    width: calc(100% - 150px);
+    padding: 0 100px 0 20px;
+}
+
+.current-date {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}
+
+.current-date__item:first-child {
+    font-size: 50px;
+}
+
+.current-date__item:last-child {
+    width: 50px;
+    height: 50px;
+}
+
+.cd-item__img {
+    width: 100%;
+    height: 100%;
+}
+
+.afterHeader {
+    width: 100%;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.year-switcher {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+}
+
+.left-arrow, .right-arrow {
+    width: 34px;
+    height: 34px;
+}
+
+.year {
+    font-size: 45px;
+}
+
+.ys-item__img {
+    width: 100%;
+    height: 100%;
+}
+
+.line {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.blod-line {
+    content: "";
+    width: 130px;
+    height: 6px;
+    background: #1560BD;
+    position: relative;
+    bottom: -5px;
+}
+
+.line-text {
+    position: absolute;
+    left: 8px;
+    bottom: -30px;
+}
+
+.months {
+    width: 100%;
+}
+
+.months-top {
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.back-button {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 0;
+}
+
+.selected-months {
+    font-size: 40px;
+}
 
 
 

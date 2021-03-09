@@ -65,9 +65,6 @@
                                 <%= info %>
                             </div>
                         </a>
-                        <!-- <a href="" class="nav-item">
-                            <img src="./img/enter.png" alt="" class="modal-login">
-                        </a> -->
                     </nav>
 
 
@@ -147,53 +144,99 @@
             </div>
             <div class="modal modal--newTasks dn">
                 <div class="modal-window modal-window--newTasks">
-                    <form action="/board" class="form form--newTasks" method="POST">
-                        <div class="mw-top">
-                            <div class="mw-top__title">
-                                Государственные задачи
+                    <div class="slider-line">
+                        <form action="/board" class="form form--newTasks" method="POST">
+                            <div class="mw-top">
+                                <div class="mw-top__title">
+                                    Государственные задачи
+                                </div>
+                                <button class="mw-top__button" type="button">
+                                    Создать задачу
+                                </button>
                             </div>
-                            <button class="mw-top__button">
-                                Создать задачу
-                            </button>
-                        </div>
-                        <div class="mw-content mw-content--newTasks">
-                            <% for(var i=0; i < gov_tasks.length; i++) {%>
-                            <div class="mw-content__item">
-                                <div class="wrapper">
-                                    <div class="mw-content-item__text">
-                                        <div class="task">
-                                            <div class="count"><%= i + 1 %></div>
-                                            <div class="task__text">
-                                                <%= gov_tasks[i].name%>
+                            <div class="mw-content mw-content--newTasks">
+                                <% for(var i=0; i < gov_tasks.length; i++) {%>
+                                <div class="mw-content__item">
+                                    <div class="wrapper">
+                                        <div class="mw-content-item__text">
+                                            <div class="task">
+                                                <div class="count"><%= i + 1 %>.</div>
+                                                <div class="task__text">
+                                                    <%= gov_tasks[i].name%>
+                                                </div>
+                                            </div>
+                                            <div class="symbol" data-key="<%= i + 1 %>"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                                <g>
+                                                    <g>
+                                                        <path style="fill:#1560BD;" d="M492,236H276V20c0-11.046-8.954-20-20-20c-11.046,0-20,8.954-20,20v216H20c-11.046,0-20,8.954-20,20s8.954,20,20,20h216
+                                                            v216c0,11.046,8.954,20,20,20s20-8.954,20-20V276h216c11.046,0,20-8.954,20-20C512,244.954,503.046,236,492,236z"/>
+                                                    </g>
+                                                </g>
+                                        </svg></div>
+                                        </div>
+                                        <div class="mw-content-item__right">
+                                            <div class="task-check">
+                                                <div class="task-chek__deadline" data-date="<%= gov_tasks[i].dline%>"></div>
+                                                <input type="checkbox" name="task" id="task" value="<%= gov_tasks[i].id_task%>">
                                             </div>
                                         </div>
-                                        <div class="symbol" data-key="1"><img src="./img/plus.svg" alt="" class="symbol-img"></div>
                                     </div>
-                                    <div class="mw-content-item__right">
-                                        <div class="task-check">
-                                            <div class="task-chek__deadline">
-                                                <%= gov_tasks[i].dline%>
-                                            </div>
-                                            <input type="checkbox" name="task" id="task" value="<%= gov_tasks[i].id_task%>">
+                                    <div class="mw-content__hidden-item dn" data-key="<%= i + 1 %>">
+                                        <div class="mw-content-hidden-item__text">
+                                            <%= gov_tasks[i].desc%>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mw-content__hidden-item dn" data-key="1">
-                                    <div class="mw-content-hidden-item__text">
-                                        <%= gov_tasks[i].desc%>
-                                    </div>
+                                <% }%>
+                            </div>
+                            <div class="mw-bottom">
+                                <input type="submit" class="mw-bottom__add" value="Добавить себе" >
+                                <button class="mw-bottom__exit" type="button">
+                                    Выйти
+                                </button>
+                            </div>
+                        </form>
+                        <form action="" class="form form-createTask">
+                            <div class="mw-top">
+                                <button class="mw-top__button-back" type="button">
+                                    <svg class="mw-top-button__img" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                        viewBox="0 0 31.494 31.494" style="enable-background:new 0 0 31.494 31.494;" xml:space="preserve">
+                                        <path style="fill:#fff;" d="M10.273,5.009c0.444-0.444,1.143-0.444,1.587,0c0.429,0.429,0.429,1.143,0,1.571l-8.047,8.047h26.554
+                                        c0.619,0,1.127,0.492,1.127,1.111c0,0.619-0.508,1.127-1.127,1.127H3.813l8.047,8.032c0.429,0.444,0.429,1.159,0,1.587
+                                        c-0.444,0.444-1.143,0.444-1.587,0l-9.952-9.952c-0.429-0.429-0.429-1.143,0-1.571L10.273,5.009z"/>
+                                    </svg>
+                                </button>
+                                <div class="mw-top__title">
+                                    Создание задачи
                                 </div>
                             </div>
-                            <% }%>
-                        </div>
-                        <div class="mw-bottom">
-                            <input type="submit" class="mw-bottom__add" value="Добавить себе" >
-                            </input>
-                            <button class="mw-bottom__exit">
-                                Выйти
-                            </button>
-                        </div>
-                    </form>
+                            <div class="mw-content mw-content--createTasks">
+                                <div class="form-item">
+                                    <input type="text" id="taskName" class="form-item__input" required=''>
+                                    <label for="form-item__input" class="form-item__label">Название задачи</label>
+                                </div>
+                                <div class="form-item">
+                                    <input type="text" id="taskCategories" class="form-item__input" required=''>
+                                    <label for="form-item__input" class="form-item__label">Категория</label>
+                                </div>
+                                <div class="form-item">
+                                    <input type="text" id="taskDesc" class="form-item__input" required=''>
+                                    <label for="form-item__input" class="form-item__label">Описание</label>
+                                </div>
+                                <div class="form-item">
+                                    <input type="text" id="taskDeadline" class="form-item__input" required=''>
+                                    <label for="form-item__input" class="form-item__label">Дата</label>
+                                </div>
+                                <input type="submit" value="Создать" class="mw-content-input__submit">
+                            </div>
+                            <div class="mw-bottom">
+                                <button class="mw-bottom__exit" type="button">
+                                    Выйти
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
