@@ -29,7 +29,7 @@
             <div class="categoris">
                 <% for (var key in categories) { %>
                 <div class="categoris-item">
-                    <div class="text"><%= categories[key].categories%></div>
+                    <div class="text categoris-text" title="<%= categories[key].categories%>"><%= categories[key].categories%></div>
                     <div class="counter all-tasks">
                         <%= categories[key].count%>
                     </div>
@@ -46,9 +46,10 @@
                     </form>
 
                     <nav class="nav">
-                        <a href="" class="nav-item">
+                        <div class="nav-item nav-item--notif">
                             <img src="./img/bell.png" alt="" class="img img--notif">
-                        </a>
+                            <div class="notif-counter">1</div>
+                        </div>
                         <a href="" class="nav-item">
                             <img src="./img/defaultUser.png" alt="" class="img img--avatar">
                             <div class="text text--header">
@@ -99,7 +100,7 @@
             </div>
             <section class="tasks">
                 <% for (var key in tasks) { %>
-                    <div class="tasks-card" data-key="<%= tasks[key].name %>" data-desc="<%= tasks[key].desc %>" data-date="<%= tasks[key].dline %>">
+                    <div class="tasks-card" data-task="<%= tasks[key].categories %>" data-key="<%= tasks[key].name %>" data-desc="<%= tasks[key].desc %>" data-date="<%= tasks[key].dline %>">
                         <div class="type">
                             <%= tasks[key].categories %>
                         </div>
@@ -113,6 +114,31 @@
                     </div>
                     <% } %>
             </section>
+            <div class="wrapper-notification dn">
+                <div class="modal-window modal-window--notifications">
+                    <div class="mw-content">
+                        <div class="mw-content__item mw-content__item--notif">
+                            <div class="type-notif">
+                                <img src="./img/plus.svg" alt="" class="img-type">
+                            </div>
+                            <div class="content-notif">
+                                <div class="name-notif">
+                                    Что-то не большое пожалуйста!
+                                </div>
+                                <div class="send-date">
+                                    24.03.2021
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mw-bottom">
+                        <button class="mw-bottom__exit">
+                            Выйти
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal modal--tasks dn">
                 <div class="modal-window">
                     <div class="mw-top">

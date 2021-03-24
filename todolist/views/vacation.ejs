@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style/board.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Oswald:wght@300;600&display=swap" rel="stylesheet">
     <title>Отпуск</title>
 </head>
 <body>
@@ -34,6 +35,7 @@
                     <nav class="nav">
                         <a href="" class="nav-item">
                             <img src="./img/bell.png" alt="" class="img img--notif">
+                            <div class="notif-counter">1</div>
                         </a>
                         <a href="" class="nav-item">
                             <img src="./img/defaultUser.png" alt="" class="img img--avatar">
@@ -47,13 +49,11 @@
             <div class="afterHeader">
                 <div class="year-switcher">
                     <div class="left-arrow">
-                        <img src="./img/left-arrow.svg" alt="" class="ys-item__img">
+                        <img src="./img/left-arrow.svg" alt="" class="left-arrow__img">
                     </div>
-                    <div class="year">
-                        2021
-                    </div>
+                    <div class="year"></div>
                     <div class="right-arrow">
-                        <img src="./img/next.svg" alt="" class="ys-item__img">
+                        <img src="./img/next.svg" alt="" class="right-arrow__img">
                     </div>
                 </div>
             </div>
@@ -67,70 +67,88 @@
             </div>
             <div class="months">
                 <div class="months-top">
-                    <img src="./img/left-arrow-long.svg" alt="" class="back-button">
+                    <svg class="months-top__button" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 31.494 31.494" style="enable-background:new 0 0 31.494 31.494;" xml:space="preserve">
+                        <path style="fill:#1560BD" d="M10.273,5.009c0.444-0.444,1.143-0.444,1.587,0c0.429,0.429,0.429,1.143,0,1.571l-8.047,8.047h26.554
+                            c0.619,0,1.127,0.492,1.127,1.111c0,0.619-0.508,1.127-1.127,1.127H3.813l8.047,8.032c0.429,0.444,0.429,1.159,0,1.587
+                            c-0.444,0.444-1.143,0.444-1.587,0l-9.952-9.952c-0.429-0.429-0.429-1.143,0-1.571L10.273,5.009z"/>
+                    </svg>
                     <div class="selected-months">
                         Месяц
                     </div>
                 </div>
-                <div class="tasks">
-                    <div class="tasks-card">
-                        <div class="description">
-                            Январь
+                <div class="img-wrapper">
+                    <div class="tasks tasks--vacation">
+                        <div class="tasks-card tasks-card--glassess winter">
+                            <div class="months-name">
+                                Январь
+                            </div>
+                            <div class="workers">16</div> <!-- Люди которые ушли или хотят уйти в отпуск в этом месяце -->
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Февраль
+                        <div class="tasks-card tasks-card--glassess winter">
+                            <div class="months-name">
+                                Февраль
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Март
+                        <div class="tasks-card tasks-card--glassess spring">
+                            <div class="months-name">
+                                Март
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Апрель
+                        <div class="tasks-card tasks-card--glassess spring">
+                            <div class="months-name">
+                                Апрель
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Май
+                        <div class="tasks-card tasks-card--glassess spring">
+                            <div class="months-name">
+                                Май
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Июнь
+                        <div class="tasks-card tasks-card--glassess summer">
+                            <div class="months-name">
+                                Июнь
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Июль
+                        <div class="tasks-card tasks-card--glassess summer">
+                            <div class="months-name">
+                                Июль
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Август
+                        <div class="tasks-card tasks-card--glassess summer">
+                            <div class="months-name">
+                                Август
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Сентябрь
+                        <div class="tasks-card tasks-card--glassess autumn">
+                            <div class="months-name">
+                                Сентябрь
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Октябрь
+                        <div class="tasks-card tasks-card--glassess autumn">
+                            <div class="months-name">
+                                Октябрь
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Ноябрь
+                        <div class="tasks-card tasks-card--glassess autumn">
+                            <div class="months-name">
+                                Ноябрь
+                            </div>
+                            <div class="workers">16</div>
                         </div>
-                    </div>
-                    <div class="tasks-card">
-                        <div class="description">
-                            Декабрь
+                        <div class="tasks-card tasks-card--glassess winter">
+                            <div class="months-name">
+                                Декабрь
+                            </div>
+                            <div class="workers">16</div>
                         </div>
                     </div>
                 </div>
@@ -138,5 +156,6 @@
 
         </div>
     </main>
+    <script src="./script/vacation.js"></script>
 </body>
 </html>
