@@ -117,6 +117,14 @@ app.post('/register', (req, res) => {
 })
 
 app.get('/board', ensureAuthenticated , (req, res) => {
+    connection.query("select * from categories", function(eror, results, fields){
+        categ_name = results;
+    })
+    if (req.body.taskName == ""){
+    }
+    else {
+        connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
+    }
     connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
         categories = results;
     })
@@ -125,6 +133,7 @@ app.get('/board', ensureAuthenticated , (req, res) => {
     })
     connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
         res.render('board', {
+            categ_name : categ_name,
             categories : categories,
             gov_tasks : gov_tasks,
             tasks : results,
@@ -135,6 +144,11 @@ app.get('/board', ensureAuthenticated , (req, res) => {
 })
 
 app.post('/board', ensureAuthenticated , (req, res) => {
+    if (req.body.taskName == ""){
+    }
+    else {
+        connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
+    }
     if (typeof req.body.task == "string"){
         connection.query("update task set fk_id_worker = ? where id_task = ?", [req.session.userid, req.body.task]);
     }
@@ -144,6 +158,9 @@ app.post('/board', ensureAuthenticated , (req, res) => {
             connection.query("update task set fk_id_worker = ? where id_task = ?", [req.session.userid, req.body.task[key]]);
         }
     }
+    connection.query("select * from categories", function(eror, results, fields){
+        categ_name = results;
+    })
     connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
         categories = results;
     })
@@ -152,6 +169,7 @@ app.post('/board', ensureAuthenticated , (req, res) => {
     })
     connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
         res.render('board', {
+            categ_name : categ_name,
             categories : categories,
             gov_tasks : gov_tasks,
             tasks : results,
