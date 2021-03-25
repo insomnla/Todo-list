@@ -237,12 +237,12 @@
                                     <label for="form-item__input" class="form-item__label">Категория</label>
                                 </div>
                                 <div class="form-item">
-                                    <input type="text" id="taskDesc" class="form-item__input" required=''>
-                                    <label for="form-item__input" class="form-item__label">Описание</label>
+                                    <textarea id="taskDesc" class="form-item__input textarea-input" required=''></textarea>
+                                    <label for="form-item__input" class="form-item__label textarea-label">Описание</label>
                                 </div>
                                 <div class="form-item">
-                                    <input type="text" id="taskDeadline" class="form-item__input" required=''>
-                                    <label for="form-item__input" class="form-item__label">Дата</label>
+                                    <input type="text" id="taskDeadline" class="form-item__input date-input" required='' autocomplete="off" autocomplete="disabled">
+                                    <label for="form-item__input" class="form-item__label date-label">Дата</label>
                                 </div>
                                 <input type="submit" value="Создать" class="mw-content-input__submit">
                             </div>
@@ -257,6 +257,8 @@
             </div>
         </div>
     </main>
+    <script src="./script/jquery.min.js"></script>
+    <script src="./script/jquery.maskedinput.js"></script>
     <script src="./script/main.js"></script>
 </body>
 </html>
