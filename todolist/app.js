@@ -12,12 +12,19 @@ const passport = require("passport");
 var MySQLStore = require('express-mysql-session')(session);
 const {ensureAuthenticated} = require('./config/auth'); 
 const { connect } = require("http2");
+const { worker } = require("cluster");
+let worker_single = 0;
+let worker_id = [0];
+let socket_id = [0];
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
 require('./config/passport')(passport)
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
-
+const server = app.listen(port, () => {
+    console.log("Listening on port: " + port);
+});
+const io = require('socket.io')(server);
 app.use(session({
     secret : 'secret',
     resave : true,
@@ -59,6 +66,19 @@ connection.connect(function(err){
     }
 });
 
+io.on("connection", (socket) => {
+    console.log("USER CONNECTED");
+    socket.on('message', (socketid,id) =>{
+        socket_id[worker_id.indexOf(id)] = socketid;
+    })
+    socket.on("notification", (data)=>{
+        console.log(data + " " + socket_id[worker_id.indexOf(data)]);
+        console.log(worker_id.indexOf(data) + " " + worker_id.indexOf(1))
+        socket.to(socket_id[worker_id.indexOf(data)]).emit('notification2', 'howdy'); 
+    })
+    console.log(socket_id);
+    console.log(worker_id);
+});
 
 app.use(express.static(__dirname + '/views'));
 app.set('views', path.join(__dirname, 'views'))
@@ -73,17 +93,33 @@ app.use((req,res,next)=> {
     
 
 app.get('/', (req, res) => {
-    res.render('welcome')
+    if (req.session.loggedin){
+        getBoard(req, res)
+    } else res.render('welcome')
 })
 
 app.get('/login', (req, res) => {
-    res.render('welcome')
+    if (req.session.loggedin){
+        getBoard(req, res)
+    } else res.render('welcome')
 })
+app.get('/socket_test', (req, res) => {
+    res.render('socket_test')
+})
+
 
 app.get('/vacation',  ensureAuthenticated, (req, res) => {
     res.render('vacation', {
         info: req.session.username
     })
+})
+
+app.get("/exit", (req, res) =>{
+    req.session.loggedin = false;
+    let index = worker_id.indexOf(worker_single);
+    worker_id.splice(index, 1);
+    socket_id.splice(index, 1);
+    res.render('welcome')
 })
 
 app.post('/register', (req, res) => {
@@ -117,30 +153,7 @@ app.post('/register', (req, res) => {
 })
 
 app.get('/board', ensureAuthenticated , (req, res) => {
-    connection.query("select * from categories", function(eror, results, fields){
-        categ_name = results;
-    })
-    if (req.body.taskName == ""){
-    }
-    else {
-        connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
-    }
-    connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
-        categories = results;
-    })
-    connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and fk_id_worker is null", function(error, results, fields){
-        gov_tasks = results;
-    })
-    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
-        res.render('board', {
-            categ_name : categ_name,
-            categories : categories,
-            gov_tasks : gov_tasks,
-            tasks : results,
-            info : req.session.username,
-            id: req.session.userid
-           })
-    })
+    getBoard(req,res);
 })
 
 app.post('/board', ensureAuthenticated , (req, res) => {
@@ -158,25 +171,7 @@ app.post('/board', ensureAuthenticated , (req, res) => {
             connection.query("update task set fk_id_worker = ? where id_task = ?", [req.session.userid, req.body.task[key]]);
         }
     }
-    connection.query("select * from categories", function(eror, results, fields){
-        categ_name = results;
-    })
-    connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
-        categories = results;
-    })
-    connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and fk_id_worker is null", function(error, results, fields){
-        gov_tasks = results;
-    })
-    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
-        res.render('board', {
-            categ_name : categ_name,
-            categories : categories,
-            gov_tasks : gov_tasks,
-            tasks : results,
-            info : req.session.username,
-            id: req.session.userid
-           })
-    })
+    getBoard(req,res);
 })
 
 app.get('/register', (req, res) => {
@@ -193,7 +188,8 @@ app.post('/login', (req, res) => {
 			if (results.length > 0) {
 				req.session.loggedin = true;
                 req.session.username = results[0].fname + " " +results[0].mname ;
-                req.session.userid = results[0].id_worker;
+                worker_single = req.session.userid = results[0].id_worker;
+                worker_id.push(req.session.userid);
 				res.redirect('/board');
 			} else {
                 req.flash('error_msg' , 'Введите правильную почту и пароль');
@@ -206,8 +202,34 @@ app.post('/login', (req, res) => {
 	}
 })
 
+function getBoard(req, res){
+    connection.query("select * from categories", function(eror, results, fields){
+        categ_name = results;
+    })
+    if (req.body.taskName == ""){
+    }
+    else {
+        connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
+    }
+    connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
+        categories = results;
+    })
+    connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and fk_id_worker is null", function(error, results, fields){
+        gov_tasks = results;
+    })
+    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
+        res.render('board', {
+            categ_name : categ_name,
+            categories : categories,
+            gov_tasks : gov_tasks,
+            tasks : results,
+            info : req.session.username,
+            id: req.session.userid
+           })
+    })
+}
 
-app.listen(port, () => {
+/* app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-})
+})*/
 

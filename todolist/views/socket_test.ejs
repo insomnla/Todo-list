@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <input>
+        <div style="height: 20px; width: 40px; background-color: black;" id="submit"></div>
+    </form>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <script>
+        let submit = document.getElementById("submit"),
+            text = document.querySelector("input");
+        const socket =  io('http://localhost:3000',{origins:"*"});
+        socket.on("connect", () => {
+            submit.addEventListener("click", ()=>{
+                socket.emit("notification", Number(text.value));
+            })  
+        });
+    </script>
+</body>
+</html>
