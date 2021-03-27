@@ -295,10 +295,106 @@ body {
     justify-content: center;
 }
 
-.tasks {
-    width: calc(100% + 40px);
+.task-sec {
+    width: 100%;
     max-height: calc(100vh - 458px);
     overflow: auto;
+    display: flex;
+    align-items: center;
+}
+
+.employee-tasks {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    column-gap: 30px;
+}
+
+.employee-tasks__item {
+    min-width: 500px;
+    max-height: calc(100vh - 478px);
+    overflow: auto;
+    padding: 0 20px 20px 20px;
+}
+
+.employee-title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+    margin-bottom: 50px;
+}
+
+.employee-task-pack {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.task-pack__item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 30px;
+    padding: 20px 0;
+    border: 2px solid #99958C;
+    border-right: none;
+    border-left: none;
+}
+
+.task-pack__item--active {
+    border: 2px solid #1560BD;
+    border-right: none;
+    border-left: none;
+    color: #1560BD;
+}
+
+.task-pack-name {
+    overflow: hidden;
+    font-size: 26px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.task-pack-checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.task-pack-checkbox {
+    border: 2px solid #99958C;
+    min-width: 40px;
+    min-height: 40px;
+    position: relative;
+}
+
+.task-pack-checkbox--active {
+    border: 2px solid #1560BD;
+}
+
+.task-pack-checkbox:checked::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: 25px;
+    height: 25px;
+    border-radius: 1px;
+    background: #1560BD;
+    opacity: 1;
+}
+
+.tasks {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -306,8 +402,6 @@ body {
     row-gap: 50px;
     column-gap: 50px;
     padding: 20px;
-    position: relative;
-    left: -20px;
 }
 
 .tasks-card {
@@ -557,8 +651,8 @@ body {
 
 #task {
     border: 2px solid #1560BD;
-    width: 20px;
-    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
     position: relative;
 }
 

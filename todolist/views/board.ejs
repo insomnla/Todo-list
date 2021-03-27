@@ -101,21 +101,299 @@
                     + Новая задача
                 </button>
             </div>
-            <section class="tasks">
-                <% for (var key in tasks) { %>
-                    <div class="tasks-card" data-task="<%= tasks[key].categories %>" data-key="<%= tasks[key].name %>" data-desc="<%= tasks[key].desc %>" data-date="<%= tasks[key].dline %>">
-                        <div class="type">
-                            <%= tasks[key].categories %>
+            <section class="task-sec">
+                <div class="employee-tasks">
+                    <div class="employee-tasks__item">
+                        <div class="employee-title">
+                            <img src="./img/defaultUser.png" alt="" class="img img--avatar">
+                            <div class="text">
+                                <%= info %>
+                            </div>
                         </div>
-                        <div class="description">
-                            <%= tasks[key].name %>
-                        </div>
-                        <!-- Если эта функция нужна будет -->
-                        <div class="workers">
-                            <img src="./img/defaultUser.png" alt="">
+                        <div class="employee-task-pack">
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name" title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus natus laborum quas, ex quae tenetur repellat veniam consequatur distinctio voluptates quasi quia odio cupiditate rem dolor non hic recusandae? Earum!">
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus natus laborum quas, ex quae tenetur repellat veniam consequatur distinctio voluptates quasi quia odio cupiditate rem dolor non hic recusandae? Earum!
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
                         </div>
                     </div>
+                    <div class="employee-tasks__item">
+                        <div class="employee-title">
+                            <img src="./img/defaultUser.png" alt="" class="img img--avatar">
+                            <div class="text">
+                                <%= info %>
+                            </div>
+                        </div>
+                        <div class="employee-task-pack">
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="employee-tasks__item">
+                        <div class="employee-title">
+                            <img src="./img/defaultUser.png" alt="" class="img img--avatar">
+                            <div class="text">
+                                <%= info %>
+                            </div>
+                        </div>
+                        <div class="employee-task-pack">
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="employee-tasks__item">
+                        <div class="employee-title">
+                            <img src="./img/defaultUser.png" alt="" class="img img--avatar">
+                            <div class="text">
+                                <%= info %>
+                            </div>
+                        </div>
+                        <div class="employee-task-pack">
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="employee-tasks__item">
+                        <div class="employee-title">
+                            <img src="./img/defaultUser.png" alt="" class="img img--avatar">
+                            <div class="text">
+                                <%= info %>
+                            </div>
+                        </div>
+                        <div class="employee-task-pack">
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="employee-tasks__item">
+                        <div class="employee-title">
+                            <img src="./img/defaultUser.png" alt="" class="img img--avatar">
+                            <div class="text">
+                                <%= info %>
+                            </div>
+                        </div>
+                        <div class="employee-task-pack">
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="employee-tasks__item">
+                        <div class="employee-title">
+                            <img src="./img/defaultUser.png" alt="" class="img img--avatar">
+                            <div class="text">
+                                <%= info %>
+                            </div>
+                        </div>
+                        <div class="employee-task-pack">
+                            <form action="" class="task-pack__item">
+                                <div class="task-pack-name">
+                                    <%= tasks[key].name %>
+                                </div>
+                                <input type="checkbox" class="task-pack-checkbox">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tasks dn">
+                    <% for (var key in tasks) { %>
+                        <div class="tasks-card" data-task="<%= tasks[key].categories %>" data-key="<%= tasks[key].name %>" data-desc="<%= tasks[key].desc %>" data-date="<%= tasks[key].dline %>">
+                            <div class="type">
+                                <%= tasks[key].categories %>
+                            </div>
+                            <div class="description">
+                                <%= tasks[key].name %>
+                            </div>
+                            <!-- Если эта функция нужна будет -->
+                            <div class="workers">
+                                <img src="./img/defaultUser.png" alt="">
+                            </div>
+                        </div>
                     <% } %>
+                </div>
             </section>
             <div class="wrapper-notification dn">
                 <div class="modal-window modal-window--notifications">

@@ -17,6 +17,9 @@ let buttonCreateTask = document.querySelector(".mw-top__button");
 let buttonCreateBack = document.querySelector(".mw-top__button-back");
 
 
+let taskPackCheckbox = document.querySelectorAll(".task-pack-checkbox");
+
+
 let symbol = document.querySelectorAll(".symbol");
 let contentHiddenItem = document.querySelectorAll(".mw-content__hidden-item");
 let dateInNewTasks = document.querySelectorAll(".task-chek__deadline");
@@ -137,6 +140,14 @@ categorisItem.forEach((elem)=>{
         });
     });
 });
+
+taskPackCheckbox.forEach((elem)=>{
+    elem.addEventListener('change', (elem)=>{
+        elem.target.classList.toggle('task-pack-checkbox--active');
+        elem.target.parentNode.classList.toggle('task-pack__item--active');
+    });
+});
+
 
 $('.date-input').click(function(){
     $(this).setCursorPosition(0);
