@@ -269,11 +269,13 @@
     <script>
         const socket =  io('http://localhost:3000',{origins:"*"});
         let id = <%= id%>
+        let notif = document.querySelector(".name-notif");
         socket.on("connect", () => {
             console.log(socket.id);
             socket.send(socket.id, id);
             socket.on("notification2", (data)=>{
-                console.log(data + "А");
+                notif.textContent = data;
+                console.log(data);
             })
         });
     </script>
