@@ -157,11 +157,6 @@ app.get('/board', ensureAuthenticated , (req, res) => {
 })
 
 app.post('/board', ensureAuthenticated , (req, res) => {
-    if (req.body.taskName == ""){
-    }
-    else {
-        connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
-    }
     if (typeof req.body.task == "string"){
         connection.query("update task set fk_id_worker = ? where id_task = ?", [req.session.userid, req.body.task]);
     }
@@ -206,7 +201,9 @@ function getBoard(req, res){
     connection.query("select * from categories", function(eror, results, fields){
         categ_name = results;
     })
-    if (req.body.taskName.length > 1){
+    console.log(req.body.taskName);
+    if (!(req.body.taskName == undefined)){
+        console.log("TRUE")
         connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
     }
     connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
