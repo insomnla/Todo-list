@@ -15,6 +15,8 @@ let buttonNewTask = document.querySelector(".bp-item--new-task");
 let buttonAdd = document.querySelector(".mw-bottom__add");
 let buttonCreateTask = document.querySelector(".mw-top__button");
 let buttonCreateBack = document.querySelector(".mw-top__button-back");
+let buttonNext = document.querySelector(".task-sec-title__button--next");
+let buttonPrev = document.querySelector(".task-sec-title__button--prev");
 
 
 let taskPackCheckbox = document.querySelectorAll(".task-pack-checkbox");
@@ -25,7 +27,20 @@ let contentHiddenItem = document.querySelectorAll(".mw-content__hidden-item");
 let dateInNewTasks = document.querySelectorAll(".task-chek__deadline");
 let categorisItem = document.querySelectorAll(".categoris-item");
 let imgNotif = document.querySelector(".nav-item--notif");
+let taskSec = document.querySelector(".task-sec");
+let taskSecWrapper = document.querySelector(".task-sec-wrapper");
+let taskSecWrapperSlider = document.querySelectorAll(".task-sec-wrapper__slider");
 
+
+let width, count = 0;
+
+init();
+
+if (count == 0) {
+    document.querySelector('.task-sec-title-slider__button--1').style.background = '#1560BD';
+}
+
+window.addEventListener('resize', init)
 
 tasksCard.forEach((elem)=>{
     elem.addEventListener('click', ()=>{
@@ -148,6 +163,42 @@ taskPackCheckbox.forEach((elem)=>{
     });
 });
 
+buttonNext.addEventListener('click', ()=>{
+    count++;
+    
+    if(count == taskSecWrapperSlider.length - 1) {
+        buttonNext.classList.add('dn');
+    }
+
+    if(buttonPrev.classList.contains('dn') && count != 0) {
+        buttonPrev.classList.remove('dn');
+    }
+
+    if (count > 0) {
+        document.querySelector('.task-sec-title-slider__button--1').style.background = 'none';
+        document.querySelector('.task-sec-title-slider__button--2').style.background = '#1560BD';
+    }
+
+    rollSlider();
+});
+
+buttonPrev.addEventListener('click', ()=>{
+    count--;
+    
+    if(count == 0) {
+        buttonPrev.classList.add('dn');
+        document.querySelector('.task-sec-title-slider__button--1').style.background = '#1560BD';
+        document.querySelector('.task-sec-title-slider__button--2').style.background = 'none';
+    }
+
+    if(buttonNext.classList.contains('dn') && count !== taskSecWrapperSlider.length - 1) {
+        buttonNext.classList.remove('dn');
+    }
+
+    rollSlider();
+});
+
+
 
 $('.date-input').click(function(){
     $(this).setCursorPosition(0);
@@ -185,3 +236,18 @@ function setDeadline(object) {
     return date;
 }
 
+function init() {
+    console.log('resize');
+    width = taskSec.offsetWidth;
+
+    taskSecWrapper.style.minWidth = width * taskSecWrapperSlider.length + 'px';
+
+    taskSecWrapperSlider.forEach((elem) => {
+        elem.style.minWidth = width + 'px';
+    });
+    rollSlider();
+}
+
+function rollSlider() {
+    taskSecWrapper.style.transform = 'translate(-' + count * width + 'px)';
+}
