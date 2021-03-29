@@ -13,9 +13,10 @@ var MySQLStore = require('express-mysql-session')(session);
 const {ensureAuthenticated} = require('./config/auth'); 
 const { connect } = require("http2");
 const { worker } = require("cluster");
-let worker_single = 0;
-let worker_id = [0];
-let socket_id = [0];
+let worker_single = 0,
+    worker_id = [0],
+    socket_id = [0],
+    dep_workers = 0;
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
 require('./config/passport')(passport)
@@ -184,6 +185,8 @@ app.post('/login', (req, res) => {
 				req.session.loggedin = true;
                 req.session.username = results[0].fname + " " +results[0].mname ;
                 worker_single = req.session.userid = results[0].id_worker;
+                req.session.department = results[0].fk_id_department;
+                req.session.role = results[0].fk_id_role;
                 worker_id.push(req.session.userid);
 				res.redirect('/board');
 			} else {
@@ -212,6 +215,10 @@ function getBoard(req, res){
     connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and fk_id_worker is null", function(error, results, fields){
         gov_tasks = results;
     })
+    if (req.session.role == 2){
+        connection.query("select id_task, task.name, task.desc, deadline, lname, LEFT(fname, 1) as fname, LEFT(mname, 1) as mname, fk_id_worker as worker from task inner join worker on task.fk_id_worker = worker.id_worker inner join department on worker.fk_id_department = department.id_department where id_department = ? order by worker", [req.session.department], function(error, results, fields) {
+            dep_workers = results;
+        })}
     connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
         res.render('board', {
             categ_name : categ_name,
@@ -219,7 +226,11 @@ function getBoard(req, res){
             gov_tasks : gov_tasks,
             tasks : results,
             info : req.session.username,
-            id: req.session.userid
+            id: req.session.userid,
+            department: req.session.department,
+            role: req.session.role,
+            dep_workers: dep_workers,
+            first: 0
            })
     })
 }

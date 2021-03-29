@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS `test`.`department` (
+  `id_department` INT NOT NULL AUTO_INCREMENT,
+  `department_name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_department`))
+ENGINE = InnoDB
+// таблица отделения, скорее всего опять баг будет :fuck:
+
+ALTER TABLE worker ADD department_id INT UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE worker ADD CONSTRAINT fk_id_department FOREIGN KEY (department_id) REFERENCES department(id_department);
+ALTER TABLE worker RENAME COLUMN department_id TO fk_id_department;
+(добавление ключа в уже существующую таблицу чтобы потом заново не вводить)(если ошибку выдаёт юзани SET FOREIGN_KEY_CHECKS=0; )
