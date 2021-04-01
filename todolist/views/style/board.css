@@ -29,6 +29,7 @@ body {
     justify-content: center;
     align-items: center;
     row-gap: 40px;
+    box-shadow: 10px 0 15px 5px #d3d3d3;
 }
 
 .aside-item {
@@ -146,6 +147,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 30px;
 }
 
 .search-form {
@@ -490,6 +492,10 @@ body {
 }
 
 .description {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 25px;
 }
 
@@ -1085,6 +1091,87 @@ body {
 
 
 
+
+/* Profile */
+
+.header-avatar {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+}
+
+.header-avatar__img {
+    width: 200px;
+    height: 200px;
+    border: 5px solid #1560BD;
+}
+
+.header-avatar__employee {
+    font-family: 'Oswald', sans-serif;
+    font-size: 50px;
+}
+
+.header-exit__img {
+    width: 60px;
+    height: 60px;
+}
+
+.after-header--profile {
+    margin-top: 150px;
+}
+
+.line1--profile {
+    width: 300px;
+    height: 6px;
+}
+
+.line2--profile {
+    height: 3px;
+}
+
+.user {
+    width: 100%;
+    max-height: calc(100vh - 450px);
+    overflow: auto;
+    display: flex;
+    align-items: start;
+}
+
+.user-information {
+    width: calc(30% + 30px);
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    padding: 20px 0;
+    margin-right: 30px;
+}
+
+.user-information-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+    padding: 20px 0;
+    border: 2px solid #99958C;
+    border-left: none;
+    border-right: none;
+}
+
+.user-information-item__title {
+    width: 50%;
+    justify-content: flex-start;
+    font-size: 30px;
+}
+
+.user-information-item__description {
+    width: 50%;
+    justify-content: flex-start;
+    font-size: 30px;
+}
+
+.user-tasks {
+    width: calc(70% - 30px);
+}
 
 
 
