@@ -219,7 +219,7 @@ function getBoard(req, res){
         connection.query("select id_task, task.name, task.desc, deadline, lname, LEFT(fname, 1) as fname, LEFT(mname, 1) as mname, fk_id_worker as worker from task inner join worker on task.fk_id_worker = worker.id_worker inner join department on worker.fk_id_department = department.id_department where id_department = ? order by worker", [req.session.department], function(error, results, fields) {
             dep_workers = results;
         })}
-    connection.query("select task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories where worker.id_worker = ?", [req.session.userid], function(error, results, fields) {
+    connection.query("select task.id_task, task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline, status.status , status.status_color as color from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories inner join status on fk_id_status = status.id_status where worker.id_worker =  ?", [req.session.userid], function(error, results, fields) {
         res.render('board', {
             categ_name : categ_name,
             categories : categories,

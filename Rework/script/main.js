@@ -24,7 +24,7 @@ if(searchResultMain >= 1) {
     }
 
     buttonToAllTasks.onclick = function() {
-        window.location.href = "/all-tasks.html";
+        window.location.href = "./all-tasks.html";
     }
 
 
@@ -53,6 +53,6 @@ if(searchResultMain >= 1) {
     let buttonToMain = document.querySelector("#to-main");
 
     buttonToMain.onclick = function() {
-        window.location.href = "/index.html";
+        window.location.href = "./index.html";
     }
 }

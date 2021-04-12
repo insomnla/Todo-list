@@ -5,7 +5,20 @@ CREATE TABLE IF NOT EXISTS `test`.`department` (
 ENGINE = InnoDB
 // таблица отделения, скорее всего опять баг будет :fuck:
 
-ALTER TABLE worker ADD department_id INT UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE worker ADD department_id INT NOT NULL DEFAULT 0;
 ALTER TABLE worker ADD CONSTRAINT fk_id_department FOREIGN KEY (department_id) REFERENCES department(id_department);
 ALTER TABLE worker RENAME COLUMN department_id TO fk_id_department;
 (добавление ключа в уже существующую таблицу чтобы потом заново не вводить)(если ошибку выдаёт юзани SET FOREIGN_KEY_CHECKS=0; )
+
+CREATE TABLE IF NOT EXISTS `test`.`status` (
+  `id_status` INT NOT NULL AUTO_INCREMENT,
+  `status` VARCHAR(45) NULL,
+  `status_color` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_status`))
+ENGINE = InnoDB
+
+
+
+ALTER TABLE task ADD status_id INT NOT NULL DEFAULT 0;
+ALTER TABLE task ADD CONSTRAINT fk_id_status FOREIGN KEY (id_status) REFERENCES status(id_status);
+ALTER TABLE task RENAME COLUMN status_id TO fk_id_status;

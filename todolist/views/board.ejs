@@ -2,351 +2,352 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/board.css">
+    <title>To-do list</title>
+    <link rel="stylesheet" href="./script/DataTables/datatables.css"/>
+    <link rel="stylesheet" href="./style/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Oswald:wght@300;600&display=swap" rel="stylesheet">
-    <title>Main page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <main class="main">
-        <aside class="aside">
-            <div class="aside-item">
-                <img src="./img/asideUser.png" alt="" class="img img--aside">
-            </div>
-            <div class="aside-item  aside-item--active">
-                <img src="./img/to-do.png" alt="" class="img img--aside">
-            </div>
-            <div class="aside-item">
-                <a href="/vacation"><img src="./img/luggage.png" alt="" class="img img--aside"></a>
-            </div>
-        </aside>
-        <div class="modal-aside">
-            <div class="title">
-                Мои задачи
-            </div>
-            <div class="categoris">
-                <% for (var key in categories) { %>
-                <div class="categoris-item">
-                    <div class="text categoris-text" title="<%= categories[key].categories%>"><%= categories[key].categories%></div>
-                    <div class="counter all-tasks">
-                        <%= categories[key].count%>
-                    </div>
-                </div>
-                <% } %>
-            </div>
-        </div>
-        <div class="main-content">
-            <header class="header header--top">
-                <div class="header__inner">
-                    <form action="" class="search-form">
-                        <input type="search" placeholder="Найти задачу" class="search">
-                        <input type="image" class="img img--lens" src="./img/magnify.png">
-                    </form>
-
-                    <nav class="nav">
-                        <div class="nav-item nav-item--notif">
-                            <img src="./img/bell.png" alt="" class="img img--notif">
-                            <div class="notif-counter">1</div>
+    <section class="page-header">
+        <header class="header page-header-header page-header-header_theme_main-color">
+            <div class="wrapper">
+                <div class="page-header-header-inner">
+                    <nav class="nav nav_width_25">
+                        <a href="" class="nav__link nav__link_color_white">Список задач</a>
+                        <a href="" class="nav__link nav__link_color_white">Отпуска</a>
+                    </nav>
+                    <nav class="nav user_nav nav_width_25">
+                        <div class="nav-item nav-item_notification">
+                            <svg class="fill_white nav__svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                <g>
+                                    <g>
+                                        <path d="M467.819,431.851l-36.651-61.056c-16.896-28.181-25.835-60.437-25.835-93.312V224
+                                            c0-82.325-67.008-149.333-149.333-149.333S106.667,141.675,106.667,224v53.483c0,32.875-8.939,65.131-25.835,93.312
+                                            l-36.651,61.056c-1.984,3.285-2.027,7.403-0.149,10.731c1.899,3.349,5.461,5.419,9.301,5.419h405.333
+                                            c3.84,0,7.403-2.069,9.301-5.419C469.845,439.253,469.803,435.136,467.819,431.851z M72.171,426.667l26.944-44.907
+                                            C118.016,350.272,128,314.219,128,277.483V224c0-70.592,57.408-128,128-128s128,57.408,128,128v53.483
+                                            c0,36.736,9.984,72.789,28.864,104.277l26.965,44.907H72.171z"/>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path d="M256,0c-23.531,0-42.667,19.136-42.667,42.667v42.667C213.333,91.221,218.112,96,224,96s10.667-4.779,10.667-10.667
+                                            V42.667c0-11.776,9.557-21.333,21.333-21.333s21.333,9.557,21.333,21.333v42.667C277.333,91.221,282.112,96,288,96
+                                            s10.667-4.779,10.667-10.667V42.667C298.667,19.136,279.531,0,256,0z"/>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <path d="M302.165,431.936c-3.008-5.077-9.515-6.741-14.613-3.819c-5.099,2.987-6.805,9.536-3.819,14.613
+                                            c2.773,4.715,4.288,10.368,4.288,15.936c0,17.643-14.357,32-32,32c-17.643,0-32-14.357-32-32c0-5.568,1.515-11.221,4.288-15.936
+                                            c2.965-5.099,1.259-11.627-3.819-14.613c-5.141-2.923-11.627-1.259-14.613,3.819c-4.715,8.064-7.211,17.301-7.211,26.731
+                                            C202.667,488.085,226.581,512,256,512s53.333-23.915,53.376-53.333C309.376,449.237,306.88,440,302.165,431.936z"/>
+                                    </g>
+                                </g>
+                            </svg>
                         </div>
-                        <a href="" class="nav-item">
-                            <img src="./img/defaultUser.svg" alt="" class="img img--avatar">
-                            <div class="text text--header">
+                        <div class="nav-item nav-item-current-user">
+                            <div class="current-user-avatar">
+                                <svg class="fill_white nav__svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <path d="M240,0C107.664,0,0,107.664,0,240c0,57.96,20.656,111.184,54.992,152.704c0.088,0.12,0.096,0.272,0.192,0.384
+                                                c24.792,29.896,55.928,52.816,90.624,67.624c0.4,0.168,0.792,0.352,1.192,0.52c2.808,1.184,5.648,2.28,8.496,3.352
+                                                c1.12,0.424,2.24,0.856,3.376,1.264c2.456,0.88,4.928,1.712,7.416,2.512c1.592,0.512,3.184,1.016,4.792,1.496
+                                                c2.2,0.656,4.408,1.288,6.632,1.888c1.952,0.528,3.92,1.016,5.888,1.488c1.992,0.48,3.992,0.96,6,1.384
+                                                c2.24,0.48,4.504,0.904,6.776,1.32c1.824,0.336,3.64,0.688,5.48,0.984c2.52,0.408,5.056,0.728,7.6,1.056
+                                                c1.64,0.208,3.272,0.448,4.92,0.624c2.88,0.304,5.784,0.52,8.696,0.72c1.352,0.096,2.696,0.24,4.056,0.312
+                                                c4.248,0.24,8.544,0.368,12.872,0.368s8.624-0.128,12.888-0.352c1.36-0.072,2.704-0.216,4.056-0.312
+                                                c2.912-0.208,5.816-0.416,8.696-0.72c1.648-0.176,3.28-0.416,4.92-0.624c2.544-0.328,5.08-0.648,7.6-1.056
+                                                c1.832-0.296,3.656-0.648,5.48-0.984c2.264-0.416,4.528-0.84,6.776-1.32c2.008-0.432,4-0.904,6-1.384
+                                                c1.968-0.48,3.936-0.968,5.888-1.488c2.224-0.592,4.432-1.232,6.632-1.888c1.608-0.48,3.2-0.984,4.792-1.496
+                                                c2.488-0.8,4.96-1.632,7.416-2.512c1.128-0.408,2.248-0.84,3.376-1.264c2.856-1.072,5.688-2.176,8.496-3.352
+                                                c0.4-0.168,0.792-0.352,1.192-0.52c34.688-14.808,65.832-37.728,90.624-67.624c0.096-0.112,0.104-0.272,0.192-0.384
+                                                C459.344,351.184,480,297.96,480,240C480,107.664,372.336,0,240,0z M337.256,441.76c-0.12,0.056-0.232,0.12-0.352,0.176
+                                                c-2.856,1.376-5.76,2.672-8.688,3.936c-0.664,0.28-1.32,0.568-1.984,0.848c-2.56,1.072-5.152,2.088-7.76,3.064
+                                                c-1.088,0.408-2.176,0.808-3.272,1.192c-2.312,0.824-4.632,1.616-6.976,2.368c-1.456,0.464-2.92,0.904-4.384,1.336
+                                                c-2.08,0.624-4.168,1.224-6.28,1.784c-1.776,0.472-3.568,0.904-5.36,1.328c-1.88,0.448-3.752,0.904-5.648,1.304
+                                                c-2.072,0.44-4.16,0.816-6.24,1.192c-1.688,0.312-3.368,0.64-5.072,0.912c-2.344,0.368-4.712,0.664-7.072,0.96
+                                                c-1.496,0.192-2.984,0.416-4.496,0.576c-2.696,0.288-5.416,0.472-8.128,0.664c-1.208,0.08-2.408,0.216-3.632,0.28
+                                                c-3.96,0.208-7.928,0.32-11.912,0.32s-7.952-0.112-11.904-0.32c-1.216-0.064-2.416-0.192-3.632-0.28
+                                                c-2.72-0.184-5.432-0.376-8.128-0.664c-1.512-0.16-3-0.384-4.496-0.576c-2.36-0.296-4.728-0.592-7.072-0.96
+                                                c-1.704-0.272-3.384-0.6-5.072-0.912c-2.088-0.376-4.176-0.76-6.24-1.192c-1.896-0.4-3.776-0.856-5.648-1.304
+                                                c-1.792-0.432-3.584-0.856-5.36-1.328c-2.104-0.56-4.2-1.168-6.28-1.784c-1.464-0.432-2.928-0.872-4.384-1.336
+                                                c-2.344-0.752-4.672-1.544-6.976-2.368c-1.096-0.392-2.184-0.792-3.272-1.192c-2.608-0.976-5.2-1.992-7.76-3.064
+                                                c-0.664-0.272-1.312-0.56-1.976-0.84c-2.928-1.256-5.832-2.56-8.696-3.936c-0.12-0.056-0.232-0.112-0.352-0.176
+                                                c-27.912-13.504-52.568-32.672-72.576-55.952c15.464-56.944,59.24-102.848,115.56-121.112c1.112,0.68,2.272,1.288,3.416,1.928
+                                                c0.672,0.376,1.336,0.776,2.016,1.136c2.384,1.264,4.8,2.448,7.272,3.512c1.896,0.832,3.856,1.536,5.808,2.256
+                                                c0.384,0.136,0.768,0.288,1.152,0.424c10.848,3.84,22.456,6.04,34.6,6.04s23.752-2.2,34.592-6.04
+                                                c0.384-0.136,0.768-0.288,1.152-0.424c1.952-0.72,3.912-1.424,5.808-2.256c2.472-1.064,4.888-2.248,7.272-3.512
+                                                c0.68-0.368,1.344-0.76,2.016-1.136c1.144-0.64,2.312-1.248,3.432-1.936c56.32,18.272,100.088,64.176,115.56,121.112
+                                                C389.824,409.08,365.168,428.248,337.256,441.76z M152,176c0-48.52,39.48-88,88-88s88,39.48,88,88
+                                                c0,30.864-16.008,58.024-40.128,73.736c-3.152,2.048-6.432,3.88-9.8,5.48c-0.4,0.192-0.792,0.392-1.192,0.576
+                                                c-23.168,10.536-50.592,10.536-73.76,0c-0.4-0.184-0.8-0.384-1.192-0.576c-3.376-1.6-6.648-3.432-9.8-5.48
+                                                C168.008,234.024,152,206.864,152,176z M421.832,370.584c-18.136-53.552-59.512-96.832-112.376-117.392
+                                                C330.6,234.144,344,206.64,344,176c0-57.344-46.656-104-104-104s-104,46.656-104,104c0,30.64,13.4,58.144,34.552,77.192
+                                                c-52.864,20.568-94.24,63.84-112.376,117.392C31.672,333.792,16,288.704,16,240C16,116.488,116.488,16,240,16s224,100.488,224,224
+                                                C464,288.704,448.328,333.792,421.832,370.584z"/>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="current-user-user-name">
                                 <%= info %>
                             </div>
-                        </a>
-                        <a href="/exit">
-                            ВЫЙТИ
-                        </a>
+                        </div>
+                        <div class="nav-item nav-item-log-out">
+                            <a href="/exit"><svg class="fill_white nav__svg" id="light" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m13.5 21h-4c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h4c.827 0 1.5-.673 1.5-1.5v-5c0-.276.224-.5.5-.5s.5.224.5.5v5c0 1.378-1.121 2.5-2.5 2.5z"/></g><g><path d="m23.5 11h-10c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h10c.276 0 .5.224.5.5s-.224.5-.5.5z"/></g><g><path d="m8 24c-.22 0-.435-.037-.638-.109l-5.99-1.997c-.82-.273-1.372-1.035-1.372-1.894v-18c0-1.103.897-2 2-2 .222 0 .438.037.639.11l5.989 1.996c.82.272 1.372 1.034 1.372 1.894v18c0 1.103-.897 2-2 2zm-6-23c-.552 0-1 .449-1 1v18c0 .428.276.808.688.946l6 2c.656.233 1.312-.292 1.312-.946v-18c0-.429-.276-.809-.688-.945l-6-2c-.103-.037-.208-.055-.312-.055z"/></g><g><path d="m15.5 8c-.276 0-.5-.224-.5-.5v-5c0-.827-.673-1.5-1.5-1.5h-11.5c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h11.5c1.379 0 2.5 1.122 2.5 2.5v5c0 .276-.224.5-.5.5z"/></g><g><path d="m19.5 15c-.128 0-.256-.049-.354-.146-.195-.195-.195-.512 0-.707l3.646-3.646-3.646-3.646c-.195-.195-.195-.512 0-.707s.512-.195.707 0l4 4c.195.195.195.512 0 .707l-4 4c-.097.096-.225.145-.353.145z"/></g></svg></a>
+                        </div>
                     </nav>
-
-
-                </div>
-            </header>
-            
-            <div class="after-header">
-                <div class="line1">
-                    <span class="text">
-                        Обзор
-                    </span>
-                </div>
-                <div class="line2"></div>
-            </div>
-
-            <div class="greet-message">
-                Здравствуйте, <span class="username"><%= info %></span>
-            </div>
-
-            <div class="buttons-process">
-                <button class="bp-item bp-item--all-task">
-                    Все задачи
-                    <div class="text all-tasks">
-                        350
-                    </div>
-                </button>
-                <button class="bp-item bp-item--in-progress">
-                    В процессе
-                    <div class="text" id="in-progress">
-                        50
-                    </div>
-                </button>
-                <button class="bp-item bp-item--completed">
-                    Завершено
-                    <div class="text" id="completed">
-                        300
-                    </div>
-                </button>
-                <button class="bp-item bp-item--new-task">
-                    + Новая задача
-                </button>
-            </div>
-            <section class="task-sec">
-                <% if (role >1){%>
-                <div class="task-sec-title"> <!-- Не отоброжать для обычных работников -->
-                    <div class="wrapper-task-sec-title__button">
-                        <button class="task-sec-title__button task-sec-title__button--prev dn">
-                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 443.52 443.52" style="enable-background:new 0 0 443.52 443.52;" xml:space="preserve">
-                                <g>
-                                    <g>
-                                        <path style="fill:#1560BD" d="M143.492,221.863L336.226,29.129c6.663-6.664,6.663-17.468,0-24.132c-6.665-6.662-17.468-6.662-24.132,0l-204.8,204.8
-                                            c-6.662,6.664-6.662,17.468,0,24.132l204.8,204.8c6.78,6.548,17.584,6.36,24.132-0.42c6.387-6.614,6.387-17.099,0-23.712
-                                            L143.492,221.863z"/>
-                                    </g>
-                                </g>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="task-sec-title__slider">
-                        <div class="task-sec-title-slider__button task-sec-title-slider__button--1"></div>
-                        <div class="task-sec-title-slider__button task-sec-title-slider__button--2"></div>
-                    </div>
-                    <div class="wrapper-task-sec-title__button">
-                        <button class="task-sec-title__button task-sec-title__button--next">
-                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 443.52 443.52" style="enable-background:new 0 0 443.52 443.52;" xml:space="preserve">
-                                <g>
-                                    <g>
-                                        <path style="fill:#1560BD" d="M336.226,209.591l-204.8-204.8c-6.78-6.548-17.584-6.36-24.132,0.42c-6.388,6.614-6.388,17.099,0,23.712l192.734,192.734
-                                            L107.294,414.391c-6.663,6.664-6.663,17.468,0,24.132c6.665,6.663,17.468,6.663,24.132,0l204.8-204.8
-                                            C342.889,227.058,342.889,216.255,336.226,209.591z"/>
-                                    </g>
-                                </g>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <%}%>
-                <%if (role >1){%>
-                <div class="task-sec-wrapper"> <!-- Для директора отделения отображать task-sec-wrapper начальным, для обычных работников tasks -->
-                    <div class="employee-tasks task-sec-wrapper__slider ">
-                        <div class="employee-tasks-main-content">
-                            <% for (var key in dep_workers) { %>
-                            <% if (!(first == dep_workers[key].worker)){ %>
-                            <% first = dep_workers[key].worker %>
-                            <div class="employee-tasks__item">
-                                <div class="employee-title">
-                                    <img src="./img/defaultUser.png" alt="" class="img img--avatar">
-                                    <div class="text">
-                                    </div>
-                                </div>
-                                <div class="employee-task-pack">
-                                    <form action="" class="task-pack__item">
-                                        <div class="task-pack-name">
-                                        </div>
-                                        <input type="checkbox" class="task-pack-checkbox">
-                                    </form>
-                                </div>
-                            </div>
-                                <%}%>
-                            <%}%>
-                        </div>
-                        <div class="employee-tasks-bottom-content">
-                            <input type="submit" value="Собрать в отчёт" class="mw-content-input__submit">
-                        </div>
-                    </div>
-                    <% } %>
-                    <div class="tasks task-sec-wrapper__slider ">
-                        <% for (var key in tasks) { %>
-                            <div class="tasks-card" data-task="<%= tasks[key].categories %>" data-key="<%= tasks[key].name %>" data-desc="<%= tasks[key].desc %>" data-date="<%= tasks[key].dline %>">
-                                <div class="type">
-                                    <%= tasks[key].categories %>
-                                </div>
-                                <div class="description" title="<%= tasks[key].name %>">
-                                    <%= tasks[key].name %>
-                                </div>
-                                <!-- Если эта функция нужна будет -->
-                                <div class="workers">
-                                    <img src="./img/defaultUser.png" alt="">
-                                </div>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-            </section>
-            <div class="wrapper-notification dn">
-                <div class="modal-window modal-window--notifications">
-                    <div class="mw-content">
-                        <div class="mw-content__item mw-content__item--notif">
-                            <div class="type-notif">
-                                <img src="./img/plus.svg" alt="" class="img-type">
-                            </div>
-                            <div class="content-notif">
-                                <div class="name-notif">
-                                    Что-то не большое пожалуйста!
-                                </div>
-                                <div class="send-date">
-                                    24.03.2021
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mw-bottom">
-                        <button class="mw-bottom__exit">
-                            Выйти
-                        </button>
-                    </div>
                 </div>
             </div>
+        </header>
+    </section>
 
-            <div class="modal modal--tasks dn">
-                <div class="modal-window">
-                    <div class="mw-top">
-                        <div class="mw-top__title work"></div>
-                        <div class="mw-top__deadline"></div>
-                    </div>
-                    <div class="mw-content">
-                        <div class="mw-content__description"></div>
-                    </div>
-                    <div class="mw-bottom">
-                        <div class="mw-bottom__workers">
-                            <img src="./img/defaultUser.png" alt="">
-                        </div>
-                        <button class="mw-bottom__exit">
-                            Выйти
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="modal modal--newTasks dn">
-                <div class="modal-window modal-window--newTasks">
-                    <div class="slider-line">
-                        <form action="/board" class="form form--newTasks" method="POST">
-                            <div class="mw-top">
-                                <div class="mw-top__title">
-                                    Государственные задачи
-                                </div>
-                                <button class="mw-top__button" type="button">
-                                    Создать задачу
-                                </button>
-                            </div>
-                            <div class="mw-content mw-content--newTasks">
-                                <% for(var i=0; i < gov_tasks.length; i++) {%>
-                                <div class="mw-content__item">
-                                    <div class="wrapper">
-                                        <div class="mw-content-item__text">
-                                            <div class="task">
-                                                <div class="count"><%= i + 1 %>.</div>
-                                                <div class="task__text">
-                                                    <%= gov_tasks[i].name%>
-                                                </div>
-                                            </div>
-                                            <div class="symbol" data-key="<%= i + 1 %>"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-                                                <g>
-                                                    <g>
-                                                        <path style="fill:#1560BD;" d="M492,236H276V20c0-11.046-8.954-20-20-20c-11.046,0-20,8.954-20,20v216H20c-11.046,0-20,8.954-20,20s8.954,20,20,20h216
-                                                            v216c0,11.046,8.954,20,20,20s20-8.954,20-20V276h216c11.046,0,20-8.954,20-20C512,244.954,503.046,236,492,236z"/>
-                                                    </g>
-                                                </g>
-                                        </svg></div>
-                                        </div>
-                                        <div class="mw-content-item__right">
-                                            <div class="task-check">
-                                                <div class="task-chek__deadline" data-date="<%= gov_tasks[i].dline%>"></div>
-                                                <input type="checkbox" name="task" id="task" value="<%= gov_tasks[i].id_task%>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mw-content__hidden-item dn" data-key="<%= i + 1 %>">
-                                        <div class="mw-content-hidden-item__text">
-                                            <%= gov_tasks[i].desc%>
-                                        </div>
-                                    </div>
-                                </div>
+    <section class="page-main">
+        <div class="wrapper">
+            <div class="page-main-inner">
+                <div class="before-table">
+                    <div class="filters">
+                        <div class="filters-item">
+                            <select name="" id="" class="select filters-item-select">
+                                <option selected value="All">Все</option>
+                                <% for(var i=0; i < categ_name.length; i++) {%>
+                                <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
                                 <% }%>
+                            </select>
+                            <div class="filters-item__subtitle">
+                                Фильтр по категориям
                             </div>
-                            <div class="mw-bottom">
-                                <input type="submit" class="mw-bottom__add" value="Добавить себе" >
-                                <button class="mw-bottom__exit" type="button">
-                                    Выйти
-                                </button>
+                        </div>
+                        <div class="filters-item">
+                            <select name="" id="" class="select filters-item-select">
+                                <option selected value="All">Все</option>
+                                <% for(var i=0; i < categ_name.length; i++) {%>
+                                <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <% }%>
+                            </select>
+                            <div class="filters-item__subtitle">
+                                Фильтр по статусу
                             </div>
-                        </form>
-                        <form action="/board" method="POST" class="form form-createTask">
-                            <div class="mw-top">
-                                <button class="mw-top__button-back" type="button">
-                                    <svg class="mw-top-button__img" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                        viewBox="0 0 31.494 31.494" style="enable-background:new 0 0 31.494 31.494;" xml:space="preserve">
-                                        <path style="fill:#fff;" d="M10.273,5.009c0.444-0.444,1.143-0.444,1.587,0c0.429,0.429,0.429,1.143,0,1.571l-8.047,8.047h26.554
-                                        c0.619,0,1.127,0.492,1.127,1.111c0,0.619-0.508,1.127-1.127,1.127H3.813l8.047,8.032c0.429,0.444,0.429,1.159,0,1.587
-                                        c-0.444,0.444-1.143,0.444-1.587,0l-9.952-9.952c-0.429-0.429-0.429-1.143,0-1.571L10.273,5.009z"/>
-                                    </svg>
-                                </button>
-                                <div class="mw-top__title">
-                                    Создание задачи
-                                </div>
-                            </div>
-                            <div class="mw-content mw-content--createTasks">
-                                <div class="form-item">
-                                    <input type="text" name="taskName" id="taskName" class="form-item__input" required=''>
-                                    <label for="form-item__input" class="form-item__label">Название задачи</label>
-                                </div>
-                                <select class="form-item" name="categories">
-                                    <option selected value="" >Выберите категорию</option>
-                                    <% for(var i=0; i < categ_name.length; i++) {%>
-                                    <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
-                                    <% }%>
-                                   </select>
-                                <div class="form-item">
-                                    <textarea id="taskDesc" name="taskDesc" class="form-item__input textarea-input" required=''></textarea>
-                                    <label for="form-item__input" class="form-item__label textarea-label">Описание</label>
-                                </div>
-                                <div class="form-item">
-                                    <input type="text" id="taskDeadline" name="taskDeadline" class="form-item__input date-input" required='' autocomplete="off" autocomplete="disabled">
-                                    <label for="form-item__input" class="form-item__label date-label">Дата</label>
-                                </div>
-                                <input type="submit" value="Создать" class="mw-content-input__submit">
-                            </div>
-                            <div class="mw-bottom">
-                                <button class="mw-bottom__exit" type="button">
-                                    Выйти
-                                </button>
-                            </div>
-                        </form>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="button buttons-button buttons-button_theme_winter" id="to-all-tasks">
+                            Список задач на отделение
+                        </button>
+                        <button class="button buttons-button" id="new-task-button">
+                            Новая задача
+                        </button>
                     </div>
                 </div>
+                <div class="options">
+                    <div class="text options__text">
+                        Выбранных задач: 10
+                    </div>
+                    <div class="instruments">
+                        <button class="button instruments__button instruments__button_theme_red instruments__button_bg_trash">
+                            Удалить выбранные задачи
+                        </button>
+                        <% if (role >1){%>
+                        <button class="button instruments__button instruments__button_bg_document">
+                            Собрать в отчёт
+                        </button>
+                        <%}%>
+                        <button class="button instruments__button instruments__button_bg_refresh">
+                            Обновить таблицу
+                        </button>
+                    </div>
+                </div>
+                <table id="tasksTable" class="display">
+                    <thead>
+                        <tr>
+                            <th class="dt-head-left"><input type="checkbox" class="table-checkbox table-checkbox_color_dark"></th>
+                            <th class="dt-head-left">ID</th>
+                            <th class="dt-head-left">Категория</th>
+                            <th class="dt-head-left">Описание задачи</th>
+                            <th class="dt-head-left">Дата окончания</th>
+                            <th class="dt-head-left">Статус</th>
+                            <th class="dt-head-left">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var key in tasks) { %>
+                        <tr>
+                            <td><input value="<%= tasks[key].id_task %>"  type="checkbox" class="table-checkbox"></td>
+                            <td><%= tasks[key].id_task %></td>
+                            <td><%= tasks[key].categories %></td>
+                            <td><%= tasks[key].desc %></td>
+                            <td><%= tasks[key].dline %></td>
+                            <td><span style="background-color: <%= tasks[key].color%>;" class="status"><%= tasks[key].status %></span></td>
+                            <td>
+                                <div class="actions">
+                                    <div class="actions-item" data-id="2" title="Добавить">
+                                        <svg style="fill:#d3d3d3" height="512pt" viewBox="0 0 512 512" width="512pt" xmlns="http://www.w3.org/2000/svg"><path d="m256 512c-141.164062 0-256-114.835938-256-256s114.835938-256 256-256 256 114.835938 256 256-114.835938 256-256 256zm0-480c-123.519531 0-224 100.480469-224 224s100.480469 224 224 224 224-100.480469 224-224-100.480469-224-224-224zm0 0"/><path d="m368 272h-224c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h224c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m256 384c-8.832031 0-16-7.167969-16-16v-224c0-8.832031 7.167969-16 16-16s16 7.167969 16 16v224c0 8.832031-7.167969 16-16 16zm0 0"/></svg>
+                                    </div>
+                                    <div class="actions-item change-selected-task" data-id="2" title="Изменить">
+                                        <svg style="fill:#509af7" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
+                                    </div>
+                                    <div class="actions-item delete-selected-task" data-id="2" title="Удалить">
+                                        <svg style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
+                                    </div>
+                                    <div class="actions-item more" data-id="2" title="Больше">
+                                        <svg style="fill:#d3d3d3" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <circle cx="192" cy="42.667" r="42.667"/>
+                                                </g>
+                                            </g>
+                                            <g>
+                                                <g>
+                                                    <circle cx="192" cy="192" r="42.667"/>
+                                                </g>
+                                            </g>
+                                            <g>
+                                                <g>
+                                                    <circle cx="192" cy="341.333" r="42.667"/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                        <div class="list-more hidden">
+                                            <div class="list-more-item">
+                                                Статус: выполненно
+                                            </div>
+                                            <div class="list-more-item">
+                                                Статус: выполненно
+                                            </div>
+                                            <div class="list-more-item">
+                                                Статус: выполненно
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </main>
+    </section>
+
+    <div class="modal hidden" id="new-task-modal">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title">
+                    Изменения задачи "Нужно установить принтер"
+                </div>
+            </div>
+            <div class="content middle-contnet">
+                <form action="" class="form middle-content-form">
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Фамилия
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите фамилию
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Имя
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите имя
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Категория
+                        </div>
+                        <select name="" id="" class="select form-item-select">
+                            <option value="1">Все</option>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите категорию
+                        </div>
+                    </div>
+                    <!-- <div class="form-item">
+                        <div class="text form-item__text">
+                            Краткое описание задачи
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите краткое описание задачи
+                        </div>
+                    </div> -->
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Полное описание задачи
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите полное описание задачи
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Дата окончания
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Выберите дату окончания
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Статус
+                        </div>
+                        <select name="" id="" class="select form-item-select">
+                            <option value="1">Все</option>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите статус
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-new-task-button">
+                    Закрыть
+                </button>
+                <button class="button bottom-content__button button_save">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="delete-task-modal-alert">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title">Удаление задачи</div>
+            </div>
+            <div class="content middle-content">
+                <div class="text">Вы уверены что хотите удалить эту задачу?</div>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-modal-alert">
+                    Отмена
+                </button>
+                <button class="button bottom-content__button" id="yes-modal-alert">
+                    Удалить
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="./script/jquery.min.js"></script>
-    <script src="./script/jquery.maskedinput.js"></script>
+    <script src="./script/DataTables/datatables.min.js"></script>
+    <script src="./script/dataTables.js"></script>
     <script src="./script/main.js"></script>
-    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
-    <% if (role > 1){%>
-        <script src="./script/directors.js"></script>
-    <%}%>
-    <script>
-        const socket =  io('http://localhost:3000',{origins:"*"});
-        let id = <%= id%>
-        let notif = document.querySelector(".name-notif");
-        socket.on("connect", () => {
-            console.log(socket.id);
-            socket.send(socket.id, id);
-            socket.on("notification2", (data)=>{
-                notif.textContent = data;
-                console.log(data);
-            })
-        });
-    </script>
 </body>
 </html>

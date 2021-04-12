@@ -97,10 +97,11 @@
                                 </svg>
                             </div>
                             <div class="current-user-user-name">
-                                Шило Сергей
+                                <%= info %>
                             </div>
                         </div>
                         <div class="nav-item nav-item-log-out">
+                            <!----     <a href="/exit"></a>> говно ---->
                             <svg class="fill_white nav__svg" id="light" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m13.5 21h-4c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h4c.827 0 1.5-.673 1.5-1.5v-5c0-.276.224-.5.5-.5s.5.224.5.5v5c0 1.378-1.121 2.5-2.5 2.5z"/></g><g><path d="m23.5 11h-10c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h10c.276 0 .5.224.5.5s-.224.5-.5.5z"/></g><g><path d="m8 24c-.22 0-.435-.037-.638-.109l-5.99-1.997c-.82-.273-1.372-1.035-1.372-1.894v-18c0-1.103.897-2 2-2 .222 0 .438.037.639.11l5.989 1.996c.82.272 1.372 1.034 1.372 1.894v18c0 1.103-.897 2-2 2zm-6-23c-.552 0-1 .449-1 1v18c0 .428.276.808.688.946l6 2c.656.233 1.312-.292 1.312-.946v-18c0-.429-.276-.809-.688-.945l-6-2c-.103-.037-.208-.055-.312-.055z"/></g><g><path d="m15.5 8c-.276 0-.5-.224-.5-.5v-5c0-.827-.673-1.5-1.5-1.5h-11.5c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h11.5c1.379 0 2.5 1.122 2.5 2.5v5c0 .276-.224.5-.5.5z"/></g><g><path d="m19.5 15c-.128 0-.256-.049-.354-.146-.195-.195-.195-.512 0-.707l3.646-3.646-3.646-3.646c-.195-.195-.195-.512 0-.707s.512-.195.707 0l4 4c.195.195.195.512 0 .707l-4 4c-.097.096-.225.145-.353.145z"/></g></svg>
                         </div>
                     </nav>
@@ -124,7 +125,10 @@
                         </div>
                         <div class="filters-item">
                             <select name="" id="" class="select filters-item-select">
-                                <option value="All">Все</option>
+                                <option selected value="All">Все</option>
+                                <% for(var i=0; i < categ_name.length; i++) {%>
+                                <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <% }%>
                             </select>
                             <div class="filters-item__subtitle">
                                 Фильтр по статусу
@@ -148,9 +152,11 @@
                         <button class="button instruments__button instruments__button_theme_red instruments__button_bg_trash">
                             Удалить выбранные задачи
                         </button>
+                        <% if (role >1){%>
                         <button class="button instruments__button instruments__button_bg_document">
                             Собрать в отчёт
                         </button>
+                        <}>
                         <button class="button instruments__button instruments__button_bg_refresh">
                             Обновить таблицу
                         </button>
@@ -169,63 +175,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <% for (var key in tasks) { %>
                         <tr>
-                            <td><input type="checkbox" class="table-checkbox"></td>
-                            <td>1</td>
-                            <td>Работа</td>
-                            <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem neque facere similique iste quis nemo provident harum! Quo a at libero maiores neque ullam porro vero quia, eum, obcaecati impedit.</td>
-                            <td>10.04.2021</td>
-                            <td><span class="status">Активен</span></td>
-                            <td>
-                                <div class="actions">
-                                    <div class="actions-item" data-id="1" title="Добавить">
-                                        <svg style="fill:#d3d3d3" height="512pt" viewBox="0 0 512 512" width="512pt" xmlns="http://www.w3.org/2000/svg"><path d="m256 512c-141.164062 0-256-114.835938-256-256s114.835938-256 256-256 256 114.835938 256 256-114.835938 256-256 256zm0-480c-123.519531 0-224 100.480469-224 224s100.480469 224 224 224 224-100.480469 224-224-100.480469-224-224-224zm0 0"/><path d="m368 272h-224c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h224c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m256 384c-8.832031 0-16-7.167969-16-16v-224c0-8.832031 7.167969-16 16-16s16 7.167969 16 16v224c0 8.832031-7.167969 16-16 16zm0 0"/></svg>
-                                    </div>
-                                    <div class="actions-item change-selected-task" data-id="1" title="Изменить">
-                                        <svg style="fill:#509af7" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
-                                    </div>
-                                    <div class="actions-item delete-selected-task" data-id="1" title="Удалить">
-                                        <svg style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
-                                    </div>
-                                    <div class="actions-item more" data-id="1" title="Больше">
-                                        <svg style="fill:#d3d3d3" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
-                                            <g>
-                                                <g>
-                                                    <circle cx="192" cy="42.667" r="42.667"/>
-                                                </g>
-                                            </g>
-                                            <g>
-                                                <g>
-                                                    <circle cx="192" cy="192" r="42.667"/>
-                                                </g>
-                                            </g>
-                                            <g>
-                                                <g>
-                                                    <circle cx="192" cy="341.333" r="42.667"/>
-                                                </g>
-                                            </g>
-                                        </svg>
-                                        <div class="list-more hidden">
-                                            <div class="list-more-item">
-                                                Статус: выполненно
-                                            </div>
-                                            <div class="list-more-item">
-                                                Статус: выполненно
-                                            </div>
-                                            <div class="list-more-item">
-                                                Статус: выполненно
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="table-checkbox"></td>
-                            <td>2</td>
-                            <td>Работа</td>
-                            <td>Нужно установить принтер</td>
+                            <td><input value="<%= tasks[key].id_task %>"  type="checkbox" class="table-checkbox"></td>
+                            <td><%= tasks[key].id_task %></td>
+                            <td><%= tasks[key].categories %></td>
+                            <td><%= tasks[key].desc %></td>
                             <td>10.04.2021</td>
                             <td><span class="status">Активен</span></td>
                             <td>
@@ -273,6 +228,7 @@
                                 </div>
                             </td>
                         </tr>
+                        <% } %>
                     </tbody>
                 </table>
             </div>
