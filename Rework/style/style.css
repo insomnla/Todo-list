@@ -125,6 +125,10 @@ svg {
     color: var(--text-color);
 }
 
+option {
+    background: var(--main-color);
+}
+
 /* Input */ 
 
 input {
@@ -375,14 +379,73 @@ tbody tr td {
 }
 
 .buttons-button {
+    background: var(--border-color);
+    color: var(--text-color);
+    font-size: 20px;
+}
+
+.buttons-button_theme_brown {
     background: #b68861;
     color: var(--main-color);
-    font-size: 20px;
 }
 
 .buttons-button_theme_winter {
     background: #30D5C8;
     color: var(--main-color);
+}
+
+.options {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.options__text {
+    color: var(--border-color);
+    font-size: 20px;
+}
+
+.instruments {
+    width: 100%;
+    display: flex;
+    column-gap: 20px;
+}
+
+.instruments__button {
+    padding-left: 60px;
+    font-size: 17px;
+    background: var(--border-color);
+    color: var(--text-color);
+}
+
+.instruments__button_theme_red {
+    background: #9e353a;
+}
+
+.instruments__button_bg_trash {
+    background-image: url(/images/trash.svg);
+}
+
+.instruments__button_bg_document {
+    background-image: url(/images/document.svg);
+}
+
+.instruments__button_bg_refresh {
+    background-image: url(/images/refresh.svg);
+}
+
+.instruments__button {
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: 20px;
+    background-size: 24px;
+}
+
+.status {
+    background: #1f4929;
+    padding: 5px 10px;
+    border-radius: 10px;
 }
 
 .actions {
@@ -418,6 +481,29 @@ tbody tr td {
 
 .list-more-item:hover {
     background: var(--border-color);
+}
+
+/* All-tasks */
+
+.buttons-button_bg_arrow_back {
+    padding-left: 60px;
+    background-image: url(/images/left-arrow-long.svg);
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: 20px;
+    background-size: 24px;
+}
+
+.instruments__button_theme_green {
+    background: #1f4929;
+}
+
+.instruments__button_bg_plus {
+    background-image: url(/images/plus.svg);
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: 20px;
+    background-size: 24px;
 }
 
 /* Hidden */

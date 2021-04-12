@@ -1,9 +1,12 @@
 $(document).ready(function() {
     $('#tasksTable').DataTable( {
         "paging":   false,
-        // "ordering": false,
         "info":     false,
-        "order": [[ 1, "asc" ]]
+        "order": [[ 1, "asc" ]],
+        columnDefs: [
+            { orderable: false, targets: 0 },
+            { orderable: false, targets: 6 }
+          ]
     } );
 } );
 
