@@ -176,19 +176,14 @@ tbody tr td {
 }
 
 .table-checkbox {
-    border: 1px solid var(--text-color);
-    min-width: 25px;
-    min-height: 25px;
-    position: relative;
-}
-
-.table-checkbox:checked::after {
     content: "";
+    border: 1px solid var(--text-color);
     width: 25px;
     height: 25px;
-    position: absolute;
-    top: 0;
-    left: 0;
+    cursor: pointer;
+}
+
+.table-checkbox_checked {
     background: var(--text-color);
     opacity: 1;
 }
@@ -424,15 +419,15 @@ tbody tr td {
 }
 
 .instruments__button_bg_trash {
-    background-image: url(./images/trash.svg);
+    background-image: url(../images/trash.svg);
 }
 
 .instruments__button_bg_document {
-    background-image: url(./images/document.svg);
+    background-image: url(../images/document.svg);
 }
 
 .instruments__button_bg_refresh {
-    background-image: url(./images/refresh.svg);
+    background-image: url(../images/refresh.svg);
 }
 
 .instruments__button {
@@ -487,7 +482,7 @@ tbody tr td {
 
 .buttons-button_bg_arrow_back {
     padding-left: 60px;
-    background-image: url(./images/left-arrow-long.svg);
+    background-image: url(../images/left-arrow-long.svg);
     background-repeat: no-repeat;
     background-position: left;
     background-position-x: 20px;
@@ -499,7 +494,7 @@ tbody tr td {
 }
 
 .instruments__button_bg_plus {
-    background-image: url(./images/plus.svg);
+    background-image: url(../images/plus.svg);
     background-repeat: no-repeat;
     background-position: left;
     background-position-x: 20px;
