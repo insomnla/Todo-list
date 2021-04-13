@@ -1,9 +1,10 @@
-let path = document.location.pathname;
-let searchResultMain = path.search('index');
-let searchResultAllTasks = path.search('all-tasks');
+let path = document.location.pathname,
+    searchResultMain = path.search('board'),
+    searchResultAllTasks = path.search('department'),
+    taskToDelete = 0;
 
 console.log(path, searchResultMain, searchResultAllTasks)
-if(searchResultMain >= 1) {
+if(searchResultMain >= 1 || searchResultAllTasks >= 1) {
     let buttonToAllTasks = document.querySelector("#to-all-tasks");
     let buttonNewTask = document.querySelector("#new-task-button");
     let buttonCloseNewTask = document.querySelector("#close-new-task-button");
@@ -16,31 +17,37 @@ if(searchResultMain >= 1) {
     let modalNewTask = document.querySelector("#new-task-modal");
     let modalAlertDeletTask = document.querySelector("#delete-task-modal-alert");
 
+
     buttonNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
     }
+
+
     buttonCloseNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
     }
 
     buttonToAllTasks.onclick = function() {
-        window.location.href = "./all-tasks.html";
+        window.location.href = "./department";
     }
-
-
 
     deleteSelectedTask.forEach((elem)=>{
         elem.addEventListener('click', (elem)=>{
+            taskToDelete = (elem.target.getAttribute("data-key"));
             modalAlertDeletTask.classList.toggle('hidden');
         })
     })
     buttonCloseModalAlert.onclick = function() {
         modalAlertDeletTask.classList.toggle('hidden');
         console.log('closed');
+        taskToDelete = 0;
     }
-    buttonYesModalAlert.onclick = function() {
+    buttonYesModalAlert.onclick = function(e) {
         modalAlertDeletTask.classList.toggle('hidden');
         console.log('deleted');
+        $.post("/delete", {taskToDelete}, function(){
+            location.reload();
+        })
     }
 
     changeSelectedTask.forEach((elem)=>{

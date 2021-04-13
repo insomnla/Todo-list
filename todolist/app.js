@@ -13,6 +13,7 @@ var MySQLStore = require('express-mysql-session')(session);
 const {ensureAuthenticated} = require('./config/auth'); 
 const { connect } = require("http2");
 const { worker } = require("cluster");
+const { query } = require("express");
 let worker_single = 0,
     worker_id = [0],
     socket_id = [0],
@@ -123,6 +124,18 @@ app.get("/exit", (req, res) =>{
     res.render('welcome')
 })
 
+app.get('/register', (req, res)=>{
+    connection.query("select * from department", function(error, results, field){
+        departments = results;
+    });
+    connection.query("select * from role", function(error, results, field){
+        res.render('register',{
+            roles : results,
+            departments : departments
+        })
+    })
+})
+
 app.post('/register', (req, res) => {
     const info = req.body;
     let errors = [];
@@ -150,7 +163,7 @@ app.post('/register', (req, res) => {
         res.render('welcome')
     }
     }, 100)
-    connection.query("INSERT INTO worker (lname, fname, mname, pass, mail) VALUES(?,?,?,?,?)", [req.body.lname, req.body.fname, req.body.mname, req.body.pass, req.body.mail]);
+    connection.query("INSERT INTO worker (lname, fname, mname, pass, mail, fk_id_role, fk_id_department, login) VALUES(?,?,?,?,?,?,?,?)", [req.body.lname, req.body.fname, req.body.mname, req.body.pass, req.body.mail, req.body.role, req.body.department, req.body.login]);
 })
 
 app.get('/board', ensureAuthenticated , (req, res) => {
@@ -200,21 +213,51 @@ app.post('/login', (req, res) => {
 	}
 })
 
+app.post("/delete", ensureAuthenticated, (req, res)=>{
+    deleteTask(req.body.taskToDelete);
+    getBoard(req, res);
+})
+
+app.get("/department", ensureAuthenticated, (req,res)=>{
+    getDeparment(req, res);
+})
+
+function getDeparment(req, res){
+    connection.query("select * from categories", function(eror, results, fields){
+        categ_name = results;
+    })
+    connection.query("select * from status", function(error, results, field){
+        statuses = results;
+    })
+    connection.query("select task.id_task, task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline, status.status , status.status_color as color from task inner join categories on fk_id_categories = categories.id_categories inner join status on fk_id_status = status.id_status where fk_id_categories = 3 and fk_id_worker is null",  function(error, results, fields) {
+     res.render("department",{
+         categ_name : categ_name,
+         tasks : results,
+         info : req.session.username,
+         id: req.session.userid,
+         department: req.session.department,
+         role: req.session.role,
+         first: 0,
+         statuses : statuses
+    })
+})
+}
+
 function getBoard(req, res){
     connection.query("select * from categories", function(eror, results, fields){
         categ_name = results;
+    })
+    connection.query("select * from status", function(error, results, field){
+        statuses = results;
     })
     console.log(req.body.taskName);
     if (!(req.body.taskName == undefined)){
         console.log("TRUE")
         connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
     }
-    connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
+/*    connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
         categories = results;
-    })
-    connection.query("select * , CAST(deadline AS CHAR) as dline from task where fk_id_categories = 3 and fk_id_worker is null", function(error, results, fields){
-        gov_tasks = results;
-    })
+    }) */ 
     if (req.session.role == 2){
         connection.query("select id_task, task.name, task.desc, deadline, lname, LEFT(fname, 1) as fname, LEFT(mname, 1) as mname, fk_id_worker as worker from task inner join worker on task.fk_id_worker = worker.id_worker inner join department on worker.fk_id_department = department.id_department where id_department = ? order by worker", [req.session.department], function(error, results, fields) {
             dep_workers = results;
@@ -222,20 +265,18 @@ function getBoard(req, res){
     connection.query("select task.id_task, task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline, status.status , status.status_color as color from task inner join worker on task.fk_id_worker = worker.id_worker inner join categories on fk_id_categories = categories.id_categories inner join status on fk_id_status = status.id_status where worker.id_worker =  ?", [req.session.userid], function(error, results, fields) {
         res.render('board', {
             categ_name : categ_name,
-            categories : categories,
-            gov_tasks : gov_tasks,
             tasks : results,
             info : req.session.username,
             id: req.session.userid,
             department: req.session.department,
             role: req.session.role,
             dep_workers: dep_workers,
-            first: 0
+            first: 0,
+            statuses : statuses
            })
     })
 }
 
-/* app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})*/
-
+function deleteTask(task){
+    connection.query("delete from task where id_task = ?", [task]);
+}

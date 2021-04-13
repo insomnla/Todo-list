@@ -16,8 +16,8 @@
             <div class="wrapper">
                 <div class="page-header-header-inner">
                     <nav class="nav nav_width_25">
-                        <a href="" class="nav__link nav__link_color_white">Список задач</a>
-                        <a href="" class="nav__link nav__link_color_white">Отпуска</a>
+                        <a href="/board" class="nav__link nav__link_color_white">Список задач</a>
+                        <a href="/vacation" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
                     <nav class="nav user_nav nav_width_25">
                         <div class="nav-item nav-item_notification">
@@ -128,9 +128,9 @@
                         <div class="filters-item">
                             <select name="" id="" class="select filters-item-select">
                                 <option selected value="All">Все</option>
-                                <% for(var i=0; i < categ_name.length; i++) {%>
-                                <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
-                                <% }%>
+                                <% for(var i=0; i < statuses.length; i++) {%>
+                                <option value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                                <% } %>
                             </select>
                             <div class="filters-item__subtitle">
                                 Фильтр по статусу
@@ -159,9 +159,6 @@
                             Собрать в отчёт
                         </button>
                         <%}%>
-                        <button class="button instruments__button instruments__button_bg_refresh">
-                            Обновить таблицу
-                        </button>
                     </div>
                 </div>
                 <table id="tasksTable" class="display">
@@ -187,14 +184,13 @@
                             <td><span style="background-color: <%= tasks[key].color%>;" class="status"><%= tasks[key].status %></span></td>
                             <td>
                                 <div class="actions">
-                                    <div class="actions-item" data-id="2" title="Добавить">
-                                        <svg style="fill:#d3d3d3" height="512pt" viewBox="0 0 512 512" width="512pt" xmlns="http://www.w3.org/2000/svg"><path d="m256 512c-141.164062 0-256-114.835938-256-256s114.835938-256 256-256 256 114.835938 256 256-114.835938 256-256 256zm0-480c-123.519531 0-224 100.480469-224 224s100.480469 224 224 224 224-100.480469 224-224-100.480469-224-224-224zm0 0"/><path d="m368 272h-224c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h224c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m256 384c-8.832031 0-16-7.167969-16-16v-224c0-8.832031 7.167969-16 16-16s16 7.167969 16 16v224c0 8.832031-7.167969 16-16 16zm0 0"/></svg>
-                                    </div>
+                                    <% if ((tasks[key].categories == "Государственная" && role > 1) || !(tasks[key].categories == "Государственная" )) { %>
                                     <div class="actions-item change-selected-task" data-id="2" title="Изменить">
                                         <svg style="fill:#509af7" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
                                     </div>
+                                    <% } %>
                                     <div class="actions-item delete-selected-task" data-id="2" title="Удалить">
-                                        <svg style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
+                                        <svg data-key="<%= tasks[key].id_task %>"  style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
                                     </div>
                                     <div class="actions-item more" data-id="2" title="Больше">
                                         <svg style="fill:#d3d3d3" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -236,7 +232,6 @@
             </div>
         </div>
     </section>
-
     <div class="modal hidden" id="new-task-modal">
         <div class="modal-window">
             <div class="content top-content">
@@ -349,5 +344,19 @@
     <script src="./script/DataTables/datatables.min.js"></script>
     <script src="./script/dataTables.js"></script>
     <script src="./script/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script>
+        const socket =  io('http://localhost:3000',{origins:"*"});
+        let id = <%= id%>
+        let notif = document.querySelector(".name-notif");
+        socket.on("connect", () => {
+            console.log(socket.id);
+            socket.send(socket.id, id);
+            socket.on("notification2", (data)=>{
+                notif.textContent = data;
+                console.log(data);
+            })
+        });
+    </script>
 </body>
 </html>
