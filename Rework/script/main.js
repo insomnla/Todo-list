@@ -17,6 +17,9 @@ if(searchResultMain >= 1) {
     let modalNewTask = document.querySelector("#new-task-modal");
     let modalAlertDeletTask = document.querySelector("#delete-task-modal-alert");
 
+    let allTitles = document.querySelectorAll(".title");
+    let titleNewTask = document.querySelector("#new-task-title");
+
     let allTableCheckbox = document.querySelector("#table-checkbox-all");
     let checkedCounter = 0;
     let checkedCounterNoVisible = 0;
@@ -24,13 +27,31 @@ if(searchResultMain >= 1) {
     let options = document.querySelector(".options");
     let optionsText = document.querySelector(".options__text");
 
+    let theme = document.querySelector("#theme");
+    let switchTheme = document.querySelector(".nav-item-theme");
+
+    getTheme();
+
+    setTitleForTitle();
+
     ifChacked();
+
+    switchTheme.onclick = function() {
+        if(localStorage.getItem('theme') == null || localStorage.getItem('theme') == 'light'){
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+        getTheme();
+    }
 
     buttonNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
     }
     buttonCloseNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
+        titleNewTask.textContent = 'Создание новой задачи';
+        setTitleForTitle();
     }
 
     buttonToAllTasks.onclick = function() {
@@ -54,8 +75,13 @@ if(searchResultMain >= 1) {
     }
 
     changeSelectedTask.forEach((elem)=>{
-        elem.addEventListener('click', (elem)=>{
+        elem.addEventListener('click', ()=>{
+            let elemId = elem.dataset['id'];
+            let tableRow = elem.parentNode.parentNode.parentNode;
+            let newTitle = tableRow.children[3].textContent;
             modalNewTask.classList.toggle('hidden');
+            titleNewTask.textContent = `Изменения задачи: ${newTitle}`;
+            setTitleForTitle();
         })
     })
 
@@ -109,6 +135,20 @@ if(searchResultMain >= 1) {
         
     }
 
+    function setTitleForTitle() {
+        allTitles.forEach((elem)=>{
+            elem.setAttribute('title', elem.textContent);
+        })
+    }
+
+    function getTheme() {
+        if (localStorage.getItem('theme') == 'light') {
+            theme.setAttribute('href', './style/light_theme.css');
+        } else if(localStorage.getItem('theme') == 'dark') {
+            theme.setAttribute('href', './style/dark_theme.css');
+        }
+    }
+
 } else if(searchResultAllTasks >= 1) {
     let buttonToMain = document.querySelector("#to-main");
     // let buttonNewTask = document.querySelector("#new-task-button");
@@ -127,14 +167,33 @@ if(searchResultMain >= 1) {
     let checkedCounter = 0;
     let checkedCounterNoVisible = 0;
 
+    let allTitles = document.querySelectorAll(".title");
+
     let options = document.querySelector(".options");
     let optionsText = document.querySelector(".options__text");
+
+    let theme = document.querySelector("#theme");
+    let switchTheme = document.querySelector(".nav-item-theme");
+
+    getTheme();
+
+    setTitleForTitle();
 
     ifChacked();
 
     // buttonNewTask.onclick = function() {
     //     modalNewTask.classList.toggle('hidden');
     // }
+
+    switchTheme.onclick = function() {
+        if(localStorage.getItem('theme') == null || localStorage.getItem('theme') == 'light'){
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+        getTheme();
+    }
+
     buttonCloseNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
     }
@@ -211,5 +270,19 @@ if(searchResultMain >= 1) {
             }
         })
         
+    }
+
+    function setTitleForTitle() {
+        allTitles.forEach((elem)=>{
+            elem.setAttribute('title', elem.textContent);
+        })
+    }
+
+    function getTheme() {
+        if (localStorage.getItem('theme') == 'light') {
+            theme.setAttribute('href', './style/light_theme.css');
+        } else if(localStorage.getItem('theme') == 'dark') {
+            theme.setAttribute('href', './style/dark_theme.css');
+        }
     }
 }

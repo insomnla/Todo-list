@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All tasks</title>
     <link rel="stylesheet" href="./script/DataTables/datatables.css"/>
+    <link rel="stylesheet" href="./style/light_theme.css" id="theme">
     <link rel="stylesheet" href="./style/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
@@ -21,6 +22,8 @@
                         <a href="" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
                     <nav class="nav user_nav nav_width_25">
+                        <div class="nav-item nav-item-theme">
+                        </div>
                         <div class="nav-item nav-item_notification">
                             <svg class="fill_white nav__svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -165,7 +168,7 @@
                             <th class="dt-head-left">ID</th>
                             <th class="dt-head-left">Категория</th>
                             <th class="dt-head-left">Описание задачи</th>
-                            <th class="dt-head-left">Дата окончания</th>
+                            <th class="dt-head-left">Дата</th>
                             <th class="dt-head-left">Статус</th>
                             <th class="dt-head-left">Действия</th>
                         </tr>
@@ -176,7 +179,7 @@
                             <td>1</td>
                             <td>Работа</td>
                             <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit qui quaerat, quod exercitationem dolorem quas quidem veritatis enim optio atque quam in, nobis itaque explicabo dolores blanditiis eius aliquid veniam?</td>
-                            <td>10.04.2021</td>
+                            <td>10.04.2021 - 20.04.2021</td>
                             <td><span class="status">Активен</span></td>
                             <td>
                                 <div class="actions">
@@ -228,7 +231,7 @@
                             <td>2</td>
                             <td>Работа</td>
                             <td>Нужно установить принтер</td>
-                            <td>10.04.2021</td>
+                            <td>10.04.2021 - 20.04.2021</td>
                             <td><span class="status">Активен</span></td>
                             <td>
                                 <div class="actions">

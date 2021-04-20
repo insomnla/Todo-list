@@ -7,13 +7,6 @@
     font-weight: 300;
 }
 
-:root {
-    --main-color: #212226;
-    --text-color: #d3d3d3;
-    --border-color: #474F59;
-    --box-shadow-on-dark: #d3d3d3;
-}
-
 body {
     background: var(--main-color);
     font-family: 'Rubik', sans-serif;
@@ -155,7 +148,7 @@ input[type=checkbox] {
 /* Table */
 
 thead tr th:hover {
-    background: var(--border-color);
+    background: var(--table-hover);
     color: var(--text-color);
 }
 
@@ -168,7 +161,7 @@ tbody tr {
 }
 
 tbody tr:hover {
-    background: var(--border-color);
+    background: var(--table-hover);
 }
 
 tbody tr td {
@@ -208,7 +201,7 @@ tbody tr td {
 }
 
 .modal-window {
-    width: 50%;
+    width: 80%;
     background: var(--main-color);
     color: var(--text-color);
 }
@@ -220,6 +213,13 @@ tbody tr td {
 
 .top-content {
     padding: 25px 50px;
+}
+
+.top-content-title {
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .middle-content {
@@ -264,7 +264,7 @@ tbody tr td {
 
 .bottom-content__button {
     background: var(--border-color);
-    color: var(--text-color);
+    color: var(--text-color-white);
     font-size: 20px;
 }
 
@@ -292,6 +292,12 @@ tbody tr td {
 
 .page-header-header_theme_main-color {
     background: var(--main-color);
+}
+
+.nav-item-theme {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
 }
 
 .nav-item_notification {
@@ -375,18 +381,18 @@ tbody tr td {
 
 .buttons-button {
     background: var(--border-color);
-    color: var(--text-color);
+    color: var(--text-color-white);
     font-size: 20px;
 }
 
 .buttons-button_theme_brown {
     background: #b68861;
-    color: var(--main-color);
+    color: var(--text-color-dark);
 }
 
 .buttons-button_theme_winter {
     background: #30D5C8;
-    color: var(--main-color);
+    color: var(--text-color-dark);
 }
 
 .options {
@@ -411,7 +417,7 @@ tbody tr td {
     padding-left: 60px;
     font-size: 17px;
     background: var(--border-color);
-    color: var(--text-color);
+    color: var(--text-color-white);
 }
 
 .instruments__button_theme_red {
@@ -439,6 +445,7 @@ tbody tr td {
 
 .status {
     background: #1f4929;
+    color: var(--text-color-white);
     padding: 5px 10px;
     border-radius: 10px;
 }

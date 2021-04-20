@@ -1,0 +1,32 @@
+:root {
+    --main-color: #212226;
+    --text-color: #d3d3d3;
+    --text-color-white: #d3d3d3;
+    --text-color-dark: #212226;
+    --second-text-color: #212226;
+    --border-color: #474F59;
+    --box-shadow-on-dark: #d3d3d3;
+
+    --table-hover: #474F59;
+}
+
+/* Table */
+
+table.dataTable thead .sorting_asc {
+    background-image: url("../images/sort_asc.svg") !important;
+    background-position-x: 100%;
+}
+
+table.dataTable thead .sorting_desc {
+    background-image: url("../images/sort_desc.svg") !important;
+    background-position-x: 100%;
+}
+
+/* Page-header */
+
+.nav-item-theme {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    background: url(../images/light_on.svg);
+}
