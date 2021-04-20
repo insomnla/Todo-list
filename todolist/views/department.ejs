@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All tasks</title>
     <link rel="stylesheet" href="./script/DataTables/datatables.css"/>
+    <link rel="stylesheet" href="./style/light_theme.css" id="theme">
     <link rel="stylesheet" href="./style/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
+    <script src="./script/dataTables.js"></script>
 </head>
 <body>
     <section class="page-header">
@@ -17,9 +19,11 @@
                 <div class="page-header-header-inner">
                     <nav class="nav nav_width_25">
                         <a href="/board" class="nav__link nav__link_color_white">Список задач</a>
-                        <a href="/vacation" class="nav__link nav__link_color_white">Отпуска</a>
+                        <a href="" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
                     <nav class="nav user_nav nav_width_25">
+                        <div class="nav-item nav-item-theme">
+                        </div>
                         <div class="nav-item nav-item_notification">
                             <svg class="fill_white nav__svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -108,6 +112,7 @@
             </div>
         </header>
     </section>
+
     <section class="page-main">
         <div class="wrapper">
             <div class="page-main-inner">
@@ -137,14 +142,12 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <div class="buttons">
-                            <button class="button buttons-button" id="new-task-button">
-                                Назад
-                            </button>
-                        </div>
+                        <button class="button buttons-button buttons-button_bg_arrow_back" id="to-main">
+                            Назад
+                        </button>
                     </div>
                 </div>
-                <div class="options">
+                <div class="options hidden">
                     <% if (role > 1) {%>
                     <div class="text options__text">
                         Выбранных задач: 10
@@ -162,11 +165,11 @@
                 <table id="tasksTable" class="display">
                     <thead>
                         <tr>
-                            <th class="dt-head-left"><input type="checkbox" class="table-checkbox table-checkbox_color_dark"></th>
+                            <th class="dt-head-left"><div class="table-checkbox table-checkbox_color_dark" id="table-checkbox-all"></div></th>
                             <th class="dt-head-left">ID</th>
                             <th class="dt-head-left">Категория</th>
                             <th class="dt-head-left">Описание задачи</th>
-                            <th class="dt-head-left">Дата окончания</th>
+                            <th class="dt-head-left">Дата</th>
                             <th class="dt-head-left">Статус</th>
                             <th class="dt-head-left">Действия</th>
                         </tr>
@@ -233,6 +236,114 @@
             </div>
         </div>
     </section>
+
+    <div class="modal hidden" id="new-task-modal">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title">
+                    Изменения задачи "Нужно установить принтер"
+                </div>
+            </div>
+            <div class="content middle-contnet">
+                <form action="" class="form middle-content-form">
+                    <!-- <div class="form-item">
+                        <div class="text form-item__text">
+                            Фамилия
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите фамилию
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Имя
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите имя
+                        </div>
+                    </div> -->
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Категория
+                        </div>
+                        <select name="" id="" class="select form-item-select">
+                            <option value="1">Все</option>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите категорию
+                        </div>
+                    </div>
+                    <!-- <div class="form-item">
+                        <div class="text form-item__text">
+                            Краткое описание задачи
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите краткое описание задачи
+                        </div>
+                    </div> -->
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Полное описание задачи
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите полное описание задачи
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Дата окончания
+                        </div>
+                        <input type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Выберите дату окончания
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Статус
+                        </div>
+                        <select name="" id="" class="select form-item-select">
+                            <option value="1">Все</option>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите статус
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-new-task-button">
+                    Закрыть
+                </button>
+                <button class="button bottom-content__button button_save">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="delete-task-modal-alert">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title">Удаление задачи</div>
+            </div>
+            <div class="content middle-content">
+                <div class="text">Вы уверены что хотите удалить эту задачу?</div>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-modal-alert">
+                    Отмена
+                </button>
+                <button class="button bottom-content__button" id="yes-modal-alert">
+                    Удалить
+                </button>
+            </div>
+        </div>
+    </div>
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
     <script src="./script/dataTables.js"></script>

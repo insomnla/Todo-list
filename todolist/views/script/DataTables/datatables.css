@@ -29,8 +29,8 @@ table.dataTable {
 table.dataTable thead th,
 table.dataTable thead td {
   padding: 20px 45px 20px 28px;
-  border-bottom: 1px solid #474F59;
-  color: #474F59;
+  border-bottom: 1px solid var(--table-hover);
+  color: var(--text-color);
 }
 table.dataTable thead th:active,
 table.dataTable thead td:active {
@@ -39,8 +39,8 @@ table.dataTable thead td:active {
 table.dataTable tfoot th,
 table.dataTable tfoot td {
   padding: 20px 18px;
-  border-top: 1px solid #474F59;
-  color: #474F59;
+  border-top: 1px solid var(--table-hover);
+  color: var(--text-color);
 }
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
@@ -53,14 +53,6 @@ table.dataTable thead .sorting_desc_disabled {
   background-repeat: no-repeat;
   background-position: right;
 }
-table.dataTable thead .sorting_asc {
-  background-image: url("DataTables-1.10.24/images/sort_asc.svg") !important;
-  background-position-x: 100%;
-}
-table.dataTable thead .sorting_desc {
-  background-image: url("DataTables-1.10.24/images/sort_desc.svg") !important;
-  background-position-x: 100%;
-}
 table.dataTable tbody tr {
   background-color: transparent;
 }
@@ -72,7 +64,7 @@ table.dataTable tbody td {
   padding: 20px 28px;
 }
 table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {
-  border-top: 1px solid #474F59;
+  border-top: 1px solid var(--table-hover);
 }
 table.dataTable.row-border tbody tr:first-child th,
 table.dataTable.row-border tbody tr:first-child td, table.dataTable.display tbody tr:first-child th,
@@ -80,7 +72,7 @@ table.dataTable.display tbody tr:first-child td {
   border-top: none;
 }
 table.dataTable.cell-border tbody th, table.dataTable.cell-border tbody td {
-  border-top: 1px solid #474F59;
+  border-top: 1px solid var(--table-hover);
 }
 table.dataTable.cell-border tbody tr:first-child th,
 table.dataTable.cell-border tbody tr:first-child td {
@@ -93,24 +85,24 @@ table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.o
   background-color: #acbad4;
 }
 table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
-  background-color: #474F59;
+  background-color: var(--table-hover);
 }
 table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
-  background-color: #474F59;
+  background-color: var(--table-hover);
 }
 table.dataTable.order-column tbody tr > .sorting_1,
 table.dataTable.order-column tbody tr > .sorting_2,
 table.dataTable.order-column tbody tr > .sorting_3, table.dataTable.display tbody tr > .sorting_1,
 table.dataTable.display tbody tr > .sorting_2,
 table.dataTable.display tbody tr > .sorting_3 {
-  /* background-color: #474F59; */
+  /* background-color: var(--table-hover); */
 }
 table.dataTable.order-column tbody tr.selected > .sorting_1,
 table.dataTable.order-column tbody tr.selected > .sorting_2,
 table.dataTable.order-column tbody tr.selected > .sorting_3, table.dataTable.display tbody tr.selected > .sorting_1,
 table.dataTable.display tbody tr.selected > .sorting_2,
 table.dataTable.display tbody tr.selected > .sorting_3 {
-  /* background-color: #474F59; */
+  /* background-color: var(--table-hover); */
 }
 table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
   background-color: transparent;
@@ -149,25 +141,25 @@ table.dataTable.display tbody tr.even.selected > .sorting_3, table.dataTable.ord
   background-color: transparent;
 }
 table.dataTable.display tbody tr:hover > .sorting_1, table.dataTable.order-column.hover tbody tr:hover > .sorting_1 {
-  background-color: #474F59;
+  background-color: var(--table-hover);
 }
 table.dataTable.display tbody tr:hover > .sorting_2, table.dataTable.order-column.hover tbody tr:hover > .sorting_2 {
-  background-color: #474F59;
+  background-color: var(--table-hover);
 }
 table.dataTable.display tbody tr:hover > .sorting_3, table.dataTable.order-column.hover tbody tr:hover > .sorting_3 {
-  background-color: #474F59;
+  background-color: var(--table-hover);
 }
 table.dataTable.display tbody tr:hover.selected > .sorting_1, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_1 {
-  background-color: #474F59;
+  background-color: var(--table-hover);
 }
 table.dataTable.display tbody tr:hover.selected > .sorting_2, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_2 {
-  background-color: #474F59;
+  background-color: var(--table-hover);
 }
 table.dataTable.display tbody tr:hover.selected > .sorting_3, table.dataTable.order-column.hover tbody tr:hover.selected > .sorting_3 {
-  background-color: #474F59;
+  background-color: var(--table-hover);
 }
 table.dataTable.no-footer {
-  border-bottom: 1px solid #474F59;
+  border-bottom: 1px solid var(--table-hover);
 }
 table.dataTable.nowrap th, table.dataTable.nowrap td {
   white-space: nowrap;
