@@ -22,3 +22,15 @@ ENGINE = InnoDB
 ALTER TABLE task ADD status_id INT NOT NULL DEFAULT 0;
 ALTER TABLE task ADD CONSTRAINT fk_id_status FOREIGN KEY (id_status) REFERENCES status(id_status);
 ALTER TABLE task RENAME COLUMN status_id TO fk_id_status;
+
+НЕ ЗРЯ ЖЕ БД УЧИЛИ НУ, ТРИГГЕРЫ ВПЕРЁЁЁЁЁЁЁЁЁЁЁЁЁЁЁЁЁЁд
+
+delimiter //
+CREATE TRIGGER upd_check BEFORE UPDATE ON task
+	FOR EACH ROW
+	BEGIN
+		IF NEW.fk_id_worker is null and new.fk_id_categories <> 3 THEN
+			delete from task where id_task = new.id_task;
+		end if;
+	END;//
+delimiter ;

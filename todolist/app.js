@@ -217,6 +217,10 @@ app.post("/delete", ensureAuthenticated, (req, res)=>{
     deleteTask(req.body.taskToDelete);
     getBoard(req, res);
 })
+app.post("/update", ensureAuthenticated, (req, res)=>{
+    changeTask(req.body);
+    getBoard(req, res);
+})
 
 app.get("/department", ensureAuthenticated, (req,res)=>{
     getDeparment(req, res);
@@ -278,5 +282,9 @@ function getBoard(req, res){
 }
 
 function deleteTask(task){
-    connection.query("delete from task where id_task = ?", [task]);
+    connection.query("update task set fk_id_worker = null where id_task = ?", [task]);
+}
+
+function changeTask(info){
+    connection.query("update task set task.desc = ? , deadline = ?, fk_id_categories = ?, fk_id_status = ? where id_task = ?", [info.taskDESC, info.taskDEADLINE, info.taskCATEG_ID, info.taskSTATUS_ID, info.taskID])
 }

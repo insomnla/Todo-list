@@ -267,8 +267,17 @@
                         <div class="text form-item__text">
                             Категория
                         </div>
-                        <select name="" id="" class="select form-item-select">
-                            <option value="1">Все</option>
+                        <select name="" id="new_task_categ" class="select form-item-select">
+                            <% for(var i=0; i < categ_name.length; i++) {%>
+                                <% if (categ_name[i].categories == "Государственная"){%>
+                                   <% if (role > 1){ %>
+                                        <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                    <%}%>
+                                <%} else { %>
+                                    <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <%}%>
+  
+                            <% }%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите категорию
@@ -287,7 +296,7 @@
                         <div class="text form-item__text">
                             Полное описание задачи
                         </div>
-                        <input type="text" class="form-item__input">
+                        <input id="new_task_desc" type="text" class="form-item__input">
                         <div class="subtitle form-item__subtitle">
                             Введите полное описание задачи
                         </div>
@@ -296,7 +305,7 @@
                         <div class="text form-item__text">
                             Дата окончания
                         </div>
-                        <input type="text" class="form-item__input">
+                        <input id="new_task_deadline" type="text" class="form-item__input">
                         <div class="subtitle form-item__subtitle">
                             Выберите дату окончания
                         </div>
@@ -305,8 +314,10 @@
                         <div class="text form-item__text">
                             Статус
                         </div>
-                        <select name="" id="" class="select form-item-select">
-                            <option value="1">Все</option>
+                        <select name="" id="new_task_status" class="select form-item-select">
+                            <% for(var i=0; i < statuses.length; i++) {%>
+                            <option value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                            <% } %>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите статус

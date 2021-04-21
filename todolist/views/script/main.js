@@ -1,6 +1,8 @@
 let path = document.location.pathname;
 let searchResultMain = path.search('board');
 let searchResultAllTasks = path.search('department');
+let taskToDelete = 0;
+
 
 console.log(path, searchResultMain, searchResultAllTasks)
 if(searchResultMain >= 1) {
@@ -62,14 +64,19 @@ if(searchResultMain >= 1) {
 
     deleteSelectedTask.forEach((elem)=>{
         elem.addEventListener('click', (elem)=>{
+            taskToDelete = (elem.target.getAttribute("data-key"));
             modalAlertDeletTask.classList.toggle('hidden');
         })
     })
     buttonCloseModalAlert.onclick = function() {
         modalAlertDeletTask.classList.toggle('hidden');
         console.log('closed');
+        taskToDelete = 0;
     }
     buttonYesModalAlert.onclick = function() {
+        $.post("/delete", {taskToDelete}, function(){
+            location.reload();
+        })
         modalAlertDeletTask.classList.toggle('hidden');
         console.log('deleted');
     }
@@ -79,6 +86,7 @@ if(searchResultMain >= 1) {
             let elemId = elem.dataset['id'];
             let tableRow = elem.parentNode.parentNode.parentNode;
             let newTitle = tableRow.children[3].textContent;
+            get_task(tableRow); // бета тест кое-какой хрени
             modalNewTask.classList.toggle('hidden');
             titleNewTask.textContent = `Изменения задачи: ${newTitle}`;
             setTitleForTitle();
@@ -204,14 +212,19 @@ if(searchResultMain >= 1) {
 
     deleteSelectedTask.forEach((elem)=>{
         elem.addEventListener('click', (elem)=>{
+            taskToDelete = (elem.target.getAttribute("data-key"));
             modalAlertDeletTask.classList.toggle('hidden');
         })
     })
     buttonCloseModalAlert.onclick = function() {
         modalAlertDeletTask.classList.toggle('hidden');
         console.log('closed');
+        taskToDelete = 0;
     }
     buttonYesModalAlert.onclick = function() {
+        $.post("/delete", {taskToDelete}, function(){
+            location.reload();
+        })
         modalAlertDeletTask.classList.toggle('hidden');
         console.log('deleted');
     }
@@ -285,4 +298,33 @@ if(searchResultMain >= 1) {
             theme.setAttribute('href', './style/dark_theme.css');
         }
     }
+}
+
+function get_task(tableRow){ // бета тест кое-какой хрени
+    let btn_save = document.querySelector(".button_save")
+    let desc = document.querySelector("#new_task_desc"),
+        deadline = document.querySelector("#new_task_deadline"),
+        taskID = tableRow.children[1].textContent,
+        taskCATEG = tableRow.children[2].textContent,
+        taskDESC = tableRow.children[3].textContent,
+        taskDEADLINE = tableRow.children[4].textContent,
+        taskSTATUS = tableRow.children[5].textContent,
+        newTaskOPT = document.querySelectorAll("option");
+    desc.value = taskDESC;
+    deadline.value = taskDEADLINE;
+    newTaskOPT.forEach((task) =>{
+        if (task.textContent == taskCATEG){
+            task.setAttribute("selected", "");
+        }
+        if (task.textContent == taskSTATUS){
+            task.setAttribute("selected", "");
+        }
+    })
+    btn_save.addEventListener("click", ()=>{
+        let taskCATEG_ID  = document.querySelector("#new_task_categ").options.selectedIndex + 1;
+        let taskSTATUS_ID = document.querySelector("#new_task_status").options.selectedIndex + 1;
+        $.post("/update", {taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID}, ()=>{
+            window.location.reload();
+        })
+    })
 }
