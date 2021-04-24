@@ -3,49 +3,39 @@ let searchResultMain = path.search('board');
 let searchResultAllTasks = path.search('department');
 let taskToDelete = 0;
 
+let mainTable = document.querySelector("#tasksTable");
+
+let buttonCloseModalAlert = document.querySelector("#close-modal-alert");
+let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
+
+let navItemCurrentUser = document.querySelector(".nav-item-current-user");
+
+let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
+let chengeSelectedTask = document.querySelectorAll(".change-selected-task");
+
+let modalAlertDeletTask = document.querySelector("#delete-task-modal-alert");
+
+let checkedCounter = 0;
+let checkedCounterNoVisible = 0;
+
+let allTitles = document.querySelectorAll(".title");
+
+let options = document.querySelector(".options");
+let optionsText = document.querySelector(".options__text");
+
+
+setTitleForTitle();
+
 
 console.log(path, searchResultMain, searchResultAllTasks)
 if(searchResultMain >= 1) {
     let buttonToAllTasks = document.querySelector("#to-all-tasks");
     let buttonNewTask = document.querySelector("#new-task-button");
     let buttonCloseNewTask = document.querySelector("#close-new-task-button");
-    let buttonCloseModalAlert = document.querySelector("#close-modal-alert");
-    let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
-
-    let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
-    let changeSelectedTask = document.querySelectorAll(".change-selected-task");
-    let tbodyCheckbox = document.querySelectorAll(".tbody-checkbox");
 
     let modalNewTask = document.querySelector("#new-task-modal");
-    let modalAlertDeletTask = document.querySelector("#delete-task-modal-alert");
 
-    let allTitles = document.querySelectorAll(".title");
     let titleNewTask = document.querySelector("#new-task-title");
-
-    let allTableCheckbox = document.querySelector("#table-checkbox-all");
-    let checkedCounter = 0;
-    let checkedCounterNoVisible = 0;
-
-    let options = document.querySelector(".options");
-    let optionsText = document.querySelector(".options__text");
-
-    let theme = document.querySelector("#theme");
-    let switchTheme = document.querySelector(".nav-item-theme");
-
-    getTheme();
-
-    setTitleForTitle();
-
-    ifChacked();
-
-    switchTheme.onclick = function() {
-        if(localStorage.getItem('theme') == null || localStorage.getItem('theme') == 'light'){
-            localStorage.setItem('theme', 'dark');
-        } else {
-            localStorage.setItem('theme', 'light');
-        }
-        getTheme();
-    }
 
     buttonNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
@@ -60,245 +50,66 @@ if(searchResultMain >= 1) {
         window.location.href = "/department";
     }
 
-
-
-    deleteSelectedTask.forEach((elem)=>{
-        elem.addEventListener('click', (elem)=>{
-            taskToDelete = (elem.target.getAttribute("data-key"));
-            modalAlertDeletTask.classList.toggle('hidden');
-        })
-    })
-    buttonCloseModalAlert.onclick = function() {
-        modalAlertDeletTask.classList.toggle('hidden');
-        console.log('closed');
-        taskToDelete = 0;
-    }
-    buttonYesModalAlert.onclick = function() {
-        $.post("/delete", {taskToDelete}, function(){
-            location.reload();
-        })
-        modalAlertDeletTask.classList.toggle('hidden');
-        console.log('deleted');
-    }
-
-    changeSelectedTask.forEach((elem)=>{
-        elem.addEventListener('click', ()=>{
-            let elemId = elem.dataset['id'];
-            let tableRow = elem.parentNode.parentNode.parentNode;
-            let newTitle = tableRow.children[3].textContent;
-            get_task(tableRow); // бета тест кое-какой хрени
-            modalNewTask.classList.toggle('hidden');
-            titleNewTask.textContent = `Изменения задачи: ${newTitle}`;
-            setTitleForTitle();
-        })
-    })
-
-
-    allTableCheckbox.onclick = function() {
-        if(allTableCheckbox.classList.contains('table-checkbox_checked')) {
-            allTableCheckbox.classList.remove('table-checkbox_checked');
-            tbodyCheckbox.forEach((block)=>{
-                block.classList.remove('table-checkbox_checked');
-            })
-            checkedCounter = 0;
-            checkedCounterNoVisible = 0;
-        } else {
-            allTableCheckbox.classList.add('table-checkbox_checked');
-            tbodyCheckbox.forEach((block)=>{
-                block.classList.add('table-checkbox_checked');
-            });
-            checkedCounter = tbodyCheckbox.length;
-            checkedCounterNoVisible = checkedCounter;
-        }
-        ifChacked();
-    }
-
-    tbodyCheckbox.forEach((block)=>{
-        block.addEventListener('click', (elem)=>{
-            if(block.classList.contains('table-checkbox_checked')) {
-                block.classList.remove('table-checkbox_checked');
-                checkedCounterNoVisible--;
-                checkedCounter--;
-            } else {
-                block.classList.add('table-checkbox_checked');
-                checkedCounterNoVisible++;
-                checkedCounter++;
-            }
-            ifChacked();
-        })
-    })
-
-    function ifChacked() {
-        optionsText.textContent = `Выбранных задач: ${checkedCounter}`;
-        if(checkedCounterNoVisible < 1) {
-            allTableCheckbox.classList.remove('table-checkbox_checked');
-        }
-        tbodyCheckbox.forEach((block)=>{
-            if(checkedCounterNoVisible > 0) {
-                options.classList.remove('hidden');
-            } else {
-                options.classList.add('hidden');
-            }
-        })
-        
-    }
-
-    function setTitleForTitle() {
-        allTitles.forEach((elem)=>{
-            elem.setAttribute('title', elem.textContent);
-        })
-    }
-
-    function getTheme() {
-        if (localStorage.getItem('theme') == 'light') {
-            theme.setAttribute('href', './style/light_theme.css');
-        } else if(localStorage.getItem('theme') == 'dark') {
-            theme.setAttribute('href', './style/dark_theme.css');
-        }
-    }
-
 } else if(searchResultAllTasks >= 1) {
     let buttonToMain = document.querySelector("#to-main");
-    // let buttonNewTask = document.querySelector("#new-task-button");
     let buttonCloseNewTask = document.querySelector("#close-new-task-button");
-    let buttonCloseModalAlert = document.querySelector("#close-modal-alert");
-    let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
-
-    let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
-    let changeSelectedTask = document.querySelectorAll(".change-selected-task");
-    let tbodyCheckbox = document.querySelectorAll(".tbody-checkbox");
 
     let modalNewTask = document.querySelector("#new-task-modal");
-    let modalAlertDeletTask = document.querySelector("#delete-task-modal-alert");
-
-    let allTableCheckbox = document.querySelector("#table-checkbox-all");
-    let checkedCounter = 0;
-    let checkedCounterNoVisible = 0;
-
-    let allTitles = document.querySelectorAll(".title");
-
-    let options = document.querySelector(".options");
-    let optionsText = document.querySelector(".options__text");
-
-    let theme = document.querySelector("#theme");
-    let switchTheme = document.querySelector(".nav-item-theme");
-
-    getTheme();
-
-    setTitleForTitle();
-
-    ifChacked();
-
-    // buttonNewTask.onclick = function() {
-    //     modalNewTask.classList.toggle('hidden');
-    // }
-
-    switchTheme.onclick = function() {
-        if(localStorage.getItem('theme') == null || localStorage.getItem('theme') == 'light'){
-            localStorage.setItem('theme', 'dark');
-        } else {
-            localStorage.setItem('theme', 'light');
-        }
-        getTheme();
-    }
 
     buttonCloseNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
     }
 
     buttonToMain.onclick = function() {
-        window.location.href = "/board.html";
-    }
-
-    deleteSelectedTask.forEach((elem)=>{
-        elem.addEventListener('click', (elem)=>{
-            taskToDelete = (elem.target.getAttribute("data-key"));
-            modalAlertDeletTask.classList.toggle('hidden');
-        })
-    })
-    buttonCloseModalAlert.onclick = function() {
-        modalAlertDeletTask.classList.toggle('hidden');
-        console.log('closed');
-        taskToDelete = 0;
-    }
-    buttonYesModalAlert.onclick = function() {
-        $.post("/delete", {taskToDelete}, function(){
-            location.reload();
-        })
-        modalAlertDeletTask.classList.toggle('hidden');
-        console.log('deleted');
-    }
-
-    changeSelectedTask.forEach((elem)=>{
-        elem.addEventListener('click', (elem)=>{
-            modalNewTask.classList.toggle('hidden');
-        })
-    })
-
-
-    allTableCheckbox.onclick = function() {
-        if(allTableCheckbox.classList.contains('table-checkbox_checked')) {
-            allTableCheckbox.classList.remove('table-checkbox_checked');
-            tbodyCheckbox.forEach((block)=>{
-                block.classList.remove('table-checkbox_checked');
-            })
-            checkedCounter = 0;
-            checkedCounterNoVisible = 0;
-        } else {
-            allTableCheckbox.classList.add('table-checkbox_checked');
-            tbodyCheckbox.forEach((block)=>{
-                block.classList.add('table-checkbox_checked');
-            });
-            checkedCounter = tbodyCheckbox.length;
-            checkedCounterNoVisible = checkedCounter;
-        }
-        ifChacked();
-    }
-
-    tbodyCheckbox.forEach((block)=>{
-        block.addEventListener('click', (elem)=>{
-            if(block.classList.contains('table-checkbox_checked')) {
-                block.classList.remove('table-checkbox_checked');
-                checkedCounterNoVisible--;
-                checkedCounter--;
-            } else {
-                block.classList.add('table-checkbox_checked');
-                checkedCounterNoVisible++;
-                checkedCounter++;
-            }
-            ifChacked();
-        })
-    })
-
-    function ifChacked() {
-        optionsText.textContent = `Выбранных задач: ${checkedCounter}`;
-        if(checkedCounterNoVisible < 1) {
-            allTableCheckbox.classList.remove('table-checkbox_checked');
-        }
-        tbodyCheckbox.forEach((block)=>{
-            if(checkedCounterNoVisible > 0) {
-                options.classList.remove('hidden');
-            } else {
-                options.classList.add('hidden');
-            }
-        })
-        
-    }
-
-    function setTitleForTitle() {
-        allTitles.forEach((elem)=>{
-            elem.setAttribute('title', elem.textContent);
-        })
-    }
-
-    function getTheme() {
-        if (localStorage.getItem('theme') == 'light') {
-            theme.setAttribute('href', './style/light_theme.css');
-        } else if(localStorage.getItem('theme') == 'dark') {
-            theme.setAttribute('href', './style/dark_theme.css');
-        }
+        window.location.href = "/board";
     }
 }
+
+navItemCurrentUser.onclick = function() {
+    window.location.href = "/profile.html";
+}
+
+deleteSelectedTask.forEach((elem)=>{
+    elem.addEventListener('click', (elem)=>{
+        taskToDelete = (elem.target.getAttribute("data-key"));
+        modalAlertDeletTask.classList.toggle('hidden');
+    })
+})
+
+buttonCloseModalAlert.onclick = function() {
+    modalAlertDeletTask.classList.toggle('hidden');
+    console.log('closed');
+    taskToDelete = 0;
+}
+
+buttonYesModalAlert.onclick = function() {
+    $.post("/delete", {taskToDelete}, function(){
+        location.reload();
+    })
+    modalAlertDeletTask.classList.toggle('hidden');
+    console.log('deleted');
+}
+
+chengeSelectedTask.forEach((elem)=>{
+    elem.addEventListener('click', ()=>{
+        let elemId = elem.dataset['id'];
+        let tableRow = elem.parentNode.parentNode.parentNode;
+        let newTitle = tableRow.children[3].textContent;
+        get_task(tableRow); // бета тест кое-какой хрени
+        modalNewTask.classList.toggle('hidden');
+        titleNewTask.textContent = `Изменения задачи: ${newTitle}`;
+        setTitleForTitle();
+    })
+})
+
+function setTitleForTitle() {
+    allTitles.forEach((elem)=>{
+        elem.setAttribute('title', elem.textContent);
+    })
+}
+
+
+
 
 function get_task(tableRow){ // бета тест кое-какой хрени
     let btn_save = document.querySelector(".button_save")
@@ -327,4 +138,80 @@ function get_task(tableRow){ // бета тест кое-какой хрени
             window.location.reload();
         })
     })
+}
+
+window.onload = function() {
+    let allTableCheckbox = document.querySelector("#table-checkbox-all");
+    let tbodyCheckbox = document.querySelectorAll(".tbody-checkbox");
+
+    if(tbodyCheckbox !== null) {
+        ifChacked();
+
+        tbodyCheckbox.forEach((block)=>{
+            block.addEventListener('click', ()=>{
+                if(block.classList.contains('table-checkbox_checked')) {
+                    block.classList.remove('table-checkbox_checked');
+                    checkedCounterNoVisible--;
+                    checkedCounter--;
+                    if (checkedCounterNoVisible == 0) {
+                        mainTable.style.animation = 'crawlUp .6s ease-in-out forwards';
+                        console.log('ky')
+                    }
+                } else {
+                    block.classList.add('table-checkbox_checked');
+                    checkedCounterNoVisible++;
+                    checkedCounter++;
+                }
+                ifChacked();
+            })
+        })
+        console.log(allTableCheckbox, tbodyCheckbox);
+
+        allTableCheckbox.onclick = function() {
+            if(allTableCheckbox.classList.contains('table-checkbox_checked')) {
+                allTableCheckbox.classList.remove('table-checkbox_checked');
+                tbodyCheckbox.forEach((block)=>{
+                    block.classList.remove('table-checkbox_checked');
+                })
+                checkedCounter = 0;
+                checkedCounterNoVisible = 0;
+                if (checkedCounterNoVisible == 0) {
+                    mainTable.style.animation = 'crawlUp .6s ease-in-out forwards';
+                    console.log('ky')
+                }
+            } else {
+                allTableCheckbox.classList.add('table-checkbox_checked');
+                tbodyCheckbox.forEach((block)=>{
+                    block.classList.add('table-checkbox_checked');
+                });
+                checkedCounter = tbodyCheckbox.length;
+                checkedCounterNoVisible = checkedCounter;
+            }
+            ifChacked();
+        }
+        
+        function ifChacked() {
+            optionsText.textContent = `Выбранных задач: ${checkedCounter}`;
+            if(checkedCounterNoVisible < 1) {
+                allTableCheckbox.classList.remove('table-checkbox_checked');
+            }
+            tbodyCheckbox.forEach(()=>{
+                if(checkedCounterNoVisible > 0) {
+                    mainTable.style.animation = 'crawlDown .6s ease-in-out forwards';
+                    setTimeout(function(){
+                        options.classList.remove('hidden');
+                    }, 300)
+                    setTimeout(function(){
+                        options.style.animation = 'opacity1 .6s linear forwards'
+                    }, 310)
+                } else {
+                    options.style.animation = 'opacity0 .6s linear forwards'
+                    setTimeout(function(){
+                        options.classList.add('hidden');
+                    }, 600)
+                }
+            })
+            
+        }
+    }
 }

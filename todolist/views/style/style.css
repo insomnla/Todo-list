@@ -30,18 +30,21 @@ body {
     font-family: 'Rubik', sans-serif;
     font-size: 30px;
     font-weight: 500;
+    color: var(--text-color);
 }
 
 .text {
     font-family: 'Rubik', sans-serif;
     font-size: 25px;
     font-weight: 300;
+    color: var(--text-color);
 }
 
 .subtitle {
     font-family: 'Rubik', sans-serif;
     font-size: 20px;
     font-weight: 300;
+    color: var(--text-color);
 }
 
 /* Button */
@@ -71,8 +74,8 @@ button:active {
     text-decoration: none;
 }
 
-.nav_width_25 {
-    width: 25%;
+.nav_width_50 {
+    width: 50%;
 }
 
 .nav__link_color_white {
@@ -146,6 +149,36 @@ input[type=checkbox] {
 }
 
 /* Table */
+
+#tasksTable {
+    /* animation: crawlDown 1s ease-in-out forwards; */
+}
+
+@keyframes crawlUp {
+    0%
+    {
+        transform: translateY(150px);
+    }
+    100%
+    {
+        transform: translateY(0);
+    }
+}
+
+@keyframes crawlDown {
+    0%
+    {
+        transform: translateY(0);
+    }
+    100%
+    {
+        transform: translateY(150px);
+    }
+}
+
+caption {
+    margin-bottom: 20px;
+}
 
 thead tr th:hover {
     background: var(--table-hover);
@@ -298,6 +331,9 @@ tbody tr td {
     width: 45px;
     height: 45px;
     cursor: pointer;
+    background: url(../images/light_off.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .nav-item_notification {
@@ -328,6 +364,7 @@ tbody tr td {
     display: flex;
     flex-direction: column;
     row-gap: 50px;
+    position: relative;
 }
 
 .before-table {
@@ -396,10 +433,35 @@ tbody tr td {
 }
 
 .options {
+    position: absolute;
+    top: 125px;
     width: 100%;
     display: flex;
     flex-direction: column;
     row-gap: 20px;
+    opacity: 0;
+}
+
+@keyframes opacity1 {
+    0%
+    {
+        opacity: 0;
+    }
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes opacity0 {
+    0%
+    {
+        opacity: 1;
+    }
+    100%
+    {
+        opacity: 0;
+    }
 }
 
 .options__text {
@@ -483,6 +545,32 @@ tbody tr td {
 
 .list-more-item:hover {
     background: var(--border-color);
+}
+
+/* Profile */
+
+.page-main-inner-profile {
+    row-gap: 100px;
+}
+
+.current-user {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 50px;
+}
+
+.current-user-avatar {
+    width: 400px;
+    height: 400px;
+    box-shadow: 0 0 15px 4px var(--text-color);
+}
+
+.current-user-information {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 /* All-tasks */

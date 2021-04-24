@@ -1,13 +1,13 @@
 :root {
-    --main-color: #d3d3d3;
+    --main-color: #FFFAFA;
     --text-color: #212226;
-    --text-color-white: #d3d3d3;
+    --text-color-white: #FFFAFA;
     --text-color-dark: #212226;
-    --second-text-color: #d3d3d3;
+    --second-text-color: #FFFAFA;
     --border-color: #474F59;
     --box-shadow-on-dark: #030303;
 
-    --table-hover: #A5A5A5;
+    --table-hover: #d3d3d3;
 }
 
 /* Table */
@@ -25,8 +25,5 @@ table.dataTable thead .sorting_desc {
 /* Page-header */
 
 .nav-item-theme {
-    width: 45px;
-    height: 45px;
-    cursor: pointer;
-    background: url(../images/light_off.svg);
+    background: url(../images/light_off.svg) !important;
 }

@@ -55,7 +55,7 @@
                             </svg>
                         </div>
                         <div class="nav-item nav-item-current-user">
-                            <div class="current-user-avatar">
+                            <div class="user-avatar">
                                 <svg class="fill_white nav__svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
                                     <g>
@@ -148,7 +148,6 @@
                     </div>
                 </div>
                 <div class="options hidden">
-                    <% if (role > 1) {%>
                     <div class="text options__text">
                         Выбранных задач: 10
                     </div>
@@ -156,16 +155,17 @@
                         <button class="button instruments__button instruments__button_theme_green instruments__button_bg_plus">
                             Добавить
                         </button>
+                        <% if (role > 1) {%>
                         <button class="button instruments__button instruments__button_theme_red instruments__button_bg_trash"> <!-- Не отображай для обычных юзеров -->
                             Удалить выбранные задачи
                         </button>
+                        <% } %>
                     </div>
-                    <% } %>
                 </div>
                 <table id="tasksTable" class="display">
                     <thead>
                         <tr>
-                            <th class="dt-head-left"><div class="table-checkbox table-checkbox_color_dark" id="table-checkbox-all"></div></th>
+                            <th class="dt-head-left"><div class="table-checkbox" id="table-checkbox-all"></div></th>
                             <th class="dt-head-left">ID</th>
                             <th class="dt-head-left">Категория</th>
                             <th class="dt-head-left">Описание задачи</th>
@@ -177,7 +177,7 @@
                     <tbody>
                         <% for (var key in tasks) { %>
                         <tr>
-                            <td><input value="<%= tasks[key].id_task %>"  type="checkbox" class="table-checkbox"></td>
+                            <td><div value="<%= tasks[key].id_task %>" class="table-checkbox tbody-checkbox"></div></td>
                             <td><%= tasks[key].id_task %></td>
                             <td><%= tasks[key].categories %></td>
                             <td><%= tasks[key].desc %></td>
@@ -186,7 +186,7 @@
                             <td>
                                 <div class="actions">
                                     <div class="actions-item" data-id="2" title="Добавить">
-                                        <svg style="fill:#d3d3d3" height="512pt" viewBox="0 0 512 512" width="512pt" xmlns="http://www.w3.org/2000/svg"><path d="m256 512c-141.164062 0-256-114.835938-256-256s114.835938-256 256-256 256 114.835938 256 256-114.835938 256-256 256zm0-480c-123.519531 0-224 100.480469-224 224s100.480469 224 224 224 224-100.480469 224-224-100.480469-224-224-224zm0 0"/><path d="m368 272h-224c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h224c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m256 384c-8.832031 0-16-7.167969-16-16v-224c0-8.832031 7.167969-16 16-16s16 7.167969 16 16v224c0 8.832031-7.167969 16-16 16zm0 0"/></svg>
+                                        <svg style="fill:var(--text-color);" height="512pt" viewBox="0 0 512 512" width="512pt" xmlns="http://www.w3.org/2000/svg"><path d="m256 512c-141.164062 0-256-114.835938-256-256s114.835938-256 256-256 256 114.835938 256 256-114.835938 256-256 256zm0-480c-123.519531 0-224 100.480469-224 224s100.480469 224 224 224 224-100.480469 224-224-100.480469-224-224-224zm0 0"/><path d="m368 272h-224c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h224c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m256 384c-8.832031 0-16-7.167969-16-16v-224c0-8.832031 7.167969-16 16-16s16 7.167969 16 16v224c0 8.832031-7.167969 16-16 16zm0 0"/></svg>
                                     </div>
                                     <%if (role > 1) {%>
                                     <div class="actions-item change-selected-task" data-id="2" title="Изменить">
@@ -197,7 +197,7 @@
                                     </div>
                                     <% } %>
                                     <div class="actions-item more" data-id="2" title="Больше">
-                                        <svg style="fill:#d3d3d3" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                        <svg style="fill:var(--text-color)" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                             viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
                                             <g>
                                                 <g>
@@ -347,6 +347,7 @@
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
     <script src="./script/dataTables.js"></script>
+    <script src="./script/theme.js"></script>
     <script src="./script/main.js"></script>
 </body>
 </html>

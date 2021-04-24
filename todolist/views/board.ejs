@@ -16,11 +16,11 @@
         <header class="header page-header-header page-header-header_theme_main-color">
             <div class="wrapper">
                 <div class="page-header-header-inner">
-                    <nav class="nav nav_width_25">
+                    <nav class="nav nav_width_50">
                         <a href="" class="nav__link nav__link_color_white">Список задач</a>
                         <a href="" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
-                    <nav class="nav user_nav nav_width_25">
+                    <nav class="nav user_nav nav_width_50">
                         <div class="nav-item nav-item-theme">
                         </div>
                         <div class="nav-item nav-item_notification">
@@ -54,7 +54,7 @@
                             </svg>
                         </div>
                         <div class="nav-item nav-item-current-user">
-                            <div class="current-user-avatar">
+                            <div class="user-avatar">
                                 <svg class="fill_white nav__svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
                                     <g>
@@ -177,7 +177,7 @@
                     <tbody>
                         <% for (var key in tasks) { %>
                         <tr>
-                            <td><input value="<%= tasks[key].id_task %>"  type="checkbox" class="table-checkbox"></td>
+                            <td><div value="<%= tasks[key].id_task %>" class="table-checkbox tbody-checkbox"></div></td>
                             <td><%= tasks[key].id_task %></td>
                             <td><%= tasks[key].categories %></td>
                             <td><%= tasks[key].desc %></td>
@@ -196,7 +196,7 @@
                                         <svg data-key="<%= tasks[key].id_task %>"  style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
                                     </div>
                                     <div class="actions-item more" data-id="2" title="Больше">
-                                        <svg style="fill:#d3d3d3" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                        <svg style="fill:var(--text-color);" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                             viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
                                             <g>
                                                 <g>
@@ -358,6 +358,7 @@
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
     <script src="./script/dataTables.js"></script>
+    <script src="./script/theme.js"></script>
     <script src="./script/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script>
