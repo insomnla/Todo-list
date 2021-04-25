@@ -118,10 +118,10 @@
                 <div class="before-table">
                     <div class="filters">
                         <div class="filters-item">
-                            <select name="" id="" class="select filters-item-select">
+                            <select name="" id="select-categories" class="select filters-item-select">
                                 <option selected value="All">Все</option>
                                 <% for(var i=0; i < categ_name.length; i++) {%>
-                                <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <option value="<%= categ_name[i].categories%>"><%= categ_name[i].categories%></option>
                                 <% }%>
                             </select>
                             <div class="filters-item__subtitle">
@@ -129,10 +129,10 @@
                             </div>
                         </div>
                         <div class="filters-item">
-                            <select name="" id="" class="select filters-item-select">
+                            <select name="" id="select-status" class="select filters-item-select">
                                 <option selected value="All">Все</option>
                                 <% for(var i=0; i < statuses.length; i++) {%>
-                                <option value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                                <option value="<%= statuses[i].status %>"><%= statuses[i].status%></option>
                                 <% } %>
                             </select>
                             <div class="filters-item__subtitle">
@@ -179,7 +179,7 @@
                         <tr>
                             <td><div value="<%= tasks[key].id_task %>" class="table-checkbox tbody-checkbox"></div></td>
                             <td><%= tasks[key].id_task %></td>
-                            <td><%= tasks[key].categories %></td>
+                            <td class="categories"><%= tasks[key].categories %></td>
                             <td><%= tasks[key].desc %></td>
                             <td><%= tasks[key].dline %></td>
                             <td><span style="background-color: <%= tasks[key].color%>;" class="status"><%= tasks[key].status %></span></td>
@@ -232,6 +232,9 @@
                         <% } %>
                     </tbody>
                 </table>
+                <div class="after-table hidden">
+                    <div class="text">По данным фильтрам ничего не найдено</div>
+                </div>
             </div>
         </div>
     </section>

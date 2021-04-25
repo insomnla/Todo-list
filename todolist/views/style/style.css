@@ -547,6 +547,12 @@ tbody tr td {
     background: var(--border-color);
 }
 
+.after-table {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 /* Profile */
 
 .page-main-inner-profile {

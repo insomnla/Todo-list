@@ -13,6 +13,7 @@ let navItemCurrentUser = document.querySelector(".nav-item-current-user");
 let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
 let chengeSelectedTask = document.querySelectorAll(".change-selected-task");
 
+let modalNewTask = document.querySelector("#new-task-modal");
 let modalAlertDeletTask = document.querySelector("#delete-task-modal-alert");
 
 let checkedCounter = 0;
@@ -23,6 +24,14 @@ let allTitles = document.querySelectorAll(".title");
 let options = document.querySelector(".options");
 let optionsText = document.querySelector(".options__text");
 
+let filterItemSelect = document.querySelectorAll(".filters-item-select");
+let selectCategories = document.querySelector("#select-categories");
+let selectStatus = document.querySelector("#select-status");
+
+let rowsOnTable = document.querySelectorAll("tbody>tr");
+
+let allRowWithCategories = document.querySelectorAll(".categories");
+let allRowWithStatus = document.querySelectorAll(".status");
 
 setTitleForTitle();
 
@@ -32,8 +41,6 @@ if(searchResultMain >= 1) {
     let buttonToAllTasks = document.querySelector("#to-all-tasks");
     let buttonNewTask = document.querySelector("#new-task-button");
     let buttonCloseNewTask = document.querySelector("#close-new-task-button");
-
-    let modalNewTask = document.querySelector("#new-task-modal");
 
     let titleNewTask = document.querySelector("#new-task-title");
 
@@ -53,8 +60,6 @@ if(searchResultMain >= 1) {
 } else if(searchResultAllTasks >= 1) {
     let buttonToMain = document.querySelector("#to-main");
     let buttonCloseNewTask = document.querySelector("#close-new-task-button");
-
-    let modalNewTask = document.querySelector("#new-task-modal");
 
     buttonCloseNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
@@ -102,14 +107,138 @@ chengeSelectedTask.forEach((elem)=>{
     })
 })
 
+filterItemSelect.forEach((elem, index)=>{
+    elem.addEventListener('change', ()=>{
+        if(index == 0) {
+            if(selectStatus.value == 'All') {
+                document.querySelector(".after-table").classList.add('hidden');
+                allRowWithCategories.forEach((elem)=>{
+                    elem.parentNode.classList.remove('hidden');
+                    elem.parentNode.style.animation = "opacity1 .6s linear forwards";
+                    if(selectCategories.value == 'All') {
+                        elem.parentNode.classList.remove('hidden');
+                        elem.parentNode.style.animation = "opacity1 .6s linear forwards";
+                    } else if(selectCategories.value !== elem.textContent) {
+                        elem.parentNode.style.animation = 'opacity0 .6s linear forwards';
+                        setTimeout(()=>{
+                            elem.parentNode.classList.add('hidden');
+                            checkForEmptiness();
+                        }, 600);
+                    }
+                })
+            } else if(selectCategories.value == 'All') {
+                rowsOnTable.forEach((row)=>{
+                    document.querySelector(".after-table").classList.add('hidden');
+                    let status = row.children[5];
+                    row.classList.remove('hidden');
+                    row.style.animation = "opacity1 .6s linear forwards";
+                    if(selectCategories.value == 'All' && selectStatus.value == status.textContent) {
+                        row.classList.remove('hidden');
+                        row.style.animation = "opacity1 .6s linear forwards";
+                    } else {
+                        row.style.animation = 'opacity0 .6s linear forwards';
+                        setTimeout(()=>{
+                            row.classList.add('hidden');
+                            checkForEmptiness();
+                        }, 600);
+                    }
+                })
+            } else {
+                rowsOnTable.forEach((row)=>{
+                    document.querySelector(".after-table").classList.add('hidden');
+                    let categories = row.children[2];
+                    let status = row.children[5];
+                    row.classList.remove('hidden');
+                    row.style.animation = "opacity1 .6s linear forwards";
+                    if(selectCategories.value == categories.textContent && selectStatus.value == status.textContent) {
+                        row.classList.remove('hidden');
+                        row.style.animation = "opacity1 .6s linear forwards";
+                    } else {
+                        row.style.animation = 'opacity0 .6s linear forwards';
+                        setTimeout(()=>{
+                            row.classList.add('hidden');
+                            checkForEmptiness();
+                        }, 600);
+                    }
+                })
+            }
+            checkForEmptiness();
+        } else if(index == 1) {
+            if(selectCategories.value == 'All') {
+                document.querySelector(".after-table").classList.add('hidden');
+                allRowWithStatus.forEach((elem)=>{
+                    elem.parentNode.parentNode.classList.remove('hidden');
+                    elem.parentNode.parentNode.style.animation = "opacity1 .6s linear forwards";
+                    if(selectStatus.value == 'All') {
+                        elem.parentNode.classList.remove('hidden');
+                        elem.parentNode.style.animation = "opacity1 .6s linear forwards";
+                    } else if(selectStatus.value !== elem.textContent) {
+                        elem.parentNode.parentNode.style.animation = 'opacity0 .6s linear forwards';
+                        setTimeout(()=>{
+                            elem.parentNode.parentNode.classList.add('hidden');
+                            checkForEmptiness();
+                        }, 600);
+                    }
+                })
+            } else if(selectStatus.value == 'All') {
+                rowsOnTable.forEach((row)=>{
+                    document.querySelector(".after-table").classList.add('hidden');
+                    let categories = row.children[2];
+                    row.classList.remove('hidden');
+                    row.style.animation = "opacity1 .6s linear forwards";
+                    if(selectCategories.value == categories.textContent && selectStatus.value == 'All') {
+                        row.classList.remove('hidden');
+                        row.style.animation = "opacity1 .6s linear forwards";
+                    } else {
+                        row.style.animation = 'opacity0 .6s linear forwards';
+                        setTimeout(()=>{
+                            row.classList.add('hidden');
+                            checkForEmptiness();
+                        }, 600);
+                    }
+                })
+            } else {
+                rowsOnTable.forEach((row)=>{
+                    document.querySelector(".after-table").classList.add('hidden');
+                    let categories = row.children[2];
+                    let status = row.children[5];
+                    row.classList.remove('hidden');
+                    row.style.animation = "opacity1 .6s linear forwards";
+                    if(selectCategories.value == categories.textContent && selectStatus.value == status.textContent) {
+                        row.classList.remove('hidden');
+                        row.style.animation = "opacity1 .6s linear forwards";
+                    } else {
+                        row.style.animation = 'opacity0 .6s linear forwards';
+                        setTimeout(()=>{
+                            row.classList.add('hidden');
+                            checkForEmptiness();
+                        }, 600);
+                    }
+                })
+            }
+        }
+    })
+})
+
+function checkForEmptiness() {
+    let counter = 0;
+    rowsOnTable.forEach((elem)=>{
+        if(elem.classList.contains('hidden')) {
+            counter++;
+            if(counter == rowsOnTable.length) {
+                document.querySelector(".after-table").classList.remove('hidden');
+                console.log('Table is empty');
+            }
+            console.log(elem.classList, counter);
+        }
+    })
+} 
+
 function setTitleForTitle() {
     allTitles.forEach((elem)=>{
         elem.setAttribute('title', elem.textContent);
     })
 }
-
-
-
 
 function get_task(tableRow){ // бета тест кое-какой хрени
     let btn_save = document.querySelector(".button_save")
@@ -155,7 +284,6 @@ window.onload = function() {
                     checkedCounter--;
                     if (checkedCounterNoVisible == 0) {
                         mainTable.style.animation = 'crawlUp .6s ease-in-out forwards';
-                        console.log('ky')
                     }
                 } else {
                     block.classList.add('table-checkbox_checked');
@@ -165,7 +293,6 @@ window.onload = function() {
                 ifChacked();
             })
         })
-        console.log(allTableCheckbox, tbodyCheckbox);
 
         allTableCheckbox.onclick = function() {
             if(allTableCheckbox.classList.contains('table-checkbox_checked')) {
@@ -177,7 +304,6 @@ window.onload = function() {
                 checkedCounterNoVisible = 0;
                 if (checkedCounterNoVisible == 0) {
                     mainTable.style.animation = 'crawlUp .6s ease-in-out forwards';
-                    console.log('ky')
                 }
             } else {
                 allTableCheckbox.classList.add('table-checkbox_checked');
@@ -205,13 +331,12 @@ window.onload = function() {
                         options.style.animation = 'opacity1 .6s linear forwards'
                     }, 310)
                 } else {
-                    options.style.animation = 'opacity0 .6s linear forwards'
+                    options.style.animation = 'opacity0 .4s linear forwards'
                     setTimeout(function(){
                         options.classList.add('hidden');
                     }, 600)
                 }
-            })
-            
+            })  
         }
     }
 }
