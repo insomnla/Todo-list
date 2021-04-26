@@ -243,6 +243,10 @@ app.post("/profile", ensureAuthenticated,(req, res)=>{
     })
 })
 
+app.post("/new_task", ensureAuthenticated, (req, res)=>{
+    newTask(req);
+    getBoard(req,res);
+})
 app.post("/delete", ensureAuthenticated, (req, res)=>{
     deleteTask(req.body.taskToDelete);
     getBoard(req, res);
@@ -357,6 +361,9 @@ function deleteTask(task){
     } else {
         connection.query("update task set fk_id_worker = null where id_task = ?", [task]);
     }
+}
+function newTask(info){
+    connection.query("insert into task(task.desc,deadline, fk_id_status, fk_id_categories, fk_id_worker) values(?,?,?,?,?)", [info.body.descValue, info.body.deadlineValue, info.body.taskCATEG_ID, info.body.taskSTATUS_ID, info.session.userid])
 }
 
 function changeTask(info){

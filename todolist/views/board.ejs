@@ -400,10 +400,10 @@
                             <% for(var i=0; i < categ_name.length; i++) {%>
                                 <% if (categ_name[i].categories == "Государственная"){%>
                                    <% if (role > 1){ %>
-                                        <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                        <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
                                     <%}%>
                                 <%} else { %>
-                                    <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                    <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
                                 <%}%>
   
                             <% }%>
@@ -436,7 +436,7 @@
                         </div>
                         <select name="" id="change_task_status" class="select form-item-select">
                             <% for(var i=0; i < statuses.length; i++) {%>
-                            <option value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                            <option id="change-option" value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
                             <% } %>
                         </select>
                         <div class="subtitle form-item__subtitle">

@@ -9,7 +9,8 @@ let mainTable = document.querySelector("#tasksTable");
 let buttonCloseModalAlert = document.querySelector("#close-modal-alert");
 let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
 let buttonToDirectDepart = document.querySelector(".instruments__button_bg_todo_list");
-let buttonBulkDelete = document.querySelector(".instruments__button_bg_trash")
+let buttonBulkDelete = document.querySelector(".instruments__button_bg_trash");
+let buttonNTask = document.querySelector(".button_save");
 
 let navItemCurrentUser = document.querySelector(".nav-item-current-user");
 let minProfile = document.querySelector(".nav-item-current-user_after");
@@ -89,6 +90,17 @@ if(searchResultMain >= 1) {
             window.location.href = '/board';
         }
     }
+}
+buttonNTask.onclick = function(){
+    let desc = document.querySelector("#new_task_desc"),
+        deadline = document.querySelector("#new_task_deadline"),
+        descValue = desc.value,
+        deadlineValue = deadline.value,
+        taskCATEG_ID  = document.querySelector("#new_task_categ").options.selectedIndex + 1,
+        taskSTATUS_ID = document.querySelector("#new_task_status").options.selectedIndex + 1;
+        $.post("/new_task", {descValue, deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
+            window.location.reload();
+        })
 }
 
 buttonBulkDelete.onclick = function() {
@@ -293,7 +305,7 @@ function get_task(tableRow){ // бета тест кое-какой хрени
         taskDESC = tableRow.children[3].textContent,
         taskDEADLINE = tableRow.children[4].textContent,
         taskSTATUS = tableRow.children[5].textContent,
-        newTaskOPT = document.querySelectorAll("option");
+        newTaskOPT = document.querySelectorAll("#change-option");
     desc.value = taskDESC;
     deadline.value = taskDEADLINE;
     newTaskOPT.forEach((task) =>{
@@ -305,6 +317,7 @@ function get_task(tableRow){ // бета тест кое-какой хрени
         }
     })
     btn_save.addEventListener("click", ()=>{
+        taskDEADLINE = deadline.value;
         let taskCATEG_ID  = document.querySelector("#change_task_categ").options.selectedIndex + 1;
         let taskSTATUS_ID = document.querySelector("#change_task_status").options.selectedIndex + 1;
         $.post("/update", {taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID}, ()=>{
