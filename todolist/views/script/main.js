@@ -18,6 +18,7 @@ let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
 let chengeSelectedTask = document.querySelectorAll(".change-selected-task");
 
 let modalNewTask = document.querySelector("#new-task-modal");
+let modalChangeTask = document.querySelector("#change-task-modal");
 let modalAlertDeletTask = document.querySelector("#delete-task-modal-alert");
 
 let checkedCounter = 0;
@@ -38,7 +39,7 @@ let allRowWithCategories = document.querySelectorAll(".categories");
 let allRowWithStatus = document.querySelectorAll(".status");
 
 let hrefOnProfile = document.querySelector(".profile");
-let titleNewTask = document.querySelector("#new-task-title");
+let titleChangeTask = document.querySelector("#change-task-title");
 
 setTitleForTitle();
 
@@ -47,7 +48,8 @@ console.log(path, 'Board?', searchResultMain, 'All Tasks?', searchResultAllTasks
 if(searchResultMain >= 1) {
     let buttonToAllTasks = document.querySelector("#to-all-tasks");
     let buttonNewTask = document.querySelector("#new-task-button");
-    let buttonCloseNewTask = document.querySelector("#close-new-task-button");
+    let buttonNewCloseTask = document.querySelector("#close-new-task-button");
+    let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
 ;
 
     if(buttonToDirectDepart !== null) {
@@ -59,10 +61,11 @@ if(searchResultMain >= 1) {
     buttonNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
     }
-    buttonCloseNewTask.onclick = function() {
+    buttonNewCloseTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
-        titleNewTask.textContent = 'Создание новой задачи';
-        setTitleForTitle();
+    }
+    buttonCloseChangeTask.onclick = function() {
+        modalChangeTask.classList.toggle('hidden');
     }
 
     buttonToAllTasks.onclick = function() {
@@ -71,10 +74,10 @@ if(searchResultMain >= 1) {
 
 } else if(searchResultAllTasks >= 1) {
     let buttonToMain = document.querySelector("#to-main");
-    let buttonCloseNewTask = document.querySelector("#close-new-task-button");
+    let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
 
-    buttonCloseNewTask.onclick = function() {
-        modalNewTask.classList.toggle('hidden');
+    buttonCloseChangeTask.onclick = function() {
+        modalChangeTask.classList.toggle('hidden');
     }
 
     buttonToMain.onclick = function() {
@@ -142,8 +145,8 @@ chengeSelectedTask.forEach((elem)=>{
         let tableRow = elem.parentNode.parentNode.parentNode;
         let newTitle = tableRow.children[3].textContent;
         get_task(tableRow); // бета тест кое-какой хрени
-        modalNewTask.classList.toggle('hidden');
-        titleNewTask.textContent = `Изменения задачи: ${newTitle}`;
+        modalChangeTask.classList.toggle('hidden');
+        titleChangeTask.textContent = `Изменение задачи: ${newTitle}`;
         setTitleForTitle();
     })
 })
@@ -282,9 +285,9 @@ function setTitleForTitle() {
 }
 
 function get_task(tableRow){ // бета тест кое-какой хрени
-    let btn_save = document.querySelector(".button_save")
-    let desc = document.querySelector("#new_task_desc"),
-        deadline = document.querySelector("#new_task_deadline"),
+    let btn_save = document.querySelector(".change_button_save")
+    let desc = document.querySelector("#change_task_desc"),
+        deadline = document.querySelector("#change_task_deadline"),
         taskID = tableRow.children[1].textContent,
         taskCATEG = tableRow.children[2].textContent,
         taskDESC = tableRow.children[3].textContent,
@@ -302,8 +305,8 @@ function get_task(tableRow){ // бета тест кое-какой хрени
         }
     })
     btn_save.addEventListener("click", ()=>{
-        let taskCATEG_ID  = document.querySelector("#new_task_categ").options.selectedIndex + 1;
-        let taskSTATUS_ID = document.querySelector("#new_task_status").options.selectedIndex + 1;
+        let taskCATEG_ID  = document.querySelector("#change_task_categ").options.selectedIndex + 1;
+        let taskSTATUS_ID = document.querySelector("#change_task_status").options.selectedIndex + 1;
         $.post("/update", {taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID}, ()=>{
             window.location.reload();
         })

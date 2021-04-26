@@ -323,24 +323,6 @@
             </div>
             <div class="content middle-contnet">
                 <form action="" class="form middle-content-form">
-                    <!-- <div class="form-item">
-                        <div class="text form-item__text">
-                            Фамилия
-                        </div>
-                        <input type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите фамилию
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Имя
-                        </div>
-                        <input type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите имя
-                        </div>
-                    </div> -->
                     <div class="form-item">
                         <div class="text form-item__text">
                             Категория
@@ -361,15 +343,6 @@
                             Выберите категорию
                         </div>
                     </div>
-                    <!-- <div class="form-item">
-                        <div class="text form-item__text">
-                            Краткое описание задачи
-                        </div>
-                        <input type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите краткое описание задачи
-                        </div>
-                    </div> -->
                     <div class="form-item">
                         <div class="text form-item__text">
                             Полное описание задачи
@@ -408,6 +381,78 @@
                     Закрыть
                 </button>
                 <button class="button bottom-content__button button_save">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="change-task-modal">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title top-content-title" id="change-task-title">
+                </div>
+            </div>
+            <div class="content middle-contnet">
+                <form action="" class="form middle-content-form">
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Категория
+                        </div>
+                        <select name="" id="change_task_categ" class="select form-item-select">
+                            <% for(var i=0; i < categ_name.length; i++) {%>
+                                <% if (categ_name[i].categories == "Государственная"){%>
+                                   <% if (role > 1){ %>
+                                        <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                    <%}%>
+                                <%} else { %>
+                                    <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <%}%>
+  
+                            <% }%>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите категорию
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Полное описание задачи
+                        </div>
+                        <input id="change_task_desc" type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите полное описание задачи
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Дата окончания
+                        </div>
+                        <input id="change_task_deadline" type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Выберите дату окончания
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Статус
+                        </div>
+                        <select name="" id="change_task_status" class="select form-item-select">
+                            <% for(var i=0; i < statuses.length; i++) {%>
+                            <option value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                            <% } %>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите статус
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-change-task-button">
+                    Закрыть
+                </button>
+                <button class="button bottom-content__button button_save change_button_save">
                     Сохранить
                 </button>
             </div>
