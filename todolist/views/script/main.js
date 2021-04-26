@@ -380,13 +380,11 @@ window.onload = function() {
 }
 
 let profileLink = document.querySelectorAll("#profile-link");
-
+let sumbitProfile = document.querySelector("#profile")
 profileLink.forEach((worker)=>{
     worker.addEventListener("click", ()=>{
         let pID = worker.getAttribute("value");
-        console.log(pID);
-        $.post("/profile", {pID}, function(data){
-            $( ".result" ).html( data );
-        })
+        sumbitProfile.value = pID
+        document.querySelector("#profile").submit();
     })
 })

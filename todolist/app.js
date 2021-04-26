@@ -1,3 +1,6 @@
+const fs = require("file-saver");
+const docx = require("docx");
+const { Document, Packer, Paragraph, Table, TableRow, TextRun, TableCell, WidthType } = docx;
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
 const urlencodedParser = bodyParser.urlencoded({extended: false});
@@ -359,3 +362,40 @@ function deleteTask(task){
 function changeTask(info){
     connection.query("update task set task.desc = ? , deadline = ?, fk_id_categories = ?, fk_id_status = ? where id_task = ?", [info.taskDESC, info.taskDEADLINE, info.taskCATEG_ID, info.taskSTATUS_ID, info.taskID])
 }
+
+app.get("/doc", async (req, res) => {
+    const table = new Table({
+        rows: [
+            new TableRow({
+                children: [
+                    new TableCell({
+                        children: [new Paragraph("Hello")],
+                    }),
+                    new TableCell({
+                        children: [new Paragraph("Hello2")],
+                    }),
+                    new TableCell({
+                        children: [new Paragraph("Hello3")],
+                    }),
+                    new TableCell({
+                        children: [new Paragraph("Hello3")],
+                    }),
+                ],
+            }),
+        ],
+        width: {
+            size: 100,
+            type: WidthType.PERCENTAGE,
+        }
+    });
+    const doc = new Document({
+        sections: [{
+            children: [table],
+        }],
+    });
+
+    const b64string = await Packer.toBase64String(doc);
+    
+    res.setHeader('Content-Disposition', 'attachment; filename=My Document.docx');
+    res.send(Buffer.from(b64string, 'base64'));
+})

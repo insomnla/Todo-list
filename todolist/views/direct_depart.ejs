@@ -224,10 +224,10 @@
                 <div class="options">
                     <div class="text options__text"></div>
                     <div class="instruments">
-                        <button disabled class="button instruments__button instruments__button_theme_red instruments__button_bg_trash">
+                        <button class="button instruments__button instruments__button_theme_red instruments__button_bg_trash">
                             Удалить выбранные задачи
                         </button>
-                        <button disabled class="button instruments__button instruments__button_bg_document">
+                        <button class="button instruments__button instruments__button_bg_document">
                             Собрать в отчёт
                         </button>
                         <button class="button instruments__button instruments__button_bg_todo_list">
@@ -311,6 +311,9 @@
             </div>
         </div>
     </section>
+    <form id="profile" action="profile" class="hidden" method="POST">
+        <input name="pID" id="profile" type="submit">
+    </form>
 
     <div class="modal hidden" id="new-task-modal">
         <div class="modal-window">
@@ -426,6 +429,7 @@
     <script src="./script/dataTables.js"></script>
     <script src="./script/theme.js"></script>
     <script src="./script/main.js"></script>
+    <script src="./script/word.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script>
         const socket =  io('http://localhost:3000',{origins:"*"});
