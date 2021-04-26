@@ -67,11 +67,16 @@ button:active {
     display: flex;
     align-items: center;
     column-gap: 30px;
+    position: relative;
 }
 
 .nav__link {
     font-size: 25px;
     text-decoration: none;
+}
+
+.nav-item:hover {
+    background: var(--table-hover);
 }
 
 .nav_width_50 {
@@ -352,6 +357,56 @@ tbody tr td {
     color: var(--text-color);
 }
 
+.current-user-arrow-down {
+    width: 20px;
+    height: 20px;
+}
+
+.nav-item-current-user_after {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    position: absolute;
+    right: 0;
+    bottom: -400px;
+    background: var(--main-color);
+    padding: 20px;
+    z-index: 5;
+    border: 1px solid var(--text-color);
+}
+
+.nav-item-current-user_after-item {
+    width: 100%;
+    padding: 20px 0;
+    cursor: pointer;
+}
+
+.nav-item-current-user_after-item:hover {
+    background: var(--table-hover);
+}
+
+.nav-item-current-user_after-item .text {
+    font-size: 20px;
+}
+
+.nav-item-current-user_after-item .subtitle {
+    font-size: 15px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+}
+
+.exit {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+}
+
+
+
 /* Page-main */
 
 .page-main {
@@ -433,13 +488,10 @@ tbody tr td {
 }
 
 .options {
-    position: absolute;
-    top: 125px;
     width: 100%;
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    opacity: 0;
 }
 
 @keyframes opacity1 {
@@ -496,6 +548,10 @@ tbody tr td {
 
 .instruments__button_bg_refresh {
     background-image: url(../images/refresh.svg);
+}
+
+.instruments__button_bg_todo_list {
+    background-image: url(../images/to-do-list.svg);
 }
 
 .instruments__button {

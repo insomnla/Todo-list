@@ -1,14 +1,17 @@
 let path = document.location.pathname;
 let searchResultMain = path.search('board');
 let searchResultAllTasks = path.search('department');
+let searchResultDirectDepart = path.search('direct_depart');
 let taskToDelete = 0;
 
 let mainTable = document.querySelector("#tasksTable");
 
 let buttonCloseModalAlert = document.querySelector("#close-modal-alert");
 let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
+let buttonToDirectDepart = document.querySelector(".instruments__button_bg_todo_list");
 
 let navItemCurrentUser = document.querySelector(".nav-item-current-user");
+let minProfile = document.querySelector(".nav-item-current-user_after");
 
 let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
 let chengeSelectedTask = document.querySelectorAll(".change-selected-task");
@@ -33,16 +36,24 @@ let rowsOnTable = document.querySelectorAll("tbody>tr");
 let allRowWithCategories = document.querySelectorAll(".categories");
 let allRowWithStatus = document.querySelectorAll(".status");
 
+let hrefOnProfile = document.querySelector(".profile");
+
 setTitleForTitle();
 
 
-console.log(path, searchResultMain, searchResultAllTasks)
+console.log(path, 'Board?', searchResultMain, 'All Tasks?', searchResultAllTasks, 'DirectDepart?', searchResultDirectDepart)
 if(searchResultMain >= 1) {
     let buttonToAllTasks = document.querySelector("#to-all-tasks");
     let buttonNewTask = document.querySelector("#new-task-button");
     let buttonCloseNewTask = document.querySelector("#close-new-task-button");
 
     let titleNewTask = document.querySelector("#new-task-title");
+
+    if(buttonToDirectDepart !== null) {
+        buttonToDirectDepart.onclick = function() {
+            window.location.href = '/direct_depart.html';
+        }
+    }
 
     buttonNewTask.onclick = function() {
         modalNewTask.classList.toggle('hidden');
@@ -68,10 +79,26 @@ if(searchResultMain >= 1) {
     buttonToMain.onclick = function() {
         window.location.href = "/board";
     }
+} else if(searchResultDirectDepart >= 1) {
+    if(buttonToDirectDepart !== null) {
+        buttonToDirectDepart.onclick = function() {
+            window.location.href = '/board';
+        }
+    }
+}
+
+hrefOnProfile.onclick = function() {
+    window.location.href = '/profile.html';
 }
 
 navItemCurrentUser.onclick = function() {
-    window.location.href = "/profile.html";
+    if(minProfile.classList.contains('hidden')) {
+        minProfile.classList.remove('hidden');
+        minProfile.style.animation = 'opacity1 .3s linear forwards';
+    } else {
+        minProfile.style.animation = 'opacity0 .3s linear forwards';
+        setTimeout(()=> minProfile.classList.add('hidden'), 300);
+    }
 }
 
 deleteSelectedTask.forEach((elem)=>{
@@ -273,7 +300,7 @@ window.onload = function() {
     let allTableCheckbox = document.querySelector("#table-checkbox-all");
     let tbodyCheckbox = document.querySelectorAll(".tbody-checkbox");
 
-    if(tbodyCheckbox !== null) {
+    if(tbodyCheckbox !== null && allTableCheckbox !== null) {
         ifChacked();
 
         tbodyCheckbox.forEach((block)=>{
@@ -282,9 +309,6 @@ window.onload = function() {
                     block.classList.remove('table-checkbox_checked');
                     checkedCounterNoVisible--;
                     checkedCounter--;
-                    if (checkedCounterNoVisible == 0) {
-                        mainTable.style.animation = 'crawlUp .6s ease-in-out forwards';
-                    }
                 } else {
                     block.classList.add('table-checkbox_checked');
                     checkedCounterNoVisible++;
@@ -302,9 +326,6 @@ window.onload = function() {
                 })
                 checkedCounter = 0;
                 checkedCounterNoVisible = 0;
-                if (checkedCounterNoVisible == 0) {
-                    mainTable.style.animation = 'crawlUp .6s ease-in-out forwards';
-                }
             } else {
                 allTableCheckbox.classList.add('table-checkbox_checked');
                 tbodyCheckbox.forEach((block)=>{
@@ -318,25 +339,25 @@ window.onload = function() {
         
         function ifChacked() {
             optionsText.textContent = `Выбранных задач: ${checkedCounter}`;
-            if(checkedCounterNoVisible < 1) {
-                allTableCheckbox.classList.remove('table-checkbox_checked');
-            }
-            tbodyCheckbox.forEach(()=>{
-                if(checkedCounterNoVisible > 0) {
-                    mainTable.style.animation = 'crawlDown .6s ease-in-out forwards';
-                    setTimeout(function(){
-                        options.classList.remove('hidden');
-                    }, 300)
-                    setTimeout(function(){
-                        options.style.animation = 'opacity1 .6s linear forwards'
-                    }, 310)
-                } else {
-                    options.style.animation = 'opacity0 .4s linear forwards'
-                    setTimeout(function(){
-                        options.classList.add('hidden');
-                    }, 600)
-                }
-            })  
+            // if(checkedCounterNoVisible < 1) {
+            //     allTableCheckbox.classList.remove('table-checkbox_checked');
+            // }
+            // tbodyCheckbox.forEach(()=>{
+            //     if(checkedCounterNoVisible > 0) {
+            //         mainTable.style.animation = 'crawlDown .6s ease-in-out forwards';
+            //         setTimeout(function(){
+            //             options.classList.remove('hidden');
+            //         }, 300)
+            //         setTimeout(function(){
+            //             options.style.animation = 'opacity1 .6s linear forwards'
+            //         }, 310)
+            //     } else {
+            //         options.style.animation = 'opacity0 .4s linear forwards'
+            //         setTimeout(function(){
+            //             options.classList.add('hidden');
+            //         }, 600)
+            //     }
+            // })  
         }
     }
 }
