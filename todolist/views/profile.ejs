@@ -17,7 +17,7 @@
             <div class="wrapper">
                 <div class="page-header-header-inner">
                     <nav class="nav nav_width_50">
-                        <a href="" class="nav__link nav__link_color_white">Список задач</a>
+                        <a href="/board" class="nav__link nav__link_color_white">Список задач</a>
                         <a href="" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
                     <nav class="nav user_nav nav_width_50">
@@ -100,7 +100,9 @@
                                 </svg>
                             </div>
                             <div class="current-user-user-name">
-                                Шило Сергей
+                                <% for (var i = 0; i < profile.length; i++){%>
+                                <%= profile[i].lname + " " + profile[i].fname%>
+                                <%}%>
                             </div>
                         </div>
                         <div class="nav-item nav-item-log-out">
@@ -137,21 +139,25 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Шило</td>
-                                <td>Сергей</td>
-                                <td>Николаевич</td>
+                                <% for (var i = 0; i < profile.length; i++){%>
+                                <td><%= profile[i].lname %></td>
+                                <td><%= profile[i].fname %></td>
+                                <td><%= profile[i].mname %></td>
                                 <td>88005353535</td>
-                                <td>Shilo@mail.ru</td>
-                                <td>Developer</td>
-                                <td>IT</td>
+                                <td><%= profile[i].mail %></td>
+                                <td><%= profile[i].role %></td>
+                                <td><%= profile[i].department_name %></td>
                                 <td>218</td>
+                                <%}%>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="user-tasks">
                     <table id="userTasksTable" class="display">
-                        <caption><div class="title">Актуальные задачи user name</div></caption>
+                        <caption><div class="title">Актуальные задачи                                 <% for (var i = 0; i < profile.length; i++){%>
+                            <%= profile[i].lname + " " + profile[i].fname%>
+                            <%}%></div></caption>
                         <thead>
                             <tr>
                                 <th class="dt-head-left"><div class="table-checkbox" id="table-checkbox-all"></div></th>
@@ -164,15 +170,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% for (var i = 0; i < tasks.length; i++){%>
                             <tr>
                                 <td><div class="table-checkbox tbody-checkbox"></div></td>
-                                <td>1</td>
-                                <td>Государственная</td>
-                                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi odit mollitia placeat praesentium ab voluptatem sit doloribus laboriosam commodi aliquam? Cum commodi et, nisi nulla aspernatur natus sed error aperiam!</td>
-                                <td>22.04.2021 - 30.04.2021</td>
-                                <td>Активно</td>
+                                <td><%= tasks[i].id_task%></td>
+                                <td><%= tasks[i].categories%></td>
+                                <td><%= tasks[i].desc%></td>
+                                <td><%= tasks[i].dline%></td>
+                                <td><%= tasks[i].status%></td>
                                 <td>Не знаю какие добавить</td>
                             </tr>
+                            <%}%>
                         </tbody>
                     </table>
                 </div>
@@ -185,7 +193,7 @@
     <script src="./script/userInformationTable.js"></script>
     <script src="./script/theme.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-    <!-- <script>
+    <script>
         const socket =  io('http://localhost:3000',{origins:"*"});
         let id = <%= id%>
         let notif = document.querySelector(".name-notif");
@@ -197,6 +205,6 @@
                 console.log(data);
             })
         });
-    </script> -->
+    </script>
 </body>
 </html>

@@ -9,6 +9,7 @@ let mainTable = document.querySelector("#tasksTable");
 let buttonCloseModalAlert = document.querySelector("#close-modal-alert");
 let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
 let buttonToDirectDepart = document.querySelector(".instruments__button_bg_todo_list");
+let buttonBulkDelete = document.querySelector(".instruments__button_bg_trash")
 
 let navItemCurrentUser = document.querySelector(".nav-item-current-user");
 let minProfile = document.querySelector(".nav-item-current-user_after");
@@ -37,6 +38,7 @@ let allRowWithCategories = document.querySelectorAll(".categories");
 let allRowWithStatus = document.querySelectorAll(".status");
 
 let hrefOnProfile = document.querySelector(".profile");
+let titleNewTask = document.querySelector("#new-task-title");
 
 setTitleForTitle();
 
@@ -46,12 +48,11 @@ if(searchResultMain >= 1) {
     let buttonToAllTasks = document.querySelector("#to-all-tasks");
     let buttonNewTask = document.querySelector("#new-task-button");
     let buttonCloseNewTask = document.querySelector("#close-new-task-button");
-
-    let titleNewTask = document.querySelector("#new-task-title");
+;
 
     if(buttonToDirectDepart !== null) {
         buttonToDirectDepart.onclick = function() {
-            window.location.href = '/direct_depart.html';
+            window.location.href = '/direct_depart';
         }
     }
 
@@ -87,8 +88,21 @@ if(searchResultMain >= 1) {
     }
 }
 
+buttonBulkDelete.onclick = function() {
+    let tasksToDelete = document.querySelectorAll(".table-checkbox_checked"),
+        taskToDelete = [];
+    tasksToDelete.forEach((item)=> {
+        if (!(item.getAttribute("value") == null)){
+            taskToDelete.push(item.getAttribute("value"));
+        }
+    })
+    $.post("/delete", {taskToDelete}, function(){
+        location.reload();
+    }) 
+}
+
 hrefOnProfile.onclick = function() {
-    window.location.href = '/profile.html';
+    window.location.href = '/profile';
 }
 
 navItemCurrentUser.onclick = function() {
@@ -361,3 +375,15 @@ window.onload = function() {
         }
     }
 }
+
+let profileLink = document.querySelectorAll("#profile-link");
+
+profileLink.forEach((worker)=>{
+    worker.addEventListener("click", ()=>{
+        let pID = worker.getAttribute("value");
+        console.log(pID);
+        $.post("/profile", {pID}, function(data){
+            $( ".result" ).html( data );
+        })
+    })
+})
