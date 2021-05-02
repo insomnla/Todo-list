@@ -45,7 +45,7 @@ let titleChangeTask = document.querySelector("#change-task-title");
 setTitleForTitle();
 
 
-console.log(path, 'Board?', searchResultMain, 'All Tasks?', searchResultAllTasks, 'DirectDepart?', searchResultDirectDepart)
+console.log(path, 'Board?', searchResultMain, 'All Tasks?', searchResultAllTasks, 'DirectDepart?', searchResultDirectDepart, )
 if(searchResultMain >= 1) {
     let buttonToAllTasks = document.querySelector("#to-all-tasks");
     let buttonNewTask = document.querySelector("#new-task-button");

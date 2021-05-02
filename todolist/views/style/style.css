@@ -609,6 +609,173 @@ tbody tr td {
     justify-content: center;
 }
 
+/* Vacation */
+
+.page-main-inner-vacation {
+    row-gap: 100px;
+}
+
+.after-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.select-year {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 50px;
+    padding: 50px 20px 20px 20px;
+    border: 2px solid var(--border-color);
+    border-top: none;
+    position: relative;
+}
+
+.select-year::before {
+    content: "";
+    width: 100%;
+    height: 4px;
+    background: var(--main-color);
+    position: absolute;
+    top: -3px;
+}
+
+.prev-year, .next-year {
+    width: 50px;
+    height: 50px;
+}
+
+.year {
+    font-size: 50px;
+}
+
+.before-months {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 50px;
+    position: relative;
+}
+
+.back-arrow {
+    position: absolute;
+    left: 0;
+}
+
+.back-arrow svg {
+    width: 100px;
+    height: 100px;
+}
+
+.selected-month {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 50px;
+}
+
+.prev-month, .next-month {
+    width: 50px;
+    height: 50px;
+}
+
+.month {
+    min-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 50px;
+}
+
+.month-item {
+    font-size: 50px;
+}
+
+.month-item:first-child, .month-item:last-child {
+    font-size: 30px;
+    color: var(--table-hover);
+    cursor: pointer;
+}
+
+.months {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 50px;
+    row-gap: 50px;
+}
+
+.month-card {
+    width: calc(25% - 150px);
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--table-hover);
+    border: 5px solid var(--main-color);
+    box-shadow: 0 0 10px 2px var(--text-color);
+    cursor: pointer;
+}
+
+.days {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    flex-wrap: wrap;
+}
+
+.days-name {
+    width: 100%;
+    display: flex;
+}
+
+.days-name-title {
+    width: calc(14.285%);
+    text-align: center;
+}
+
+.calendar {
+    width: 100%;
+    display: flex;
+}
+
+.calendar-item {
+    width: calc(14.285%);
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    /* border: 1px solid var(--border-color);
+    border-top: none;
+    border-bottom: none; */
+}
+
+.day-card {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* padding: 50px 0; */
+    font-size: 50px;
+    /* border: 1px solid var(--border-color);
+    border-left: none;
+    border-right: none; */
+    animation: opacity1 2s ease forwards;
+}
+
+.day-card-info {
+    display: inline-block;
+    padding: 10px;
+}
+
+.empty-dayCard {
+    width: 100px;
+    height: 82px;
+    /* margin: 50px 0; */
+    background: transparent;
+}
+
 /* Profile */
 
 .page-main-inner-profile {

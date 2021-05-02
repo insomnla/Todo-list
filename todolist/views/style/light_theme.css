@@ -27,3 +27,9 @@ table.dataTable thead .sorting_desc {
 .nav-item-theme {
     background: url(../images/light_off.svg) !important;
 }
+
+/* Vacation */
+
+.select-year {
+    border-color: var(--text-color) !important;
+}
