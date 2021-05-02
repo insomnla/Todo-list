@@ -1,3 +1,4 @@
+const url = require('url');
 const fs = require("file-saver");
 const docx = require("docx");
 const { Document, Packer, Paragraph, Table, TableRow, TextRun, TableCell, WidthType } = docx;
@@ -370,22 +371,24 @@ function changeTask(info){
     connection.query("update task set task.desc = ? , deadline = ?, fk_id_categories = ?, fk_id_status = ? where id_task = ?", [info.taskDESC, info.taskDEADLINE, info.taskCATEG_ID, info.taskSTATUS_ID, info.taskID])
 }
 
-app.get("/doc", async (req, res) => {
+app.get("/report", async (req, res) => {
+    let urlRequest = url.parse(req.url, true);
+    let idTasksArray = urlRequest.query.tasks.split(",");
     const table = new Table({
         rows: [
             new TableRow({
                 children: [
                     new TableCell({
-                        children: [new Paragraph("Hello")],
+                        children: [new Paragraph("Название")],
                     }),
                     new TableCell({
-                        children: [new Paragraph("Hello2")],
+                        children: [new Paragraph("Описание")],
                     }),
                     new TableCell({
-                        children: [new Paragraph("Hello3")],
+                        children: [new Paragraph("Ответственный")],
                     }),
                     new TableCell({
-                        children: [new Paragraph("Hello3")],
+                        children: [new Paragraph("Дата выполнения")],
                     }),
                 ],
             }),
@@ -395,14 +398,47 @@ app.get("/doc", async (req, res) => {
             type: WidthType.PERCENTAGE,
         }
     });
-    const doc = new Document({
-        sections: [{
-            children: [table],
-        }],
-    });
-
-    const b64string = await Packer.toBase64String(doc);
+    let tables = [table];
+    for (let i = 0; i< idTasksArray.length; i++){
+        connection.query("select  id_task, task.name, task.desc, concat(lname,' ', fname, ' ' , mname) as fio , CAST(deadline AS CHAR) as dline from task inner join worker on fk_id_worker = id_worker where id_task = ?", [idTasksArray[i]], function(error, results, fields){
+            let tablec = new Table({
+                rows: [
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                children: [new Paragraph(results[0].name)],
+                            }),
+                            new TableCell({
+                                children: [new Paragraph(results[0].desc)],
+                            }),
+                            new TableCell({
+                                children: [new Paragraph(results[0].fio)],
+                            }),
+                            new TableCell({
+                                children: [new Paragraph(results[0].dline)],
+                            }),
+                        ],
+                    }),
+                ],
+                width: {
+                    size: 100,
+                    type: WidthType.PERCENTAGE,
+                }
+            });
+            tables.push(tablec);
+        })
+    };
+    setTimeout(async() => {
+        const doc = new Document({
+            sections: [{
+                children: tables,
+            }],
+        });
     
-    res.setHeader('Content-Disposition', 'attachment; filename=My Document.docx');
-    res.send(Buffer.from(b64string, 'base64'));
+        const b64string = await Packer.toBase64String(doc);
+        
+        res.setHeader('Content-Disposition', 'attachment; filename=report.docx');
+        res.send(Buffer.from(b64string, 'base64'));
+    }, 1000);
+
 })
