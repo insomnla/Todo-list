@@ -252,7 +252,7 @@
                         <tr>
                             <td><div value="<%= tasks[key].id_task %>" class="table-checkbox tbody-checkbox"></div></td>
                             <td><%= tasks[key].id_task %></td>
-                            <td><p id="profile-link" value = "<%= tasks[key].id_worker%>" href=""><%= tasks[key].fio %></p></td>
+                            <td><p id="profile-link" value = "<%= tasks[key].id_worker%>" href="/profile?ID=<%= tasks[key].id_worker%>"><%= tasks[key].fio %></p></td>
                             <td class="categories"><%= tasks[key].categories %></td>
                             <td><%= tasks[key].desc %></td>
                             <td><%= tasks[key].dline %></td>
@@ -311,10 +311,9 @@
             </div>
         </div>
     </section>
-    <form id="profile" action="profile" class="hidden" method="POST">
-        <input name="pID" id="profile" type="submit">
+    <form name="pID" id="profile" action="/profile" class="hidden" method="POST">
+        <input class="profile_id" name="pID" id="profile" type="submit">
     </form>
-
     <div class="modal hidden" id="new-task-modal">
         <div class="modal-window">
             <div class="content top-content">

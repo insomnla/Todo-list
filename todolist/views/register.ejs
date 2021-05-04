@@ -77,22 +77,6 @@
                         Введите коректное отчество
                     </label>
                 </div>
-                <div class="input-box">
-                <select name="role" id="" class="select filters-item-select">
-                    <option selected value="All">Все</option>
-                    <% for(var i=0; i < roles.length; i++) {%>
-                    <option value="<%= roles[i].id_role%>"><%= roles[i].role%></option>
-                    <% }%>
-                </select>
-                </div>
-                <div class="input-box">
-                    <select name="department" id="" class="select filters-item-select">
-                        <option selected value="All">Все</option>
-                        <% for(var i=0; i < departments.length; i++) {%>
-                        <option value="<%= departments[i].id_department%>"><%= departments[i].department_name%></option>
-                        <% }%>
-                    </select>
-                    </div>
                 <%- include ('./partials/messages') %>
                 <input class="form-reg__submit" type="submit" value="Войти">
             </form>

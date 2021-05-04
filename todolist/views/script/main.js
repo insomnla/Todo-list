@@ -391,13 +391,13 @@ window.onload = function() {
         }
     }
 }
-
+let profileID = document.querySelector(".profile_id")
 let profileLink = document.querySelectorAll("#profile-link");
 let sumbitProfile = document.querySelector("#profile")
 profileLink.forEach((worker)=>{
     worker.addEventListener("click", ()=>{
         let pID = worker.getAttribute("value");
-        sumbitProfile.value = pID
-        document.querySelector("#profile").submit();
+        profileID.innerHTML = pID
+        document.forms['pID'].submit();
     })
 })

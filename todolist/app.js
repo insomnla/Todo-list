@@ -167,11 +167,20 @@ app.post('/register', (req, res) => {
         res.render('welcome')
     }
     }, 100)
-    connection.query("INSERT INTO worker (lname, fname, mname, pass, mail, fk_id_role, fk_id_department, login) VALUES(?,?,?,?,?,?,?,?)", [req.body.lname, req.body.fname, req.body.mname, req.body.pass, req.body.mail, req.body.role, req.body.department, req.body.login]);
+    connection.query("INSERT INTO worker (lname, fname, mname, pass, mail, fk_id_role, fk_id_department, login) VALUES(?,?,?,?,?,0,0,?)", [req.body.lname, req.body.fname, req.body.mname, req.body.pass, req.body.mail, req.body.login]);
 })
 
 app.get('/board', ensureAuthenticated , (req, res) => {
     getBoard(req,res);
+})
+
+app.get("/admin", ensureAuthenticated, (req, res) => {
+    if (req.session.userid == 0){
+        res.render('admin')
+    }
+    else {
+        getBoard(req,res);
+    }
 })
 
 app.post('/board', ensureAuthenticated , (req, res) => {
@@ -231,10 +240,10 @@ app.get("/profile", ensureAuthenticated, (req, res)=>{
 })
 
 app.post("/profile", ensureAuthenticated,(req, res)=>{
+    console.log(req.body);
     connection.query("select lname, fname, mname, mail, role, department_name from worker inner join role on id_role = fk_id_role inner join department on id_department = fk_id_department where id_worker = ? ", [req.body.pID], function(error,results,fields){
         profile = results;
     })
-    console.log(req.body.pID);
     connection.query("select  id_task, categories.categories, task.desc, CAST(deadline AS CHAR) as dline, status.status from task inner join status on fk_id_status = id_status inner join categories on fk_id_categories = id_categories where fk_id_worker = ? and status = 'Активен'", [req.body.pID], function(error, results, fields) {
         res.render('profile', {
             profile : profile,
