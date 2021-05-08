@@ -21,7 +21,7 @@
                         <a href="vacation-rework.html" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
                     <nav class="nav user_nav nav_width_50">
-                        <div class="nav-item nav-item-theme">
+                        <div class="nav-item nav-item-theme customization">
                         </div>
                         <div class="nav-item nav-item_notification">
                             <svg class="fill_white nav__svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -160,21 +160,25 @@
                             <%}%></div></caption>
                         <thead>
                             <tr>
+                                <th class="dt-head-left"><div class="table-checkbox" id="table-checkbox-all"></div></th>
                                 <th class="dt-head-left">ID</th>
                                 <th class="dt-head-left">Категория</th>
                                 <th class="dt-head-left">Описание задачи</th>
                                 <th class="dt-head-left">Дата</th>
                                 <th class="dt-head-left">Статус</th>
+                                <th class="dt-head-left">Действия</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% for (var i = 0; i < tasks.length; i++){%>
                             <tr>
+                                <td><div class="table-checkbox tbody-checkbox"></div></td>
                                 <td><%= tasks[i].id_task%></td>
                                 <td><%= tasks[i].categories%></td>
                                 <td><%= tasks[i].desc%></td>
                                 <td><%= tasks[i].dline%></td>
                                 <td><%= tasks[i].status%></td>
+                                <td>Не знаю какие добавить</td>
                             </tr>
                             <%}%>
                         </tbody>
@@ -184,10 +188,258 @@
         </div>
     </section>
 
+    <section class="page-main">
+        <div class="wrapper">
+            <div class="page-main-inner page-main-inner-profile">
+                <div class="user-information">
+                    <table id="allUsers" class="display">
+                        <caption><div class="title">Все сотрудники</div></caption>
+                        <thead>
+                            <tr>
+                                <th class="dt-head-left">ID</th>
+                                <th class="dt-head-left">Фамилия</th>
+                                <th class="dt-head-left">Имя</th>
+                                <th class="dt-head-left">Отчество</th>
+                                <th class="dt-head-left">Телефон</th>
+                                <th class="dt-head-left">Почта</th>
+                                <th class="dt-head-left">Должность</th>
+                                <th class="dt-head-left">Отделение</th>
+                                <th class="dt-head-left">Кабинет</th>
+                                <th class="dt-head-left">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Шило</td>
+                                <td>Сергей</td>
+                                <td>Николаевич</td>
+                                <td>88005553535</td>
+                                <td>shilo@mail.ru</td>
+                                <td>Работник</td>
+                                <td>IT</td>
+                                <td>218</td>
+                                <td>
+                                    <div class="actions">
+                                        <div class="actions-item actions-item_disabled change-selected-task" data-id="2" title="Изменить">
+                                            <svg style="fill:#509af7" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
+                                        </div>
+                                        <div class="actions-item delete-selected-task" data-id="2" title="Удалить">
+                                            <svg  style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
+                                        </div>
+                                        <div class="actions-item more" data-id="2" title="Больше">
+                                            <svg style="fill:var(--text-color);" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
+                                                <g>
+                                                    <g>
+                                                        <circle cx="192" cy="42.667" r="42.667"/>
+                                                    </g>
+                                                </g>
+                                                <g>
+                                                    <g>
+                                                        <circle cx="192" cy="192" r="42.667"/>
+                                                    </g>
+                                                </g>
+                                                <g>
+                                                    <g>
+                                                        <circle cx="192" cy="341.333" r="42.667"/>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                            <div class="list-more hidden">
+                                                <div class="list-more-item">
+                                                    Статус: выполненно
+                                                </div>
+                                                <div class="list-more-item">
+                                                    Статус: выполненно
+                                                </div>
+                                                <div class="list-more-item">
+                                                    Статус: выполненно
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-main">
+        <div class="wrapper">
+            <div class="page-main-inner page-main-inner-profile">
+                <div class="user-information">
+                    <table id="allTasks" class="display">
+                        <caption><div class="title">Все задачи</div></caption>
+                        <thead>
+                            <tr>
+                                <th class="dt-head-left">ID</th>
+                                <th class="dt-head-left">Название</th>
+                                <th class="dt-head-left">Описание</th>
+                                <th class="dt-head-left">Сроки</th>
+                                <th class="dt-head-left">Сотрудники</th>
+                                <th class="dt-head-left">Категория</th>
+                                <th class="dt-head-left">Статус</th>
+                                <th class="dt-head-left">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Название</td>
+                                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus numquam incidunt doloribus consequatur, blanditiis harum repellat soluta enim cumque praesentium eum quae eos tenetur vel vero ad ea, perferendis qui.</td>
+                                <td>20.04.2021 - 29.04.2021</td>
+                                <td>Шило Сергей</td>
+                                <td>Работа</td>
+                                <td>Активно</td>
+                                <td>
+                                    <div class="actions">
+                                        <div class="actions-item actions-item_disabled change-selected-task" data-id="2" title="Изменить">
+                                            <svg style="fill:#509af7" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
+                                        </div>
+                                        <div class="actions-item delete-selected-task" data-id="2" title="Удалить">
+                                            <svg  style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
+                                        </div>
+                                        <div class="actions-item more" data-id="2" title="Больше">
+                                            <svg style="fill:var(--text-color);" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
+                                                <g>
+                                                    <g>
+                                                        <circle cx="192" cy="42.667" r="42.667"/>
+                                                    </g>
+                                                </g>
+                                                <g>
+                                                    <g>
+                                                        <circle cx="192" cy="192" r="42.667"/>
+                                                    </g>
+                                                </g>
+                                                <g>
+                                                    <g>
+                                                        <circle cx="192" cy="341.333" r="42.667"/>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                            <div class="list-more hidden">
+                                                <div class="list-more-item">
+                                                    Статус: выполненно
+                                                </div>
+                                                <div class="list-more-item">
+                                                    Статус: выполненно
+                                                </div>
+                                                <div class="list-more-item">
+                                                    Статус: выполненно
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal hidden" id="change-task-modal">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title top-content-title" id="change-task-title">
+                </div>
+            </div>
+            <div class="content middle-contnet">
+                <form action="" class="form middle-content-form">
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Категория
+                        </div>
+                        <select name="" id="change_task_categ" class="select form-item-select">
+                            <% for(var i=0; i < categ_name.length; i++) {%>
+                                <% if (categ_name[i].categories == "Государственная"){%>
+                                   <% if (role > 1){ %>
+                                        <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                    <%}%>
+                                <%} else { %>
+                                    <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <%}%>
+  
+                            <% }%>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите категорию
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Полное описание задачи
+                        </div>
+                        <input id="change_task_desc" type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите полное описание задачи
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Дата окончания
+                        </div>
+                        <input id="change_task_deadline" type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Выберите дату окончания
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Статус
+                        </div>
+                        <select name="" id="change_task_status" class="select form-item-select">
+                            <% for(var i=0; i < statuses.length; i++) {%>
+                            <option id="change-option" value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                            <% } %>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите статус
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-change-task-button">
+                    Закрыть
+                </button>
+                <button class="button bottom-content__button button_save change_button_save">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="delete-task-modal-alert">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title">Удаление задачи</div>
+            </div>
+            <div class="content middle-content">
+                <div class="text">Вы уверены что хотите удалить эту задачу?</div>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-modal-alert">
+                    Отмена
+                </button>
+                <button class="button bottom-content__button" id="yes-modal-alert">
+                    Удалить
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
     <script src="./script/userInformationTable.js"></script>
     <script src="./script/theme.js"></script>
+    <script src="./script/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script>
         const socket =  io('http://localhost:3000',{origins:"*"});

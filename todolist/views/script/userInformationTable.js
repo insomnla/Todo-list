@@ -60,3 +60,69 @@ $(document).ready(function() {
         },
     });
 });
+
+let allUsers = document.querySelector("#allUsers");
+let allTasks = document.querySelector("#allTasks");
+let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
+
+buttonCloseChangeTask.onclick = function() {
+    modalChangeTask.classList.toggle('hidden');
+}
+
+if(allUsers !== null) {
+    $('#allUsers').DataTable( {
+        "paging":   false,
+        "info":     false,
+        "searching": true,
+        "order": [[ 0, "asc" ]],
+        columnDefs: [
+            { orderable: false, targets: 9 }
+        ],
+        language: {
+            "loadingRecords": "Загрузка...",
+            "processing":     "В процессе...",
+            "search":         "Поиск:",
+            "emptyTable":     "Список задач пуст",
+            "zeroRecords":    "По вашему запросу ничего не найдено",
+            "paginate": {
+                "first":      "Первый",
+                "last":       "Последний",
+                "next":       "Следующий",
+                "previous":   "Предыдущий"
+            },
+            "aria": {
+                "sortAscending":  ": активирована сортировка колонок по возврастанию",
+                "sortDescending": ": активирована сортировка колонок по убыванию"
+            }
+        },
+    });
+}
+
+if(allTasks !== null) {
+    $('#allTasks').DataTable( {
+        "paging":   false,
+        "info":     false,
+        "searching": true,
+        "order": [[ 0, "asc" ]],
+        columnDefs: [
+            { orderable: false, targets: 7 }
+        ],
+        language: {
+            "loadingRecords": "Загрузка...",
+            "processing":     "В процессе...",
+            "search":         "Поиск:",
+            "emptyTable":     "Список задач пуст",
+            "zeroRecords":    "По вашему запросу ничего не найдено",
+            "paginate": {
+                "first":      "Первый",
+                "last":       "Последний",
+                "next":       "Следующий",
+                "previous":   "Предыдущий"
+            },
+            "aria": {
+                "sortAscending":  ": активирована сортировка колонок по возврастанию",
+                "sortDescending": ": активирована сортировка колонок по убыванию"
+            }
+        },
+    });
+}
