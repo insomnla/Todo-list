@@ -18,7 +18,7 @@
                 <div class="page-header-header-inner">
                     <nav class="nav nav_width_50">
                         <a href="" class="nav__link nav__link_color_white">Список задач</a>
-                        <a href="" class="nav__link nav__link_color_white">Отпуска</a>
+                        <a href="vacation-rework.html" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
                     <nav class="nav user_nav nav_width_50">
                         <div class="nav-item nav-item-theme">
@@ -342,6 +342,15 @@
                     </div>
                     <div class="form-item">
                         <div class="text form-item__text">
+                            Название задачи
+                        </div>
+                        <input id="new_task_name" type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите название задачи
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
                             Полное описание задачи
                         </div>
                         <input id="new_task_desc" type="text" class="form-item__input">
@@ -477,7 +486,7 @@
 
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
-    <script src="./script/dataTables.js"></script>
+    <script src="./script/board.js"></script>
     <script src="./script/theme.js"></script>
     <script src="./script/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>

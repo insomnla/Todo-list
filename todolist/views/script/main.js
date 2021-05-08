@@ -1,14 +1,10 @@
-let path = document.location.pathname;
-let searchResultMain = path.search('board');
-let searchResultAllTasks = path.search('department');
-let searchResultDirectDepart = path.search('direct_depart');
 let taskToDelete = 0;
 
 let mainTable = document.querySelector("#tasksTable");
 
 let buttonCloseModalAlert = document.querySelector("#close-modal-alert");
 let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
-let buttonToDirectDepart = document.querySelector(".instruments__button_bg_todo_list");
+
 let buttonBulkDelete = document.querySelector(".instruments__button_bg_trash");
 let buttonNTask = document.querySelector(".button_save");
 
@@ -44,53 +40,6 @@ let titleChangeTask = document.querySelector("#change-task-title");
 
 setTitleForTitle();
 
-
-console.log(path, 'Board?', searchResultMain, 'All Tasks?', searchResultAllTasks, 'DirectDepart?', searchResultDirectDepart, )
-if(searchResultMain >= 1) {
-    let buttonToAllTasks = document.querySelector("#to-all-tasks");
-    let buttonNewTask = document.querySelector("#new-task-button");
-    let buttonNewCloseTask = document.querySelector("#close-new-task-button");
-    let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
-;
-
-    if(buttonToDirectDepart !== null) {
-        buttonToDirectDepart.onclick = function() {
-            window.location.href = '/direct_depart';
-        }
-    }
-
-    buttonNewTask.onclick = function() {
-        modalNewTask.classList.toggle('hidden');
-    }
-    buttonNewCloseTask.onclick = function() {
-        modalNewTask.classList.toggle('hidden');
-    }
-    buttonCloseChangeTask.onclick = function() {
-        modalChangeTask.classList.toggle('hidden');
-    }
-
-    buttonToAllTasks.onclick = function() {
-        window.location.href = "/department";
-    }
-
-} else if(searchResultAllTasks >= 1) {
-    let buttonToMain = document.querySelector("#to-main");
-    let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
-
-    buttonCloseChangeTask.onclick = function() {
-        modalChangeTask.classList.toggle('hidden');
-    }
-
-    buttonToMain.onclick = function() {
-        window.location.href = "/board";
-    }
-} else if(searchResultDirectDepart >= 1) {
-    if(buttonToDirectDepart !== null) {
-        buttonToDirectDepart.onclick = function() {
-            window.location.href = '/board';
-        }
-    }
-}
 buttonNTask.onclick = function(){
     let desc = document.querySelector("#new_task_desc"),
         deadline = document.querySelector("#new_task_deadline"),
@@ -103,17 +52,19 @@ buttonNTask.onclick = function(){
         })
 }
 
-buttonBulkDelete.onclick = function() {
-    let tasksToDelete = document.querySelectorAll(".table-checkbox_checked"),
-        taskToDelete = [];
-    tasksToDelete.forEach((item)=> {
-        if (!(item.getAttribute("value") == null)){
-            taskToDelete.push(item.getAttribute("value"));
-        }
-    })
-    $.post("/delete", {taskToDelete}, function(){
-        location.reload();
-    }) 
+if (buttonBulkDelete !== null) {
+    buttonBulkDelete.onclick = function() {
+        let tasksToDelete = document.querySelectorAll(".table-checkbox_checked"),
+            taskToDelete = [];
+        tasksToDelete.forEach((item)=> {
+            if (!(item.getAttribute("value") == null)){
+                taskToDelete.push(item.getAttribute("value"));
+            }
+        })
+        $.post("/delete", {taskToDelete}, function(){
+            location.reload();
+        }) 
+    }
 }
 
 hrefOnProfile.onclick = function() {
@@ -139,7 +90,6 @@ deleteSelectedTask.forEach((elem)=>{
 
 buttonCloseModalAlert.onclick = function() {
     modalAlertDeletTask.classList.toggle('hidden');
-    console.log('closed');
     taskToDelete = 0;
 }
 
@@ -148,7 +98,6 @@ buttonYesModalAlert.onclick = function() {
         location.reload();
     })
     modalAlertDeletTask.classList.toggle('hidden');
-    console.log('deleted');
 }
 
 chengeSelectedTask.forEach((elem)=>{
@@ -283,9 +232,7 @@ function checkForEmptiness() {
             counter++;
             if(counter == rowsOnTable.length) {
                 document.querySelector(".after-table").classList.remove('hidden');
-                console.log('Table is empty');
             }
-            console.log(elem.classList, counter);
         }
     })
 } 

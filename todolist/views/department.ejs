@@ -10,18 +10,17 @@
     <link rel="stylesheet" href="./style/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
-    <script src="./script/dataTables.js"></script>
 </head>
 <body>
     <section class="page-header">
         <header class="header page-header-header page-header-header_theme_main-color">
             <div class="wrapper">
                 <div class="page-header-header-inner">
-                    <nav class="nav nav_width_25">
-                        <a href="/board" class="nav__link nav__link_color_white">Список задач</a>
-                        <a href="" class="nav__link nav__link_color_white">Отпуска</a>
+                    <nav class="nav nav_width_50">
+                        <a href="" class="nav__link nav__link_color_white">Список задач</a>
+                        <a href="vacation-rework.html" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
-                    <nav class="nav user_nav nav_width_25">
+                    <nav class="nav user_nav nav_width_50">
                         <div class="nav-item nav-item-theme">
                         </div>
                         <div class="nav-item nav-item_notification">
@@ -55,6 +54,9 @@
                             </svg>
                         </div>
                         <div class="nav-item nav-item-current-user">
+                            <div class="current-user-user-name">
+                                <%= info %>
+                            </div>
                             <div class="user-avatar">
                                 <svg class="fill_white nav__svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
@@ -100,12 +102,81 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="current-user-user-name">
-                                <%= info %>
+                            <div class="current-user-arrow-down">
+                                <svg class="fill_white" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 490.688 490.688" style="enable-background:new 0 0 490.688 490.688;" xml:space="preserve">
+                                    <path style="fill:#d3d3d3;" d="M472.328,120.529L245.213,347.665L18.098,120.529c-4.237-4.093-10.99-3.975-15.083,0.262
+                                        c-3.992,4.134-3.992,10.687,0,14.82l234.667,234.667c4.165,4.164,10.917,4.164,15.083,0l234.667-234.667
+                                        c4.237-4.093,4.354-10.845,0.262-15.083c-4.093-4.237-10.845-4.354-15.083-0.262c-0.089,0.086-0.176,0.173-0.262,0.262
+                                        L472.328,120.529z"/>
+                                    <path d="M245.213,373.415c-2.831,0.005-5.548-1.115-7.552-3.115L2.994,135.633c-4.093-4.237-3.975-10.99,0.262-15.083
+                                        c4.134-3.992,10.687-3.992,14.82,0l227.136,227.115l227.115-227.136c4.093-4.237,10.845-4.354,15.083-0.262
+                                        c4.237,4.093,4.354,10.845,0.262,15.083c-0.086,0.089-0.173,0.176-0.262,0.262L252.744,370.279
+                                        C250.748,372.281,248.039,373.408,245.213,373.415z"/>
+                                </svg>
                             </div>
                         </div>
-                        <div class="nav-item nav-item-log-out">
-                            <svg class="fill_white nav__svg" id="light" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m13.5 21h-4c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h4c.827 0 1.5-.673 1.5-1.5v-5c0-.276.224-.5.5-.5s.5.224.5.5v5c0 1.378-1.121 2.5-2.5 2.5z"/></g><g><path d="m23.5 11h-10c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h10c.276 0 .5.224.5.5s-.224.5-.5.5z"/></g><g><path d="m8 24c-.22 0-.435-.037-.638-.109l-5.99-1.997c-.82-.273-1.372-1.035-1.372-1.894v-18c0-1.103.897-2 2-2 .222 0 .438.037.639.11l5.989 1.996c.82.272 1.372 1.034 1.372 1.894v18c0 1.103-.897 2-2 2zm-6-23c-.552 0-1 .449-1 1v18c0 .428.276.808.688.946l6 2c.656.233 1.312-.292 1.312-.946v-18c0-.429-.276-.809-.688-.945l-6-2c-.103-.037-.208-.055-.312-.055z"/></g><g><path d="m15.5 8c-.276 0-.5-.224-.5-.5v-5c0-.827-.673-1.5-1.5-1.5h-11.5c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h11.5c1.379 0 2.5 1.122 2.5 2.5v5c0 .276-.224.5-.5.5z"/></g><g><path d="m19.5 15c-.128 0-.256-.049-.354-.146-.195-.195-.195-.512 0-.707l3.646-3.646-3.646-3.646c-.195-.195-.195-.512 0-.707s.512-.195.707 0l4 4c.195.195.195.512 0 .707l-4 4c-.097.096-.225.145-.353.145z"/></g></svg>
+                        <div class="nav-item-current-user_after hidden">
+                            <div class="profile nav-item-current-user_after-item">
+                                <svg class="fill_white nav__svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
+                                <g>
+                                    <g>
+                                        <path d="M240,0C107.664,0,0,107.664,0,240c0,57.96,20.656,111.184,54.992,152.704c0.088,0.12,0.096,0.272,0.192,0.384
+                                            c24.792,29.896,55.928,52.816,90.624,67.624c0.4,0.168,0.792,0.352,1.192,0.52c2.808,1.184,5.648,2.28,8.496,3.352
+                                            c1.12,0.424,2.24,0.856,3.376,1.264c2.456,0.88,4.928,1.712,7.416,2.512c1.592,0.512,3.184,1.016,4.792,1.496
+                                            c2.2,0.656,4.408,1.288,6.632,1.888c1.952,0.528,3.92,1.016,5.888,1.488c1.992,0.48,3.992,0.96,6,1.384
+                                            c2.24,0.48,4.504,0.904,6.776,1.32c1.824,0.336,3.64,0.688,5.48,0.984c2.52,0.408,5.056,0.728,7.6,1.056
+                                            c1.64,0.208,3.272,0.448,4.92,0.624c2.88,0.304,5.784,0.52,8.696,0.72c1.352,0.096,2.696,0.24,4.056,0.312
+                                            c4.248,0.24,8.544,0.368,12.872,0.368s8.624-0.128,12.888-0.352c1.36-0.072,2.704-0.216,4.056-0.312
+                                            c2.912-0.208,5.816-0.416,8.696-0.72c1.648-0.176,3.28-0.416,4.92-0.624c2.544-0.328,5.08-0.648,7.6-1.056
+                                            c1.832-0.296,3.656-0.648,5.48-0.984c2.264-0.416,4.528-0.84,6.776-1.32c2.008-0.432,4-0.904,6-1.384
+                                            c1.968-0.48,3.936-0.968,5.888-1.488c2.224-0.592,4.432-1.232,6.632-1.888c1.608-0.48,3.2-0.984,4.792-1.496
+                                            c2.488-0.8,4.96-1.632,7.416-2.512c1.128-0.408,2.248-0.84,3.376-1.264c2.856-1.072,5.688-2.176,8.496-3.352
+                                            c0.4-0.168,0.792-0.352,1.192-0.52c34.688-14.808,65.832-37.728,90.624-67.624c0.096-0.112,0.104-0.272,0.192-0.384
+                                            C459.344,351.184,480,297.96,480,240C480,107.664,372.336,0,240,0z M337.256,441.76c-0.12,0.056-0.232,0.12-0.352,0.176
+                                            c-2.856,1.376-5.76,2.672-8.688,3.936c-0.664,0.28-1.32,0.568-1.984,0.848c-2.56,1.072-5.152,2.088-7.76,3.064
+                                            c-1.088,0.408-2.176,0.808-3.272,1.192c-2.312,0.824-4.632,1.616-6.976,2.368c-1.456,0.464-2.92,0.904-4.384,1.336
+                                            c-2.08,0.624-4.168,1.224-6.28,1.784c-1.776,0.472-3.568,0.904-5.36,1.328c-1.88,0.448-3.752,0.904-5.648,1.304
+                                            c-2.072,0.44-4.16,0.816-6.24,1.192c-1.688,0.312-3.368,0.64-5.072,0.912c-2.344,0.368-4.712,0.664-7.072,0.96
+                                            c-1.496,0.192-2.984,0.416-4.496,0.576c-2.696,0.288-5.416,0.472-8.128,0.664c-1.208,0.08-2.408,0.216-3.632,0.28
+                                            c-3.96,0.208-7.928,0.32-11.912,0.32s-7.952-0.112-11.904-0.32c-1.216-0.064-2.416-0.192-3.632-0.28
+                                            c-2.72-0.184-5.432-0.376-8.128-0.664c-1.512-0.16-3-0.384-4.496-0.576c-2.36-0.296-4.728-0.592-7.072-0.96
+                                            c-1.704-0.272-3.384-0.6-5.072-0.912c-2.088-0.376-4.176-0.76-6.24-1.192c-1.896-0.4-3.776-0.856-5.648-1.304
+                                            c-1.792-0.432-3.584-0.856-5.36-1.328c-2.104-0.56-4.2-1.168-6.28-1.784c-1.464-0.432-2.928-0.872-4.384-1.336
+                                            c-2.344-0.752-4.672-1.544-6.976-2.368c-1.096-0.392-2.184-0.792-3.272-1.192c-2.608-0.976-5.2-1.992-7.76-3.064
+                                            c-0.664-0.272-1.312-0.56-1.976-0.84c-2.928-1.256-5.832-2.56-8.696-3.936c-0.12-0.056-0.232-0.112-0.352-0.176
+                                            c-27.912-13.504-52.568-32.672-72.576-55.952c15.464-56.944,59.24-102.848,115.56-121.112c1.112,0.68,2.272,1.288,3.416,1.928
+                                            c0.672,0.376,1.336,0.776,2.016,1.136c2.384,1.264,4.8,2.448,7.272,3.512c1.896,0.832,3.856,1.536,5.808,2.256
+                                            c0.384,0.136,0.768,0.288,1.152,0.424c10.848,3.84,22.456,6.04,34.6,6.04s23.752-2.2,34.592-6.04
+                                            c0.384-0.136,0.768-0.288,1.152-0.424c1.952-0.72,3.912-1.424,5.808-2.256c2.472-1.064,4.888-2.248,7.272-3.512
+                                            c0.68-0.368,1.344-0.76,2.016-1.136c1.144-0.64,2.312-1.248,3.432-1.936c56.32,18.272,100.088,64.176,115.56,121.112
+                                            C389.824,409.08,365.168,428.248,337.256,441.76z M152,176c0-48.52,39.48-88,88-88s88,39.48,88,88
+                                            c0,30.864-16.008,58.024-40.128,73.736c-3.152,2.048-6.432,3.88-9.8,5.48c-0.4,0.192-0.792,0.392-1.192,0.576
+                                            c-23.168,10.536-50.592,10.536-73.76,0c-0.4-0.184-0.8-0.384-1.192-0.576c-3.376-1.6-6.648-3.432-9.8-5.48
+                                            C168.008,234.024,152,206.864,152,176z M421.832,370.584c-18.136-53.552-59.512-96.832-112.376-117.392
+                                            C330.6,234.144,344,206.64,344,176c0-57.344-46.656-104-104-104s-104,46.656-104,104c0,30.64,13.4,58.144,34.552,77.192
+                                            c-52.864,20.568-94.24,63.84-112.376,117.392C31.672,333.792,16,288.704,16,240C16,116.488,116.488,16,240,16s224,100.488,224,224
+                                            C464,288.704,448.328,333.792,421.832,370.584z"/>
+                                    </g>
+                                </g>
+                            </svg>
+                                <div class="profile-info">
+                                    <div class="text"> <%= info %></div>
+                                    <div class="subtitle">Перейти в личный кабинет</div>
+                                </div>
+                            </div>
+                            <hr class="nav-item-current-user_after__hr">
+                            <div class="customization nav-item-current-user_after-item">
+                                <div class="text">Настройки</div>
+                            </div>
+                            <hr class="nav-item-current-user_after__hr">
+                            <div class="exit nav-item-current-user_after-item">
+                                <svg class="fill_white nav__svg" id="light" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m13.5 21h-4c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h4c.827 0 1.5-.673 1.5-1.5v-5c0-.276.224-.5.5-.5s.5.224.5.5v5c0 1.378-1.121 2.5-2.5 2.5z"/></g><g><path d="m23.5 11h-10c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h10c.276 0 .5.224.5.5s-.224.5-.5.5z"/></g><g><path d="m8 24c-.22 0-.435-.037-.638-.109l-5.99-1.997c-.82-.273-1.372-1.035-1.372-1.894v-18c0-1.103.897-2 2-2 .222 0 .438.037.639.11l5.989 1.996c.82.272 1.372 1.034 1.372 1.894v18c0 1.103-.897 2-2 2zm-6-23c-.552 0-1 .449-1 1v18c0 .428.276.808.688.946l6 2c.656.233 1.312-.292 1.312-.946v-18c0-.429-.276-.809-.688-.945l-6-2c-.103-.037-.208-.055-.312-.055z"/></g><g><path d="m15.5 8c-.276 0-.5-.224-.5-.5v-5c0-.827-.673-1.5-1.5-1.5h-11.5c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h11.5c1.379 0 2.5 1.122 2.5 2.5v5c0 .276-.224.5-.5.5z"/></g><g><path d="m19.5 15c-.128 0-.256-.049-.354-.146-.195-.195-.195-.512 0-.707l3.646-3.646-3.646-3.646c-.195-.195-.195-.512 0-.707s.512-.195.707 0l4 4c.195.195.195.512 0 .707l-4 4c-.097.096-.225.145-.353.145z"/></g></svg>
+                                <div class="exit-info">
+                                    <div class="text">Выйти</div>
+                                </div>
+                            </div>
                         </div>
                     </nav>
                 </div>
@@ -147,7 +218,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="options hidden">
+                <div class="options">
                     <div class="text options__text">
                         Выбранных задач: 10
                     </div>
@@ -240,55 +311,46 @@
     <div class="modal hidden" id="new-task-modal">
         <div class="modal-window">
             <div class="content top-content">
-                <div class="title">
-                    Изменения задачи "Нужно установить принтер"
+                <div class="title top-content-title" id="new-task-title">
+                    Создание новой задачи
                 </div>
             </div>
             <div class="content middle-contnet">
                 <form action="" class="form middle-content-form">
-                    <!-- <div class="form-item">
-                        <div class="text form-item__text">
-                            Фамилия
-                        </div>
-                        <input type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите фамилию
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Имя
-                        </div>
-                        <input type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите имя
-                        </div>
-                    </div> -->
                     <div class="form-item">
                         <div class="text form-item__text">
                             Категория
                         </div>
-                        <select name="" id="" class="select form-item-select">
-                            <option value="1">Все</option>
+                        <select name="" id="new_task_categ" class="select form-item-select">
+                            <% for(var i=0; i < categ_name.length; i++) {%>
+                                <% if (categ_name[i].categories == "Государственная"){%>
+                                   <% if (role > 1){ %>
+                                        <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                    <%}%>
+                                <%} else { %>
+                                    <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <%}%>
+  
+                            <% }%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите категорию
                         </div>
                     </div>
-                    <!-- <div class="form-item">
+                    <div class="form-item">
                         <div class="text form-item__text">
-                            Краткое описание задачи
+                            Название задачи
                         </div>
-                        <input type="text" class="form-item__input">
+                        <input id="new_task_name" type="text" class="form-item__input">
                         <div class="subtitle form-item__subtitle">
-                            Введите краткое описание задачи
+                            Введите название задачи
                         </div>
-                    </div> -->
+                    </div>
                     <div class="form-item">
                         <div class="text form-item__text">
                             Полное описание задачи
                         </div>
-                        <input type="text" class="form-item__input">
+                        <input id="new_task_desc" type="text" class="form-item__input">
                         <div class="subtitle form-item__subtitle">
                             Введите полное описание задачи
                         </div>
@@ -297,7 +359,7 @@
                         <div class="text form-item__text">
                             Дата окончания
                         </div>
-                        <input type="text" class="form-item__input">
+                        <input id="new_task_deadline" type="text" class="form-item__input">
                         <div class="subtitle form-item__subtitle">
                             Выберите дату окончания
                         </div>
@@ -306,8 +368,10 @@
                         <div class="text form-item__text">
                             Статус
                         </div>
-                        <select name="" id="" class="select form-item-select">
-                            <option value="1">Все</option>
+                        <select name="" id="new_task_status" class="select form-item-select">
+                            <% for(var i=0; i < statuses.length; i++) {%>
+                            <option value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                            <% } %>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите статус
@@ -320,6 +384,78 @@
                     Закрыть
                 </button>
                 <button class="button bottom-content__button button_save">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="change-task-modal">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title top-content-title" id="change-task-title">
+                </div>
+            </div>
+            <div class="content middle-contnet">
+                <form action="" class="form middle-content-form">
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Категория
+                        </div>
+                        <select name="" id="change_task_categ" class="select form-item-select">
+                            <% for(var i=0; i < categ_name.length; i++) {%>
+                                <% if (categ_name[i].categories == "Государственная"){%>
+                                   <% if (role > 1){ %>
+                                        <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                    <%}%>
+                                <%} else { %>
+                                    <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <%}%>
+  
+                            <% }%>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите категорию
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Полное описание задачи
+                        </div>
+                        <input id="change_task_desc" type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите полное описание задачи
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Дата окончания
+                        </div>
+                        <input id="change_task_deadline" type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Выберите дату окончания
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Статус
+                        </div>
+                        <select name="" id="change_task_status" class="select form-item-select">
+                            <% for(var i=0; i < statuses.length; i++) {%>
+                            <option id="change-option" value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                            <% } %>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите статус
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-change-task-button">
+                    Закрыть
+                </button>
+                <button class="button bottom-content__button button_save change_button_save">
                     Сохранить
                 </button>
             </div>
@@ -346,7 +482,7 @@
     </div>
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
-    <script src="./script/dataTables.js"></script>
+    <script src="./script/department.js"></script>
     <script src="./script/theme.js"></script>
     <script src="./script/main.js"></script>
     <script>

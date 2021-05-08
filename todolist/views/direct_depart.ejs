@@ -17,7 +17,7 @@
             <div class="wrapper">
                 <div class="page-header-header-inner">
                     <nav class="nav nav_width_50">
-                        <a href="/board" class="nav__link nav__link_color_white">Список задач</a>
+                        <a href="" class="nav__link nav__link_color_white">Список задач</a>
                         <a href="" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
                     <nav class="nav user_nav nav_width_50">
@@ -162,7 +162,7 @@
                                 </g>
                             </svg>
                                 <div class="profile-info">
-                                    <div class="text"><%= info %></div>
+                                    <div class="text"> <%= info %></div>
                                     <div class="subtitle">Перейти в личный кабинет</div>
                                 </div>
                             </div>
@@ -311,9 +311,11 @@
             </div>
         </div>
     </section>
+
     <form name="pID" id="profile" action="/profile" class="hidden" method="POST">
         <input class="profile_id" name="pID" id="profile" type="submit">
     </form>
+
     <div class="modal hidden" id="new-task-modal">
         <div class="modal-window">
             <div class="content top-content">
@@ -323,45 +325,35 @@
             </div>
             <div class="content middle-contnet">
                 <form action="" class="form middle-content-form">
-                    <!-- <div class="form-item">
-                        <div class="text form-item__text">
-                            Фамилия
-                        </div>
-                        <input type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите фамилию
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Имя
-                        </div>
-                        <input type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите имя
-                        </div>
-                    </div> -->
                     <div class="form-item">
                         <div class="text form-item__text">
                             Категория
                         </div>
                         <select name="" id="new_task_categ" class="select form-item-select">
-                                        <option></option>
-                                    <option></option>
+                            <% for(var i=0; i < categ_name.length; i++) {%>
+                                <% if (categ_name[i].categories == "Государственная"){%>
+                                   <% if (role > 1){ %>
+                                        <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                    <%}%>
+                                <%} else { %>
+                                    <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <%}%>
+  
+                            <% }%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите категорию
                         </div>
                     </div>
-                    <!-- <div class="form-item">
+                    <div class="form-item">
                         <div class="text form-item__text">
-                            Краткое описание задачи
+                            Название задачи
                         </div>
-                        <input type="text" class="form-item__input">
+                        <input id="new_task_name" type="text" class="form-item__input">
                         <div class="subtitle form-item__subtitle">
-                            Введите краткое описание задачи
+                            Введите название задачи
                         </div>
-                    </div> -->
+                    </div>
                     <div class="form-item">
                         <div class="text form-item__text">
                             Полное описание задачи
@@ -385,7 +377,9 @@
                             Статус
                         </div>
                         <select name="" id="new_task_status" class="select form-item-select">
-                            <option></option>
+                            <% for(var i=0; i < statuses.length; i++) {%>
+                            <option value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                            <% } %>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите статус
@@ -398,6 +392,78 @@
                     Закрыть
                 </button>
                 <button class="button bottom-content__button button_save">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="change-task-modal">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title top-content-title" id="change-task-title">
+                </div>
+            </div>
+            <div class="content middle-contnet">
+                <form action="" class="form middle-content-form">
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Категория
+                        </div>
+                        <select name="" id="change_task_categ" class="select form-item-select">
+                            <% for(var i=0; i < categ_name.length; i++) {%>
+                                <% if (categ_name[i].categories == "Государственная"){%>
+                                   <% if (role > 1){ %>
+                                        <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                    <%}%>
+                                <%} else { %>
+                                    <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
+                                <%}%>
+  
+                            <% }%>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите категорию
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Полное описание задачи
+                        </div>
+                        <input id="change_task_desc" type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Введите полное описание задачи
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Дата окончания
+                        </div>
+                        <input id="change_task_deadline" type="text" class="form-item__input">
+                        <div class="subtitle form-item__subtitle">
+                            Выберите дату окончания
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Статус
+                        </div>
+                        <select name="" id="change_task_status" class="select form-item-select">
+                            <% for(var i=0; i < statuses.length; i++) {%>
+                            <option id="change-option" value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
+                            <% } %>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите статус
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-change-task-button">
+                    Закрыть
+                </button>
+                <button class="button bottom-content__button button_save change_button_save">
                     Сохранить
                 </button>
             </div>
@@ -425,7 +491,7 @@
 
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
-    <script src="./script/dataTables.js"></script>
+    <script src="./script/direct_depart.js"></script>
     <script src="./script/theme.js"></script>
     <script src="./script/main.js"></script>
     <script src="./script/word.js"></script>
