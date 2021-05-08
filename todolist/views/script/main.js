@@ -5,7 +5,6 @@ let mainTable = document.querySelector("#tasksTable");
 let buttonCloseModalAlert = document.querySelector("#close-modal-alert");
 let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
 
-let buttonBulkAdd = document.querySelector(".instruments__button_bg_plus");
 let buttonBulkDelete = document.querySelector(".instruments__button_bg_trash");
 let buttonNTask = document.querySelector(".button_save");
 
@@ -14,7 +13,6 @@ let minProfile = document.querySelector(".nav-item-current-user_after");
 
 let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
 let chengeSelectedTask = document.querySelectorAll(".change-selected-task");
-let addSelectedTask = document.querySelectorAll(".add-selected-task")
 
 let modalNewTask = document.querySelector("#new-task-modal");
 let modalChangeTask = document.querySelector("#change-task-modal");
@@ -54,25 +52,6 @@ buttonNTask.onclick = function(){
         })
 }
 
-
-if (buttonBulkAdd !== null) {
-    buttonBulkAdd.onclick = function() {
-        let tasksToADD = document.querySelectorAll(".table-checkbox_checked"),
-            taskToADD = [];
-        tasksToADD.forEach((item)=> {
-            if (!(item.getAttribute("value") == null)){
-                taskToADD.push(item.getAttribute("value"));
-            }
-        })
-        setTimeout(() => {
-            $.post("/add_task", {taskToADD}, function(){
-                location.reload();
-            }) 
-        }, 100);
-    }
-}
-
-
 if (buttonBulkDelete !== null) {
     buttonBulkDelete.onclick = function() {
         let tasksToDelete = document.querySelectorAll(".table-checkbox_checked"),
@@ -82,16 +61,16 @@ if (buttonBulkDelete !== null) {
                 taskToDelete.push(item.getAttribute("value"));
             }
         })
-        setTimeout(() => {
-            $.post("/delete", {taskToDelete}, function(){
-                location.reload();
-            }) 
-        }, 100);
+        $.post("/delete", {taskToDelete}, function(){
+            location.reload();
+        }) 
     }
 }
 
-hrefOnProfile.onclick = function() {
-    window.location.href = '/profile';
+if(hrefOnProfile !== null) {
+    hrefOnProfile.onclick = function() {
+        window.location.href = '/profile';
+    }
 }
 
 navItemCurrentUser.onclick = function() {
@@ -134,17 +113,6 @@ chengeSelectedTask.forEach((elem)=>{
         setTitleForTitle();
     })
 })
-
-if (addSelectedTask !== null){
-    addSelectedTask.forEach( (task)=>{
-        task.addEventListener("click", (elem)=>{
-            let taskToADD = elem.target.getAttribute("data-key");
-            $.post("/add_task", {taskToADD}, function(){
-                location.reload();
-            }) 
-        })
-    })
-}
 
 filterItemSelect.forEach((elem, index)=>{
     elem.addEventListener('change', ()=>{
@@ -349,7 +317,9 @@ window.onload = function() {
         }
         
         function ifChacked() {
-            optionsText.textContent = `Выбранных задач: ${checkedCounter}`;
+            if(optionsText !== null) {
+                optionsText.textContent = `Выбранных задач: ${checkedCounter}`;
+            }
             // if(checkedCounterNoVisible < 1) {
             //     allTableCheckbox.classList.remove('table-checkbox_checked');
             // }
@@ -372,7 +342,6 @@ window.onload = function() {
         }
     }
 }
-
 let profileID = document.querySelector(".profile_id")
 let profileLink = document.querySelectorAll("#profile-link");
 let sumbitProfile = document.querySelector("#profile")

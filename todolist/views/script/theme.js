@@ -1,5 +1,5 @@
 let theme = document.querySelector("#theme");
-let switchTheme = document.querySelector(".nav-item-theme");
+let switchTheme = document.querySelector(".customization");
 
 getTheme();
 

@@ -393,19 +393,11 @@ tbody tr td {
     font-size: 15px;
 }
 
-.profile {
+.profile, .customization, .exit {
     display: flex;
     align-items: center;
     column-gap: 15px;
 }
-
-.exit {
-    display: flex;
-    align-items: center;
-    column-gap: 15px;
-}
-
-
 
 /* Page-main */
 
