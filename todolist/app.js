@@ -257,10 +257,17 @@ app.post("/new_task", ensureAuthenticated, (req, res)=>{
     newTask(req);
     getBoard(req,res);
 })
+
+app.post("/add_task", ensureAuthenticated, (req, res)=>{
+    addTask(req.body.taskToADD, req.session.userid);
+    getDeparment(req, res);
+})
+
 app.post("/delete", ensureAuthenticated, (req, res)=>{
     deleteTask(req.body.taskToDelete);
     getBoard(req, res);
 })
+
 app.post("/update", ensureAuthenticated, (req, res)=>{
     changeTask(req.body);
     getBoard(req, res);
@@ -363,12 +370,26 @@ function getBoard(req, res){
     })
 }
 
+function addTask(task, user){
+    console.log(typeof(task));
+    console.log(task)
+    if (typeof(task) == "object"){
+        for (var i = 0;i < task.length; i++){
+            connection.query("update task set fk_id_worker = ? where id_task = ?", [user ,task[i]]);
+        }
+    } 
+    if (typeof(task) == "string") {
+        connection.query("update task set fk_id_worker = ? where id_task = ?", [user ,task]);
+    }
+}
+
 function deleteTask(task){
-    if (typeof(task == Object)){
+    if (typeof(task) == "object"){
         for (var i = 0;i < task.length; i++){
             connection.query("update task set fk_id_worker = null where id_task = ?", [task[i]]);
         }
-    } else {
+    } 
+    if (typeof(task) == "string"){
         connection.query("update task set fk_id_worker = null where id_task = ?", [task]);
     }
 }
