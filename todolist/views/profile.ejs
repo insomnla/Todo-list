@@ -160,25 +160,21 @@
                             <%}%></div></caption>
                         <thead>
                             <tr>
-                                <th class="dt-head-left"><div class="table-checkbox" id="table-checkbox-all"></div></th>
                                 <th class="dt-head-left">ID</th>
                                 <th class="dt-head-left">Категория</th>
                                 <th class="dt-head-left">Описание задачи</th>
                                 <th class="dt-head-left">Дата</th>
                                 <th class="dt-head-left">Статус</th>
-                                <th class="dt-head-left">Действия</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% for (var i = 0; i < tasks.length; i++){%>
                             <tr>
-                                <td><div class="table-checkbox tbody-checkbox"></div></td>
                                 <td><%= tasks[i].id_task%></td>
                                 <td><%= tasks[i].categories%></td>
                                 <td><%= tasks[i].desc%></td>
                                 <td><%= tasks[i].dline%></td>
                                 <td><%= tasks[i].status%></td>
-                                <td>Не знаю какие добавить</td>
                             </tr>
                             <%}%>
                         </tbody>
