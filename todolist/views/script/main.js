@@ -28,10 +28,6 @@ let allTitles = document.querySelectorAll(".title");
 let options = document.querySelector(".options");
 let optionsText = document.querySelector(".options__text");
 
-let filterItemSelect = document.querySelectorAll(".filters-item-select");
-let selectCategories = document.querySelector("#select-categories");
-let selectStatus = document.querySelector("#select-status");
-
 let rowsOnTable = document.querySelectorAll("tbody>tr");
 
 let allRowWithCategories = document.querySelectorAll(".categories");
@@ -40,18 +36,22 @@ let allRowWithStatus = document.querySelectorAll(".status");
 let hrefOnProfile = document.querySelector(".profile");
 let titleChangeTask = document.querySelector("#change-task-title");
 
+let exit = document.querySelector(".exit");
+
 setTitleForTitle();
 
-buttonNTask.onclick = function(){
-    let desc = document.querySelector("#new_task_desc"),
-        deadline = document.querySelector("#new_task_deadline"),
-        descValue = desc.value,
-        deadlineValue = deadline.value,
-        taskCATEG_ID  = document.querySelector("#new_task_categ").options.selectedIndex + 1,
-        taskSTATUS_ID = document.querySelector("#new_task_status").options.selectedIndex + 1;
-        $.post("/new_task", {descValue, deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
-            window.location.reload();
-        })
+if (buttonNTask !== null){
+    buttonNTask.onclick = function(){
+        let desc = document.querySelector("#new_task_desc"),
+            deadline = document.querySelector("#new_task_deadline"),
+            descValue = desc.value,
+            deadlineValue = deadline.value,
+            taskCATEG_ID  = document.querySelector("#new_task_categ").options.selectedIndex + 1,
+            taskSTATUS_ID = document.querySelector("#new_task_status").options.selectedIndex + 1;
+            $.post("/new_task", {descValue, deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
+                window.location.reload();
+            })
+    }
 }
 
 if (buttonBulkAdd !== null) {
@@ -89,23 +89,31 @@ if (buttonBulkDelete !== null) {
     }
 }
 
+if(exit !== null) {
+    exit.onclick = function() {
+        window.location.href = '/exit';
+    }
+}
+
 if(hrefOnProfile !== null) {
     hrefOnProfile.onclick = function() {
         window.location.href = '/profile';
     }
 }
 
-navItemCurrentUser.onclick = function() {
-    if(minProfile.classList.contains('hidden')) {
-        minProfile.classList.remove('hidden');
-        minProfile.style.animation = 'opacity1 .3s linear forwards';
-    } else {
-        minProfile.style.animation = 'opacity0 .3s linear forwards';
-        setTimeout(()=> minProfile.classList.add('hidden'), 300);
+if(navItemCurrentUser !== null) {
+    navItemCurrentUser.onclick = function() {
+        if(minProfile.classList.contains('hidden')) {
+            minProfile.classList.remove('hidden');
+            minProfile.style.animation = 'opacity1 .3s linear forwards';
+        } else {
+            minProfile.style.animation = 'opacity0 .3s linear forwards';
+            setTimeout(()=> minProfile.classList.add('hidden'), 300);
+        }
     }
 }
 
-if (addSelectedTask !== null){
+if(addSelectedTask !== null) {
     addSelectedTask.forEach( (task)=>{
         task.addEventListener("click", (elem)=>{
             let taskToADD = elem.target.getAttribute("data-key");
@@ -116,149 +124,44 @@ if (addSelectedTask !== null){
     })
 }
 
-deleteSelectedTask.forEach((elem)=>{
-    elem.addEventListener('click', (elem)=>{
-        taskToDelete = (elem.target.getAttribute("data-key"));
+if(deleteSelectedTask !== null) {
+    deleteSelectedTask.forEach((elem)=>{
+        elem.addEventListener('click', (elem)=>{
+            taskToDelete = (elem.target.getAttribute("data-key"));
+            modalAlertDeletTask.classList.toggle('hidden');
+        })
+    })
+}
+
+if(buttonCloseModalAlert !== null) {
+    buttonCloseModalAlert.onclick = function() {
         modalAlertDeletTask.classList.toggle('hidden');
-    })
-})
-
-buttonCloseModalAlert.onclick = function() {
-    modalAlertDeletTask.classList.toggle('hidden');
-    taskToDelete = 0;
+        taskToDelete = 0;
+    }
 }
 
-buttonYesModalAlert.onclick = function() {
-    $.post("/delete", {taskToDelete}, function(){
-        location.reload();
-    })
-    modalAlertDeletTask.classList.toggle('hidden');
+if(buttonYesModalAlert !== null) {
+    buttonYesModalAlert.onclick = function() {
+        $.post("/delete", {taskToDelete}, function(){
+            location.reload();
+        })
+        modalAlertDeletTask.classList.toggle('hidden');
+    }
 }
 
-chengeSelectedTask.forEach((elem)=>{
-    elem.addEventListener('click', ()=>{
-        let elemId = elem.dataset['id'];
-        let tableRow = elem.parentNode.parentNode.parentNode;
-        let newTitle = tableRow.children[3].textContent;
-        get_task(tableRow); // бета тест кое-какой хрени
-        modalChangeTask.classList.toggle('hidden');
-        titleChangeTask.textContent = `Изменение задачи: ${newTitle}`;
-        setTitleForTitle();
+if(chengeSelectedTask !== null) {
+    chengeSelectedTask.forEach((elem)=>{
+        elem.addEventListener('click', ()=>{
+            let elemId = elem.dataset['id'];
+            let tableRow = elem.parentNode.parentNode.parentNode;
+            let newTitle = tableRow.children[3].textContent;
+            get_task(tableRow); // бета тест кое-какой хрени
+            modalChangeTask.classList.toggle('hidden');
+            titleChangeTask.textContent = `Изменение задачи: ${newTitle}`;
+            setTitleForTitle();
+        })
     })
-})
-
-filterItemSelect.forEach((elem, index)=>{
-    elem.addEventListener('change', ()=>{
-        if(index == 0) {
-            if(selectStatus.value == 'All') {
-                document.querySelector(".after-table").classList.add('hidden');
-                allRowWithCategories.forEach((elem)=>{
-                    elem.parentNode.classList.remove('hidden');
-                    elem.parentNode.style.animation = "opacity1 .6s linear forwards";
-                    if(selectCategories.value == 'All') {
-                        elem.parentNode.classList.remove('hidden');
-                        elem.parentNode.style.animation = "opacity1 .6s linear forwards";
-                    } else if(selectCategories.value !== elem.textContent) {
-                        elem.parentNode.style.animation = 'opacity0 .6s linear forwards';
-                        setTimeout(()=>{
-                            elem.parentNode.classList.add('hidden');
-                            checkForEmptiness();
-                        }, 600);
-                    }
-                })
-            } else if(selectCategories.value == 'All') {
-                rowsOnTable.forEach((row)=>{
-                    document.querySelector(".after-table").classList.add('hidden');
-                    let status = row.children[5];
-                    row.classList.remove('hidden');
-                    row.style.animation = "opacity1 .6s linear forwards";
-                    if(selectCategories.value == 'All' && selectStatus.value == status.textContent) {
-                        row.classList.remove('hidden');
-                        row.style.animation = "opacity1 .6s linear forwards";
-                    } else {
-                        row.style.animation = 'opacity0 .6s linear forwards';
-                        setTimeout(()=>{
-                            row.classList.add('hidden');
-                            checkForEmptiness();
-                        }, 600);
-                    }
-                })
-            } else {
-                rowsOnTable.forEach((row)=>{
-                    document.querySelector(".after-table").classList.add('hidden');
-                    let categories = row.children[2];
-                    let status = row.children[5];
-                    row.classList.remove('hidden');
-                    row.style.animation = "opacity1 .6s linear forwards";
-                    if(selectCategories.value == categories.textContent && selectStatus.value == status.textContent) {
-                        row.classList.remove('hidden');
-                        row.style.animation = "opacity1 .6s linear forwards";
-                    } else {
-                        row.style.animation = 'opacity0 .6s linear forwards';
-                        setTimeout(()=>{
-                            row.classList.add('hidden');
-                            checkForEmptiness();
-                        }, 600);
-                    }
-                })
-            }
-            checkForEmptiness();
-        } else if(index == 1) {
-            if(selectCategories.value == 'All') {
-                document.querySelector(".after-table").classList.add('hidden');
-                allRowWithStatus.forEach((elem)=>{
-                    elem.parentNode.parentNode.classList.remove('hidden');
-                    elem.parentNode.parentNode.style.animation = "opacity1 .6s linear forwards";
-                    if(selectStatus.value == 'All') {
-                        elem.parentNode.classList.remove('hidden');
-                        elem.parentNode.style.animation = "opacity1 .6s linear forwards";
-                    } else if(selectStatus.value !== elem.textContent) {
-                        elem.parentNode.parentNode.style.animation = 'opacity0 .6s linear forwards';
-                        setTimeout(()=>{
-                            elem.parentNode.parentNode.classList.add('hidden');
-                            checkForEmptiness();
-                        }, 600);
-                    }
-                })
-            } else if(selectStatus.value == 'All') {
-                rowsOnTable.forEach((row)=>{
-                    document.querySelector(".after-table").classList.add('hidden');
-                    let categories = row.children[2];
-                    row.classList.remove('hidden');
-                    row.style.animation = "opacity1 .6s linear forwards";
-                    if(selectCategories.value == categories.textContent && selectStatus.value == 'All') {
-                        row.classList.remove('hidden');
-                        row.style.animation = "opacity1 .6s linear forwards";
-                    } else {
-                        row.style.animation = 'opacity0 .6s linear forwards';
-                        setTimeout(()=>{
-                            row.classList.add('hidden');
-                            checkForEmptiness();
-                        }, 600);
-                    }
-                })
-            } else {
-                rowsOnTable.forEach((row)=>{
-                    document.querySelector(".after-table").classList.add('hidden');
-                    let categories = row.children[2];
-                    let status = row.children[5];
-                    row.classList.remove('hidden');
-                    row.style.animation = "opacity1 .6s linear forwards";
-                    if(selectCategories.value == categories.textContent && selectStatus.value == status.textContent) {
-                        row.classList.remove('hidden');
-                        row.style.animation = "opacity1 .6s linear forwards";
-                    } else {
-                        row.style.animation = 'opacity0 .6s linear forwards';
-                        setTimeout(()=>{
-                            row.classList.add('hidden');
-                            checkForEmptiness();
-                        }, 600);
-                    }
-                })
-            }
-        }
-    })
-})
+}
 
 function checkForEmptiness() {
     let counter = 0;
@@ -307,6 +210,25 @@ function get_task(tableRow){ // бета тест кое-какой хрени
         })
     })
 }
+
+window.addEventListener('click', (event)=> {
+    if(event.target.classList.contains('modal')) {
+        if(modalAlertDeletTask !== null) {
+            modalAlertDeletTask.classList.add('hidden');
+        };
+        if(modalChangeTask !== null) {
+            modalChangeTask.classList.add('hidden');
+        };
+        if(modalNewTask !== null) {
+            modalNewTask.classList.add('hidden');
+        }
+    } else if(!event.target.classList.contains('mini-profile') ||  event.target.classList.contains('nav-item-current-user_after__hr')) {
+        if(minProfile !== null) {
+            minProfile.style.animation = 'opacity0 .3s linear forwards';
+            setTimeout(()=> minProfile.classList.add('hidden'), 300);
+        }
+    }
+})
 
 window.onload = function() {
     let allTableCheckbox = document.querySelector("#table-checkbox-all");
@@ -378,10 +300,13 @@ window.onload = function() {
 let profileID = document.querySelector(".profile_id")
 let profileLink = document.querySelectorAll("#profile-link");
 let sumbitProfile = document.querySelector("#profile")
-profileLink.forEach((worker)=>{
-    worker.addEventListener("click", ()=>{
-        let pID = worker.getAttribute("value");
-        profileID.innerHTML = pID
-        document.forms['pID'].submit();
+
+if (profileLink !== null){
+    profileLink.forEach((worker)=>{
+        worker.addEventListener("click", ()=>{
+            let pID = worker.getAttribute("value");
+            profileID.innerHTML = pID
+            document.forms['pID'].submit();
+        })
     })
-})
+}

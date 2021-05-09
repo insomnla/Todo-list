@@ -368,7 +368,7 @@ tbody tr td {
     row-gap: 30px;
     position: absolute;
     right: 0;
-    bottom: -400px;
+    bottom: -425px;
     background: var(--main-color);
     padding: 20px;
     z-index: 5;
@@ -756,9 +756,40 @@ tbody tr td {
     animation: opacity1 2s ease forwards;
 }
 
+.day-card-prew-month {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* padding: 50px 0; */
+    font-size: 50px;
+    /* border: 1px solid var(--border-color);
+    border-left: none;
+    border-right: none; */
+    animation: opacity1 2s ease forwards;
+}
+
+.day-card-next-month {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* padding: 50px 0; */
+    font-size: 50px;
+    /* border: 1px solid var(--border-color);
+    border-left: none;
+    border-right: none; */
+    animation: opacity1 2s ease forwards;
+}
+
 .day-card-info {
     display: inline-block;
     padding: 10px;
+    color: var(--text-color);
+}
+
+.day-card-info-another-month  {
+    display: inline-block;
+    padding: 10px;
+    color: var(--table-hover);
 }
 
 .empty-dayCard {
