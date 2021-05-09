@@ -18,7 +18,7 @@
                 <div class="page-header-header-inner">
                     <nav class="nav nav_width_50">
                         <a href="/board" class="nav__link nav__link_color_white">Список задач</a>
-                        <a href="vacation-rework.html" class="nav__link nav__link_color_white">Отпуска</a>
+                        <a href="/vacation" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
                     <nav class="nav user_nav nav_width_50">
                         <div class="nav-item nav-item-theme customization">
@@ -209,15 +209,16 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% for (var i = 0; i< all_workers.length; i++) {%>
                             <tr>
-                                <td>1</td>
-                                <td>Шило</td>
-                                <td>Сергей</td>
-                                <td>Николаевич</td>
+                                <td><%= all_workers[i].id_worker %></td>
+                                <td><%= all_workers[i].lname %></td>
+                                <td><%= all_workers[i].fname %></td>
+                                <td><%= all_workers[i].mname%></td>
                                 <td>88005553535</td>
-                                <td>shilo@mail.ru</td>
-                                <td>Работник</td>
-                                <td>IT</td>
+                                <td><%= all_workers[i].mail%></td>
+                                <td><%= all_workers[i].role %></td>
+                                <td><%= all_workers[i].department_name %></td>
                                 <td>218</td>
                                 <td>
                                     <div class="actions">
@@ -261,6 +262,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
@@ -287,14 +289,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% for (var i = 0; i< all_tasks.length; i++) {%>
                             <tr>
-                                <td>1</td>
-                                <td>Название</td>
-                                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus numquam incidunt doloribus consequatur, blanditiis harum repellat soluta enim cumque praesentium eum quae eos tenetur vel vero ad ea, perferendis qui.</td>
-                                <td>20.04.2021 - 29.04.2021</td>
-                                <td>Шило Сергей</td>
-                                <td>Работа</td>
-                                <td>Активно</td>
+                                <td><%= all_tasks[i].id_task %></td>
+                                <td><%= all_tasks[i].name %></td>
+                                <td><%= all_tasks[i].desc %></td>
+                                <td><%= all_tasks[i].dline %></td>
+                                <td><%= all_tasks[i].fio %></td>
+                                <td><%= all_tasks[i].categories %></td>
+                                <td><%= all_tasks[i].status %></td>
                                 <td>
                                     <div class="actions">
                                         <div class="actions-item actions-item_disabled change-selected-task" data-id="2" title="Изменить">
@@ -337,6 +340,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>

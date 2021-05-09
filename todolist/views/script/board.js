@@ -67,7 +67,7 @@ let buttonToDirectors = document.querySelector(".instruments__button_bg_director
 
 if(buttonToDirectors !== null) {
     buttonToDirectors.onclick = function() {
-        window.location.href = '/director.html';
+        window.location.href = '/director';
     }
 }
 

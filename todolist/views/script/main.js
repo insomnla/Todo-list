@@ -44,11 +44,13 @@ if (buttonNTask !== null){
     buttonNTask.onclick = function(){
         let desc = document.querySelector("#new_task_desc"),
             deadline = document.querySelector("#new_task_deadline"),
+            name = document.querySelector("#new_task_name"),
+            nameValue = name.value,
             descValue = desc.value,
             deadlineValue = deadline.value,
             taskCATEG_ID  = document.querySelector("#new_task_categ").options.selectedIndex + 1,
             taskSTATUS_ID = document.querySelector("#new_task_status").options.selectedIndex + 1;
-            $.post("/new_task", {descValue, deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
+            $.post("/new_task", {descValue, nameValue ,deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
                 window.location.reload();
             })
     }
@@ -117,9 +119,11 @@ if(addSelectedTask !== null) {
     addSelectedTask.forEach( (task)=>{
         task.addEventListener("click", (elem)=>{
             let taskToADD = elem.target.getAttribute("data-key");
-            $.post("/add_task", {taskToADD}, function(){
-                location.reload();
-            }) 
+            setTimeout(() => {
+                $.post("/add_task", {taskToADD}, function(){
+                    location.reload();
+                }) 
+            }, 100);
         })
     })
 }
@@ -142,9 +146,11 @@ if(buttonCloseModalAlert !== null) {
 
 if(buttonYesModalAlert !== null) {
     buttonYesModalAlert.onclick = function() {
-        $.post("/delete", {taskToDelete}, function(){
-            location.reload();
-        })
+        setTimeout(() => {
+            $.post("/delete", {taskToDelete}, function(){
+                location.reload();
+            })
+        }, 100);
         modalAlertDeletTask.classList.toggle('hidden');
     }
 }
@@ -182,15 +188,20 @@ function setTitleForTitle() {
 }
 
 function get_task(tableRow){ // бета тест кое-какой хрени
-    let btn_save = document.querySelector(".change_button_save")
+    let btn_save = document.querySelector(".change_button_save"),
+        newTaskOPT = document.querySelectorAll("#change-option");
+        addedValue = 0;
+    console.log(tableRow.children);
+    if (tableRow.children.length == 8){
+        addedValue = 1;
+    }
     let desc = document.querySelector("#change_task_desc"),
         deadline = document.querySelector("#change_task_deadline"),
         taskID = tableRow.children[1].textContent,
-        taskCATEG = tableRow.children[2].textContent,
-        taskDESC = tableRow.children[3].textContent,
-        taskDEADLINE = tableRow.children[4].textContent,
-        taskSTATUS = tableRow.children[5].textContent,
-        newTaskOPT = document.querySelectorAll("#change-option");
+        taskCATEG = tableRow.children[2 + addedValue].textContent,
+        taskDESC = tableRow.children[3 + addedValue].textContent,
+        taskDEADLINE = tableRow.children[4 + addedValue].textContent,
+        taskSTATUS = tableRow.children[5 + addedValue].textContent;
     desc.value = taskDESC;
     deadline.value = taskDEADLINE;
     newTaskOPT.forEach((task) =>{
