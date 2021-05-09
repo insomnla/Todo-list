@@ -7,12 +7,14 @@ let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
 
 let buttonBulkDelete = document.querySelector(".instruments__button_bg_trash");
 let buttonNTask = document.querySelector(".button_save");
+let buttonBulkAdd = document.querySelector(".instruments__button_bg_plus");
 
 let navItemCurrentUser = document.querySelector(".nav-item-current-user");
 let minProfile = document.querySelector(".nav-item-current-user_after");
 
 let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
 let chengeSelectedTask = document.querySelectorAll(".change-selected-task");
+let addSelectedTask = document.querySelectorAll(".add-selected-task")
 
 let modalNewTask = document.querySelector("#new-task-modal");
 let modalChangeTask = document.querySelector("#change-task-modal");
@@ -52,6 +54,24 @@ buttonNTask.onclick = function(){
         })
 }
 
+if (buttonBulkAdd !== null) {
+    buttonBulkAdd.onclick = function() {
+        let tasksToADD = document.querySelectorAll(".table-checkbox_checked"),
+            taskToADD = [];
+        tasksToADD.forEach((item)=> {
+            if (!(item.getAttribute("value") == null)){
+                taskToADD.push(item.getAttribute("value"));
+            }
+        })
+        setTimeout(() => {
+            $.post("/add_task", {taskToADD}, function(){
+                location.reload();
+            }) 
+        }, 100);
+    }
+}
+
+
 if (buttonBulkDelete !== null) {
     buttonBulkDelete.onclick = function() {
         let tasksToDelete = document.querySelectorAll(".table-checkbox_checked"),
@@ -61,9 +81,11 @@ if (buttonBulkDelete !== null) {
                 taskToDelete.push(item.getAttribute("value"));
             }
         })
-        $.post("/delete", {taskToDelete}, function(){
-            location.reload();
-        }) 
+        setTimeout(() => {
+            $.post("/delete", {taskToDelete}, function(){
+                location.reload();
+            }) 
+        }, 100);
     }
 }
 
@@ -81,6 +103,17 @@ navItemCurrentUser.onclick = function() {
         minProfile.style.animation = 'opacity0 .3s linear forwards';
         setTimeout(()=> minProfile.classList.add('hidden'), 300);
     }
+}
+
+if (addSelectedTask !== null){
+    addSelectedTask.forEach( (task)=>{
+        task.addEventListener("click", (elem)=>{
+            let taskToADD = elem.target.getAttribute("data-key");
+            $.post("/add_task", {taskToADD}, function(){
+                location.reload();
+            }) 
+        })
+    })
 }
 
 deleteSelectedTask.forEach((elem)=>{
