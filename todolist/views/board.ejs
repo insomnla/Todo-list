@@ -226,11 +226,15 @@
                         <button class="button instruments__button instruments__button_theme_red instruments__button_bg_trash">
                             Удалить выбранные задачи
                         </button>
-                        <% if (role >1){%>
+                        <% if (role >1 && role < 3){%>
                         <button class="button instruments__button instruments__button_bg_todo_list">
                             Перейти к задачам сотрудников
                         </button>
-                        <%}%>
+                        <% } else { %>
+                        <button class="button instruments__button instruments__button_bg_directors">
+                            Перейти к списку директоров отделений
+                        </button>
+                        <% }%>
                     </div>
                 </div>
                 <table id="tasksTable" class="display">

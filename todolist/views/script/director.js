@@ -1,11 +1,10 @@
 $(document).ready(function() {
-    $('#tasksTable').DataTable( {
+    $('#directors-depart').DataTable( {
         "paging":   false,
         "info":     false,
         "order": [[ 1, "asc" ]],
         columnDefs: [
-            { orderable: false, targets: 0 },
-            { orderable: false, targets: 6 }
+            { orderable: false, targets: 0 }
         ],
         language: {
             "loadingRecords": "Загрузка...",
@@ -25,14 +24,7 @@ $(document).ready(function() {
             }
         },
     } );
-    $('#userInformationTable').DataTable( {
-        "paging":   false,
-        "info":     false,
-        "order": false,
-        "search": false,
-    });
 } );
-
 
 onloadFunc();
 function onloadFunc() {
@@ -58,35 +50,10 @@ function onloadFunc() {
     }
 }
 
-let buttonToAllTasks = document.querySelector("#to-all-tasks");
-let buttonToDirectDepart = document.querySelector(".instruments__button_bg_todo_list");
-let buttonNewTask = document.querySelector("#new-task-button");
-let buttonNewCloseTask = document.querySelector("#close-new-task-button");
-let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
-let buttonToDirectors = document.querySelector(".instruments__button_bg_directors");
+let buttonToTasks = document.querySelector(".instruments__button_bg_todo_list");
 
-if(buttonToDirectors !== null) {
-    buttonToDirectors.onclick = function() {
-        window.location.href = '/director.html';
+if(buttonToTasks !== null) {
+    buttonToTasks.onclick = function() {
+        window.location.href = '/board';
     }
-}
-
-if(buttonToDirectDepart !== null) {
-    buttonToDirectDepart.onclick = function() {
-        window.location.href = '/direct_depart';
-    }
-}
-
-buttonNewTask.onclick = function() {
-    modalNewTask.classList.toggle('hidden');
-}
-buttonNewCloseTask.onclick = function() {
-    modalNewTask.classList.toggle('hidden');
-}
-buttonCloseChangeTask.onclick = function() {
-    modalChangeTask.classList.toggle('hidden');
-}
-
-buttonToAllTasks.onclick = function() {
-    window.location.href = "/department";
 }

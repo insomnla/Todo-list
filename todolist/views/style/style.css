@@ -546,6 +546,10 @@ tbody tr td {
     background-image: url(../images/to-do-list.svg);
 }
 
+.instruments__button_bg_directors {
+    background-image: url(../images/leader.svg);
+}
+
 .instruments__button {
     background-repeat: no-repeat;
     background-position: left;
