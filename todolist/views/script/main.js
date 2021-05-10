@@ -222,6 +222,52 @@ function get_task(tableRow){ // бета тест кое-какой хрени
     })
 }
 
+getNewStatusAtTasks();
+
+function getNewStatusAtTasks() {
+    let date = new Date();
+    let currentDay = date.getDate();
+    let currentMonth = date.getMonth() + 1;
+    let currentYear = date.getFullYear();
+
+    if(currentDay < 10) {
+        currentDay = `0${currentDay}`;
+    }
+
+    if(currentMonth < 10) {
+        currentMonth = `0${currentMonth}`;
+    }
+
+    let currentDate = `${currentDay}.${currentMonth}.${currentYear}`;
+
+    let deadLine = document.querySelectorAll(".date");
+
+    let idArray = new Array();
+
+    if(deadLine !== null) {
+        deadLine.forEach((item)=>{
+            let dateArray = item.textContent.split(' ');
+            dateArray = dateArray.filter(element => element !== "");
+            dateArray.shift();
+            dateArray.shift();
+            let deadLineDate = dateArray[0].split('.');
+            dateArray.push(item.parentNode.getAttribute("data-id"));
+            let coincidences = dateArray.indexOf(currentDate);
+            if(deadLineDate[2] < currentYear) {
+                idArray.push(dateArray[1]);
+            } else if (deadLineDate[1] < currentMonth) {
+                idArray.push(dateArray[1]);
+            } else if (deadLineDate[0] < currentDay) {
+                idArray.push(dateArray[1]);
+            } else if(coincidences == 0) {
+                idArray.push(dateArray[1]);
+            }
+        })
+    }
+
+    return idArray; //Возвращает массив id задач из бд у которых истёк срок выполнения
+}
+
 window.addEventListener('click', (event)=> {
     if(event.target.classList.contains('modal')) {
         if(modalAlertDeletTask !== null) {

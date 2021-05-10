@@ -176,7 +176,7 @@
                                 <td><%= tasks[i].id_task%></td>
                                 <td><%= tasks[i].categories%></td>
                                 <td><%= tasks[i].desc%></td>
-                                <td><%= tasks[i].dline%></td>
+                                <td class="date"><%= tasks[i].dline%></td>
                                 <td><%= tasks[i].status%></td>
                                 <td>Не знаю какие добавить</td>
                             </tr>
@@ -290,11 +290,11 @@
                         </thead>
                         <tbody>
                             <% for (var i = 0; i< all_tasks.length; i++) {%>
-                            <tr>
+                            <tr data-id="<%= all_tasks[i].id_task %>">
                                 <td><%= all_tasks[i].id_task %></td>
                                 <td><%= all_tasks[i].name %></td>
                                 <td><%= all_tasks[i].desc %></td>
-                                <td><%= all_tasks[i].dline %></td>
+                                <td class="date"><%= all_tasks[i].dline %></td>
                                 <td><%= all_tasks[i].fio %></td>
                                 <td><%= all_tasks[i].categories %></td>
                                 <td><%= all_tasks[i].status %></td>
