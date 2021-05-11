@@ -25,12 +25,6 @@ $(document).ready(function() {
             }
         },
     } );
-    $('#userInformationTable').DataTable( {
-        "paging":   false,
-        "info":     false,
-        "order": false,
-        "search": false,
-    });
 } );
 
 

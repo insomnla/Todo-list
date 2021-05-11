@@ -60,16 +60,20 @@ function onloadFunc() {
 
 let buttonToAllTasks = document.querySelector("#to-all-tasks");
 let buttonToDirectDepart = document.querySelector(".instruments__button_bg_todo_list");
-let buttonNewTask = document.querySelector("#new-task-button");
-let buttonNewCloseTask = document.querySelector("#close-new-task-button");
+let buttonNewTaskForEmployee = document.querySelector("#new-task-for-directDepart-button");
+let buttonNewTaskForEmployeeClose = document.querySelector("#close-new-task-for-directDepart-button");
 let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
 
-buttonNewTask.onclick = function() {
-    modalNewTask.classList.toggle('hidden');
+let modalNewTaskForEmployee = document.querySelector("#new-task-modal-for-directDepart");
+
+buttonNewTaskForEmployee.onclick = function() {
+    modalNewTaskForEmployee.classList.toggle('hidden');
 }
-buttonNewCloseTask.onclick = function() {
-    modalNewTask.classList.toggle('hidden');
+
+buttonNewTaskForEmployeeClose.onclick = function() {
+    modalNewTaskForEmployee.classList.toggle('hidden');
 }
+
 buttonCloseChangeTask.onclick = function() {
     modalChangeTask.classList.toggle('hidden');
 }

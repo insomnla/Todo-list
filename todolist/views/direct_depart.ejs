@@ -215,7 +215,7 @@
                         <button class="button buttons-button buttons-button_theme_winter" id="to-all-tasks">
                             Список задач на отделение
                         </button>
-                        <button class="button buttons-button" id="new-task-button">
+                        <button class="button buttons-button" id="new-task-for-directDepart-button">
                             Новая задача
                         </button>
                     </div>
@@ -315,15 +315,26 @@
         <input class="profile_id" name="pID" id="profile" type="submit">
     </form>
 
-    <div class="modal hidden" id="new-task-modal">
+    <div class="modal hidden" id="new-task-modal-for-directDepart">
         <div class="modal-window">
             <div class="content top-content">
-                <div class="title top-content-title" id="new-task-title">
+                <div class="title top-content-title" id="new-task-title-for-directDepart">
                     Создание новой задачи
                 </div>
             </div>
             <div class="content middle-contnet">
                 <form action="" class="form middle-content-form">
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Сотрудник
+                        </div>
+                        <select name="new_task_employee" id="new_task_employee" class="select form-item-select">
+                            <option value="Шило Сергей Николаевич">Шило Сергей Николаевич</option>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите сотрудника
+                        </div>
+                    </div>
                     <div class="form-item">
                         <div class="text form-item__text">
                             Категория
@@ -387,7 +398,7 @@
                 </form>
             </div>
             <div class="content bottom-content">
-                <button class="button bottom-content__button" id="close-new-task-button">
+                <button class="button bottom-content__button" id="close-new-task-for-directDepart-button">
                     Закрыть
                 </button>
                 <button class="button bottom-content__button button_save">

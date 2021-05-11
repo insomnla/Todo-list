@@ -25,6 +25,9 @@ let checkedCounterNoVisible = 0;
 
 let allTitles = document.querySelectorAll(".title");
 
+let more = document.querySelectorAll(".more");
+let listMore = document.querySelectorAll(".list-more");
+
 let options = document.querySelector(".options");
 let optionsText = document.querySelector(".options__text");
 
@@ -125,6 +128,26 @@ if(addSelectedTask !== null) {
                 }) 
             }, 100);
         })
+    })
+}
+
+if(more !== null) {
+    more.forEach((moreElem) => {
+        moreElem.onclick = function() {
+            let moreId = moreElem.getAttribute("data-id");
+            listMore.forEach((listMoreElem) => {
+                let listMoreId = listMoreElem.getAttribute("data-id");
+                if(moreId == listMoreId) {
+                    if(listMoreElem.classList.contains('hidden')) {
+                        listMoreElem.classList.remove('hidden');
+                        listMoreElem.style.animation = 'opacity1 .3s linear forwards';
+                    } else {
+                        listMoreElem.style.animation = 'opacity0 .3s linear forwards';
+                        setTimeout(()=> listMoreElem.classList.add('hidden'), 300);
+                    }
+                }
+            })
+        }   
     })
 }
 

@@ -155,6 +155,10 @@ input[type=checkbox] {
 
 /* Table */
 
+table {
+    width: 100%;
+}
+
 #tasksTable {
     /* animation: crawlDown 1s ease-in-out forwards; */
 }
@@ -827,6 +831,37 @@ tbody tr td {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+}
+
+.profile-content-title {
+    text-align: center;
+}
+
+.page-main-profile-content {
+    width: 100%;
+    display: flex;
+    column-gap: 50px;
+}
+
+.add-categories, .change-categories {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 50px;
+}
+
+.add-categories-form, .change-categories-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 50px;
+}
+
+.add-categories-form button, .change-categories-form button {
+    width: 50%;
+    background: var(--table-hover);
 }
 
 /* All-tasks */
