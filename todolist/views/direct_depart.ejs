@@ -329,7 +329,9 @@
                             Сотрудник
                         </div>
                         <select name="new_task_employee" id="new_task_employee" class="select form-item-select">
-                            <option value="Шило Сергей Николаевич">Шило Сергей Николаевич</option>
+                            <% for (var i=0; i < dep_workers.length ; i++){%>
+                            <option value="<%= dep_workers[i].id_worker%>"><%= dep_workers[i].fio%></option>
+                            <%}%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите сотрудника

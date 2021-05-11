@@ -51,8 +51,8 @@ if (buttonNTask !== null){
             nameValue = name.value,
             descValue = desc.value,
             deadlineValue = deadline.value,
-            taskCATEG_ID  = document.querySelector("#new_task_categ").options.selectedIndex + 1,
-            taskSTATUS_ID = document.querySelector("#new_task_status").options.selectedIndex + 1;
+            taskCATEG_ID  = document.querySelector("#new_task_categ").value;
+            taskSTATUS_ID = document.querySelector("#new_task_status").value;
             $.post("/new_task", {descValue, nameValue ,deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
                 window.location.reload();
             })
@@ -214,7 +214,6 @@ function get_task(tableRow){ // бета тест кое-какой хрени
     let btn_save = document.querySelector(".change_button_save"),
         newTaskOPT = document.querySelectorAll("#change-option");
         addedValue = 0;
-    console.log(tableRow.children);
     if (tableRow.children.length == 8){
         addedValue = 1;
     }
@@ -229,16 +228,16 @@ function get_task(tableRow){ // бета тест кое-какой хрени
     deadline.value = taskDEADLINE;
     newTaskOPT.forEach((task) =>{
         if (task.textContent == taskCATEG){
-            task.setAttribute("selected", "");
+            task.selected = true;
         }
         if (task.textContent == taskSTATUS){
-            task.setAttribute("selected", "");
+            task.selected = true;
         }
     })
     btn_save.addEventListener("click", ()=>{
         taskDEADLINE = deadline.value;
-        let taskCATEG_ID  = document.querySelector("#change_task_categ").options.selectedIndex + 1;
-        let taskSTATUS_ID = document.querySelector("#change_task_status").options.selectedIndex + 1;
+        let taskCATEG_ID  = document.querySelector("#change_task_categ").value;
+        let taskSTATUS_ID = document.querySelector("#change_task_status").value;
         $.post("/update", {taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID}, ()=>{
             window.location.reload();
         })
@@ -286,9 +285,10 @@ function getNewStatusAtTasks() {
                 idArray.push(dateArray[1]);
             }
         })
+        $.post("/deadline_check", {idArray}, function(){
+        
+        })
     }
-
-    return idArray; //Возвращает массив id задач из бд у которых истёк срок выполнения
 }
 
 window.addEventListener('click', (event)=> {

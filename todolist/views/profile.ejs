@@ -208,11 +208,11 @@
                                 <td><%= all_workers[i].id_worker %></td>
                                 <td><%= all_workers[i].lname %> <%= all_workers[i].fname %> <%= all_workers[i].mname%></td>
                                 
-                                <td>88005553535</td>
+                                <td><%= all_workers[i].number%></td>
                                 <td><%= all_workers[i].mail%></td>
                                 <td><%= all_workers[i].role %></td>
                                 <td><%= all_workers[i].department_name %></td>
-                                <td>218</td>
+                                <td><%= all_workers[i].room%></td>
                                 <td>
                                     <div class="actions">
                                         <div class="actions-item actions-item_disabled change-selected-task-for-allUsers" data-id="2" title="Изменить">
@@ -381,7 +381,7 @@
                         <div class="text form-item__text">
                             Фамилия
                         </div>
-                        <input id="change_task_for_allUsers_lname" type="text" class="form-item__input">
+                        <input id="change_task_for_allUsers_lname" type="text" class="form-item__input user">
                         <div class="subtitle form-item__subtitle">
                             Введите фамилию
                         </div>
@@ -390,7 +390,7 @@
                         <div class="text form-item__text">
                             Имя
                         </div>
-                        <input id="change_task_for_allUsers_name" type="text" class="form-item__input">
+                        <input id="change_task_for_allUsers_name" type="text" class="form-item__input  user">
                         <div class="subtitle form-item__subtitle">
                             Введите имя
                         </div>
@@ -399,7 +399,7 @@
                         <div class="text form-item__text">
                             Отчество
                         </div>
-                        <input id="change_task_for_allUsers_mname" type="text" class="form-item__input">
+                        <input id="change_task_for_allUsers_mname" type="text" class="form-item__input  user">
                         <div class="subtitle form-item__subtitle">
                             Введите отчество
                         </div>
@@ -408,7 +408,7 @@
                         <div class="text form-item__text">
                             Телефон
                         </div>
-                        <input id="change_task_for_allUsers_number" type="text" class="form-item__input">
+                        <input id="change_task_for_allUsers_number" type="text" class="form-item__input  user">
                         <div class="subtitle form-item__subtitle">
                             Введите номер телефона
                         </div>
@@ -417,7 +417,7 @@
                         <div class="text form-item__text">
                             Почта
                         </div>
-                        <input id="change_task_for_allUsers_email" type="text" class="form-item__input">
+                        <input id="change_task_for_allUsers_email" type="text" class="form-item__input  user">
                         <div class="subtitle form-item__subtitle">
                             Введите почту
                         </div>
@@ -426,8 +426,10 @@
                         <div class="text form-item__text">
                             Должность
                         </div>
-                        <select class="select" name="change_task_for_allUsers_role" id="change_task_for_allUsers_role">
-                            <option value="Работник">Работник</option>
+                        <select class="select role" name="change_task_for_allUsers_role" id="change_task_for_allUsers_role">
+                            <% for(var i=0; i < roles.length; i++) {%>
+                                <option id="role" value="<%= roles[i].id_role%>"><%= roles[i].role %></option>
+                                <%}%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите должность
@@ -437,8 +439,10 @@
                         <div class="text form-item__text">
                             Отделение
                         </div>
-                        <select class="select" name="change_task_for_allUsers_department" id="change_task_for_allUsers_department">
-                            <option value="IT">IT</option>
+                        <select class="select department" name="change_task_for_allUsers_department" id="change_task_for_allUsers_department">
+                            <% for(var i=0; i < departments.length; i++) {%>
+                            <option id="department" value="<%= departments[i].id_department%>"><%= departments[i].department_name %></option>
+                            <%}%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите отделение
@@ -448,7 +452,7 @@
                         <div class="text form-item__text">
                             Кабинет
                         </div>
-                        <input id="change_task_for_allUsers_room" type="text" class="form-item__input">
+                        <input id="change_task_for_allUsers_room" type="text" class="form-item__input user">
                         <div class="subtitle form-item__subtitle">
                             Введите кабинет
                         </div>
@@ -459,7 +463,7 @@
                 <button class="button bottom-content__button" id="close-change-allUsers-button">
                     Закрыть
                 </button>
-                <button class="button bottom-content__button button_save change_button_save">
+                <button id="change_user" class="button bottom-content__button button_save change_button_save">
                     Сохранить
                 </button>
             </div>
@@ -478,7 +482,7 @@
                         <div class="text form-item__text">
                             Название
                         </div>
-                        <input id="change_task_for_allTasks_taskName" type="text" class="form-item__input">
+                        <input id="change_task_for_allTasks_taskName" type="text" class="form-item__input task">
                         <div class="subtitle form-item__subtitle">
                             Введите название для задачи
                         </div>
@@ -487,7 +491,7 @@
                         <div class="text form-item__text">
                             Описание
                         </div>
-                        <input id="change_task_for_allTasks_desc" type="text" class="form-item__input">
+                        <input id="change_task_for_allTasks_desc" type="text" class="form-item__input task">
                         <div class="subtitle form-item__subtitle">
                             Введите описание для задачи
                         </div>
@@ -496,7 +500,7 @@
                         <div class="text form-item__text">
                             Сроки
                         </div>
-                        <input id="change_task_for_allTasks_deadline" type="text" class="form-item__input">
+                        <input id="change_task_for_allTasks_deadline" type="text" class="form-item__input task">
                         <div class="subtitle form-item__subtitle">
                             Введите сроки
                         </div>
@@ -505,8 +509,10 @@
                         <div class="text form-item__text">
                             Сотрудник
                         </div>
-                        <select class="select" name="change_task_for_allTasks_employee" id="change_task_for_allTasks_employee">
-                            <option value="Шило Сергей Николаевич">Шило Сергей Николаевич</option>
+                        <select class="select workers" name="change_task_for_allTasks_employee" id="change_task_for_allTasks_employee">
+                            <% for (var i = 0; i< all_workers.length; i++) {%>
+                            <option id="workers" value="<%= all_workers[i].id_worker%>"><%= all_workers[i].lname %> <%= all_workers[i].fname %> <%= all_workers[i].mname%></option>
+                            <%}%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите сотрудника
@@ -516,8 +522,10 @@
                         <div class="text form-item__text">
                             Категория
                         </div>
-                        <select class="select" name="change_task_for_allTasks_categories" id="change_task_for_allTasks_categories">
-                            <option value="Работа">Работа</option>
+                        <select class="select categories" name="change_task_for_allTasks_categories" id="change_task_for_allTasks_categories">
+                            <% for (var i = 0; i < categories.length ; i++) {%>
+                            <option id="categories" value="<%= categories[i].id_categories%>"><%= categories[i].categories%></option>
+                            <%}%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите категорию
@@ -527,8 +535,10 @@
                         <div class="text form-item__text">
                             Статус
                         </div>
-                        <select class="select" name="change_task_for_allTasks_status" id="change_task_for_allTasks_status">
-                            <option value="Активно">Активно</option>
+                        <select class="select statuses" name="change_task_for_allTasks_status" id="change_task_for_allTasks_status">
+                            <% for (var i = 0; i < statuses.length; i++){%>
+                            <option id="statuses" value="<%= statuses[i].id_status%>"><%= statuses[i].status%></option>
+                            <%}%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите статус
@@ -540,7 +550,7 @@
                 <button class="button bottom-content__button" id="close-change-allTasks-button">
                     Закрыть
                 </button>
-                <button class="button bottom-content__button button_save change_button_save">
+                <button id="change_task" class="button bottom-content__button button_save change_button_save">
                     Сохранить
                 </button>
             </div>
