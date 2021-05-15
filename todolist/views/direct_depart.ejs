@@ -248,10 +248,10 @@
                         </tr>
                     </thead>
                     <% for (var key in tasks) { %>
-                        <tr data-id="<%= tasks[key].id_task %>">
+                        <tr data-key="<%= tasks[key].id_task %>" value = "<%= tasks[key].id_worker %>">
                             <td><div value="<%= tasks[key].id_task %>" class="table-checkbox tbody-checkbox"></div></td>
                             <td><%= tasks[key].id_task %></td>
-                            <td><p id="profile-link" value = "<%= tasks[key].id_worker%>" href="/profile?ID=<%= tasks[key].id_worker%>"><%= tasks[key].fio %></p></td>
+                            <td id="profiles"><%= tasks[key].fio %></td>
                             <td class="categories"><%= tasks[key].categories %></td>
                             <td><%= tasks[key].desc %></td>
                             <td class="date"><%= tasks[key].dline %></td>

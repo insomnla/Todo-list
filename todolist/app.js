@@ -18,12 +18,13 @@ const {ensureAuthenticated} = require('./config/auth');
 const { connect } = require("http2");
 const { worker } = require("cluster");
 const { query } = require("express");
+const { profile } = require('console');
 let worker_single = 0,
     worker_id = [0],
     socket_id = [0],
     dep_workers = 0;
 // Parse URL-encoded bodies (as sent by HTML forms)
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }))
 require('./config/passport')(passport)
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
@@ -237,17 +238,7 @@ app.post("/deadline_check", ensureAuthenticated, (req,res)=>{
 })
 
 app.post("/profile", ensureAuthenticated,(req, res)=>{
-    connection.query("select lname, fname, mname, mail, role, department_name from worker inner join role on id_role = fk_id_role inner join department on id_department = fk_id_department where id_worker = ? ", [req.body.pID], function(error,results,fields){
-        profile = results;
-    })
-    connection.query("select  id_task, categories.categories, task.desc, CAST(deadline AS CHAR) as dline, status.status from task inner join status on fk_id_status = id_status inner join categories on fk_id_categories = id_categories where fk_id_worker = ? and status = 'Активен'", [req.body.pID], function(error, results, fields) {
-        res.render('profile', {
-            profile : profile,
-            id : req.session.userid,
-            tasks : results,
-            role : req.session.role
-        })
-    })
+    getProfile(req,res);
 })
 
 app.post("/new_task", ensureAuthenticated, (req, res)=>{
@@ -288,12 +279,22 @@ app.get("/direct_depart", ensureAuthenticated, (req,res)=>{
     getDirectDepart(req, res);
 })
 
+app.post("/direct_depart", ensureAuthenticated, (req,res)=>{
+    getDirectDepart(req, res);
+})
+
+
 app.get("/director", ensureAuthenticated, (req,res)=>{
     getDirector(req, res);
 })
 
 function getDirectDepart(req, res){
-    connection.query("select fk_id_department ,id_worker, concat(lname, ' ', fname, ' ', mname) as fio from worker where fk_id_department = ?", [req.session.department], function(error, results, fields){
+    dep_id = req.session.department;
+    if (req.body.dep_id !== undefined){
+        console.log(req.body.dep_id , " ААААААААааа" );
+        dep_id = req.body.dep_id;
+    }
+    connection.query("select fk_id_department ,id_worker, concat(lname, ' ', fname, ' ', mname) as fio from worker where fk_id_department = ?", [dep_id], function(error, results, fields){
         dep_workers = results;
     }) 
     connection.query("select * from categories", function(eror, results, fields){
@@ -307,7 +308,7 @@ function getDirectDepart(req, res){
         console.log("TRUE")
         connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
     }
-    connection.query("select id_worker, id_task, concat(lname,' ' ,fname,' ', mname) as fio, categories.categories, task.name, task.desc, CAST(deadline AS CHAR) as dline , status from task inner join worker on fk_id_worker = id_worker inner join categories on fk_id_categories = id_categories inner join status on fk_id_status = id_status inner join department on fk_id_department = id_department where fk_id_department = ?", [req.session.department], function(error, results, fields) {
+    connection.query("select id_worker, id_task, concat(lname,' ' ,fname,' ', mname) as fio, categories.categories, task.name, task.desc, CAST(deadline AS CHAR) as dline , status from task inner join worker on fk_id_worker = id_worker inner join categories on fk_id_categories = id_categories inner join status on fk_id_status = id_status inner join department on fk_id_department = id_department where fk_id_department = ?", [dep_id], function(error, results, fields) {
         res.render('direct_depart', {
             categ_name : categ_name,
             tasks : results,
@@ -383,29 +384,23 @@ function getDirector(req, res){
     connection.query("select * from status", function(error, results, field){
         statuses = results;
     })
+    connection.query("select count(*) as counter, department_name from worker join department on fk_id_department = id_department  where fk_id_department <> 0 and fk_id_role <> 2 group by fk_id_department", function(error, results, field){
+        dep_count = results;
+    })
     console.log(req.body.taskName);
     if (!(req.body.taskName == undefined)){
         console.log("TRUE")
         connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
     }
-/*    connection.query("select categories.categories, count(*) as count from task inner join categories on task.fk_id_categories = categories.id_categories inner join worker on worker.id_worker = task.fk_id_worker where id_worker = ? group by fk_id_categories", [req.session.userid] , function(error, results, fields){
-        categories = results;
-    }) */ 
-    if (req.session.role == 2){
-        connection.query("select id_task, task.name, task.desc, deadline, lname, LEFT(fname, 1) as fname, LEFT(mname, 1) as mname, fk_id_worker as worker from task inner join worker on task.fk_id_worker = worker.id_worker inner join department on worker.fk_id_department = department.id_department where id_department = ? order by worker", [req.session.department], function(error, results, fields) {
-            dep_workers = results;
-        })}
-    connection.query("select id_worker, id_task, concat(lname,' ' ,fname,' ', mname) as fio, categories.categories, task.name, task.desc, CAST(deadline AS CHAR) as dline , status from task inner join worker on fk_id_worker = id_worker inner join categories on fk_id_categories = id_categories inner join status on fk_id_status = id_status inner join department on fk_id_department = id_department where fk_id_department = ?", [req.session.department], function(error, results, fields) {
+    connection.query("select id_department, id_worker, lname, fname, mname, department_name from worker join department on fk_id_department = id_department where fk_id_role = 2", function(error, results, fields) {
         res.render('director', {
             categ_name : categ_name,
-            tasks : results,
+            dep_directors : results,
             info : req.session.username,
             id: req.session.userid,
             department: req.session.department,
-            roles : roles,
-            departments : departments,
+            dep_count : dep_count,
             role: req.session.role,
-            dep_workers: dep_workers,
             first: 0,
             statuses : statuses
            })
@@ -415,30 +410,36 @@ function getDirector(req, res){
 function addTask(task, user){
     console.log(typeof(task));
     console.log(task)
-    if (typeof(task) == "object"){
+    if (typeof(task) == 'object'){
         for (var i = 0;i < task.length; i++){
             connection.query("update task set fk_id_worker = ? where id_task = ?", [user ,task[i]]);
         }
     } 
-    if (typeof(task) == "string") {
+    if (typeof(task) == 'string') {
+        console.log(task, user, "string");
         connection.query("update task set fk_id_worker = ? where id_task = ?", [user ,task]);
     }
 }
 
 function deleteTask(task){
     if (typeof(task) == "object"){
+        console.log("object");
         for (var i = 0;i < task.length; i++){
             connection.query("update task set fk_id_worker = null where id_task = ?", [task[i]]);
         }
     } 
     if (typeof(task) == "string"){
+        console.log("string");
         connection.query("update task set fk_id_worker = null where id_task = ?", [task]);
     }
 }
 function newTask(info){
-    connection.query("insert into task(task.name, task.desc,deadline, fk_id_status, fk_id_categories, fk_id_worker) values(?,?,?,?,?,?)", [info.body.nameValue ,info.body.descValue, info.body.deadlineValue, info.body.taskCATEG_ID, info.body.taskSTATUS_ID, info.session.userid])
+    if (info.body.employee_id == -1){
+        connection.query("insert into task(task.name, task.desc,deadline, fk_id_status, fk_id_categories, fk_id_worker) values(?,?,?,?,?,?)", [info.body.nameValue ,info.body.descValue, info.body.deadlineValue, info.body.taskCATEG_ID, info.body.taskSTATUS_ID, info.session.userid]);
+    } else {
+        connection.query("insert into task(task.name, task.desc,deadline, fk_id_status, fk_id_categories, fk_id_worker) values(?,?,?,?,?,?)", [info.body.nameValue ,info.body.descValue, info.body.deadlineValue, info.body.taskCATEG_ID, info.body.taskSTATUS_ID, info.body.employee_id]);
+    }
 }
-
 function changeTask(info){
     connection.query("update task set task.desc = ? , deadline = ?, fk_id_categories = ?, fk_id_status = ? where id_task = ?", [info.taskDESC, info.taskDEADLINE, info.taskCATEG_ID, info.taskSTATUS_ID, info.taskID])
 }
@@ -527,6 +528,10 @@ function changeWorker(info){
 }
 
 function getProfile(req, res){
+    profile_id = req.session.id;
+    if (req.body.profile_id !== undefined){
+        profile_id = req.body.profile_id;
+    }
     connection.query("select * from categories", function(eror, results, fields){
         categ_name = results;
     })
@@ -539,18 +544,22 @@ function getProfile(req, res){
     connection.query("select * from role", function(eror, results, fields){
         roles = results;
     })
+    connection.query("select id_worker, lname, fname, mname from worker where id_worker = ?", [req.session.userid], function(error, results, field){
+        guest_info = results;
+    })
     connection.query("select id_worker, lname, fname, mname, mail, role.role, department_name, number, room from worker inner join department on fk_id_department = id_department inner join role on id_role = fk_id_role", function(error, results, fields){
         all_workers = results;
     })
-    connection.query("select lname, fname, mname, mail, role, department_name from worker inner join role on id_role = fk_id_role inner join department on id_department = fk_id_department where id_worker = ? ", [req.session.userid], function(error,results,fields){
-        profile = results;
+    connection.query("select lname, fname, mname, mail, role, department_name, number, room from worker inner join role on id_role = fk_id_role inner join department on id_department = fk_id_department where id_worker = ? ", [profile_id], function(error,results,fields){
+        user_profile = results;
     })
     connection.query("select id_task, task.name, task.desc, CAST(deadline AS CHAR) as dline, concat(lname, ' ', fname, ' ' , mname) as fio, categories, status from task inner join categories on fk_id_categories = id_categories inner join status on id_status = fk_id_status inner join worker on id_worker = fk_id_worker", function(error, results, fields) {
         all_tasks = results;
     })
-    connection.query("select id_task, categories.categories, task.desc, CAST(deadline AS CHAR) as dline, status.status from task inner join status on fk_id_status = id_status inner join categories on fk_id_categories = id_categories where fk_id_worker = ? and status = 'Активен'", [req.session.userid], function(error, results, fields) {
+    connection.query("select id_task, categories.categories, task.desc, CAST(deadline AS CHAR) as dline, status.status from task inner join status on fk_id_status = id_status inner join categories on fk_id_categories = id_categories where fk_id_worker = ? and status = 'Активен'", [profile_id], function(error, results, fields) {
         res.render('profile', {
-            profile : profile,
+            guest_info : guest_info,
+            user_profile : user_profile,
             categories : categ_name,
             statuses : statuses,
             id : req.session.userid,

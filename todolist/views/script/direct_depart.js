@@ -68,6 +68,15 @@ let modalNewTaskForEmployee = document.querySelector("#new-task-modal-for-direct
 
 let formItemInput = document.querySelectorAll(".form-item__input");
 
+let profiles = document.querySelectorAll("#profiles");
+
+profiles.forEach((profile)=>{
+    profile.addEventListener("click", ()=>{
+        profile_id = profile.parentNode.getAttribute("value");
+        artificialPost(profile_id);
+    })
+})
+
 buttonNewTaskForEmployee.onclick = function() {
     modalNewTaskForEmployee.classList.toggle('hidden');
     if(!modalNewTaskForEmployee.classList.contains('hidden')) {
@@ -97,4 +106,21 @@ if(buttonToDirectDepart !== null) {
 
 buttonToAllTasks.onclick = function() {
     window.location.href = "/department";
+}
+
+function artificialPost(profile_id) {
+    var form = document.createElement('form');
+    var input = document.createElement('input');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', '/profile');
+    form.setAttribute('value', profile_id);
+    form.style.display = 'hidden';
+    form.name = "dep_id";
+    form.innerHTML = profile_id;
+    document.body.appendChild(form)
+    form.appendChild(input)
+    input.setAttribute('value', profile_id);
+    input.setAttribute('name', 'profile_id');
+    console.log(form);
+    form.submit();
 }

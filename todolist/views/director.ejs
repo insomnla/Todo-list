@@ -243,15 +243,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <% for(var i=0; i < dep_directors.length; i++) {%>
+                        <tr data-key = "<%= dep_directors[i].id_department%>">
                             <td><div value="" class="table-checkbox tbody-checkbox"></div></td>
-                            <td>1</td>
-                            <td>Лобачёв</td>
-                            <td>Дмитрий</td>
-                            <td>Николаевич</td>
-                            <td>30</td>
-                            <td>IT</td>
+                            <td><%= dep_directors[i].id_worker%></td>
+                            <td><%= dep_directors[i].lname%></td>
+                            <td><%= dep_directors[i].fname%></td>
+                            <td><%= dep_directors[i].mname%></td>
+                            <% for(var k=0; k < dep_count.length; k++) {%>
+                                <% if (dep_directors[i].department_name == dep_count[k].department_name) {%>
+                                    <td><%= dep_count[k].counter%></td>
+                                    <%}%>
+                            <%}%>
+                            <td><%= dep_directors[i].department_name%></td>
                         </tr>
+                        <%}%>
                     </tbody>
                 </table>
                 <div class="after-table hidden">

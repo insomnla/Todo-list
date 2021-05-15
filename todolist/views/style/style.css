@@ -896,6 +896,10 @@ tbody tr td {
     background-size: 24px;
 }
 
+path {
+    pointer-events: none;  /* прячем path чтобы всегда нажимать на svg */
+}
+
 /* Hidden */
 
 .hidden {

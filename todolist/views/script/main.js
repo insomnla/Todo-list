@@ -108,11 +108,9 @@ if(addSelectedTask !== null) {
     addSelectedTask.forEach( (task)=>{
         task.addEventListener("click", (elem)=>{
             let taskToADD = elem.target.getAttribute("data-key");
-            setTimeout(() => {
-                $.post("/add_task", {taskToADD}, function(){
-                    location.reload();
-                }) 
-            }, 100);
+            $.post("/add_task", {taskToADD}, function(){
+                location.reload();
+            }) 
         })
     })
 }
@@ -141,6 +139,8 @@ if(deleteSelectedTask !== null) {
     deleteSelectedTask.forEach((elem)=>{
         elem.addEventListener('click', (elem)=>{
             taskToDelete = (elem.target.getAttribute("data-key"));
+            console.log(taskToDelete);
+            console.log(elem.target);
             modalAlertDeletTask.classList.toggle('hidden');
         })
     })
@@ -155,11 +155,9 @@ if(buttonCloseModalAlert !== null) {
 
 if(buttonYesModalAlert !== null) {
     buttonYesModalAlert.onclick = function() {
-        setTimeout(() => {
-            $.post("/delete", {taskToDelete}, function(){
-                location.reload();
-            })
-        }, 100);
+       $.post("/delete", {taskToDelete}, function(){
+            location.reload();
+        })
         modalAlertDeletTask.classList.toggle('hidden');
     }
 }
@@ -206,20 +204,26 @@ function setTitleForTitle() {
 
 function saveTask(){
     let desc = document.querySelector("#new_task_desc"),
+        employee_id = -1;
+        employee = document.querySelector("#new_task_employee")
         deadline = document.querySelector("#new_task_deadline"),
-        name = document.querySelector("#new_task_name"),
-        nameValue = name.value,
+        tname = document.querySelector("#new_task_name"),
+        nameValue = tname.value,
         descValue = desc.value,
         deadlineValue = deadline.value,
         taskCATEG_ID  = document.querySelector("#new_task_categ").value;
         taskSTATUS_ID = document.querySelector("#new_task_status").value;
-        $.post("/new_task", {descValue, nameValue , deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
+        if (employee !== null){
+            employee_id = employee.value;
+        }
+        console.log(employee_id, descValue, nameValue , deadlineValue, taskCATEG_ID, taskSTATUS_ID)
+        $.post("/new_task", {employee_id, descValue, nameValue , deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
             window.location.reload();
-        })
+        }) 
 }
 
-function get_task(tableRow){ // бета тест кое-какой хрени
-        let newTaskOPT = document.querySelectorAll("#change-option");
+function get_task(tableRow){ 
+    let newTaskOPT = document.querySelectorAll("#change-option");
         addedValue = 0;
     if (tableRow.children.length == 8){
         addedValue = 1;
@@ -241,9 +245,11 @@ function get_task(tableRow){ // бета тест кое-какой хрени
             task.selected = true;
         }
     })
-    let taskCATEG_ID  = document.querySelector("#change_task_categ").value;
-    let taskSTATUS_ID = document.querySelector("#change_task_status").value;
     buttonSaveChangeTask.onclick = function() {
+        let taskCATEG_ID  = document.querySelector("#change_task_categ").value;
+        let taskSTATUS_ID = document.querySelector("#change_task_status").value;
+        let taskDESC = desc.value;
+        let taskDEADLINE = deadline.value;
         if(desc.value !== '' && deadline.value !== '') {
             saveChangeTask(taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID);
         } else {
@@ -253,9 +259,10 @@ function get_task(tableRow){ // бета тест кое-какой хрени
 }
 
 function saveChangeTask(taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID) {
+    console.log(taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID)
     $.post("/update", {taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID}, ()=>{
         window.location.reload();
-    })
+    }) 
 }
 
 getNewStatusAtTasks();

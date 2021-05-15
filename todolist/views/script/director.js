@@ -50,10 +50,35 @@ function onloadFunc() {
     }
 }
 
-let buttonToTasks = document.querySelector(".instruments__button_bg_todo_list");
+let buttonToTasks = document.querySelector(".instruments__button_bg_todo_list"),
+    depDirectors = document.querySelectorAll("tr");
 
 if(buttonToTasks !== null) {
     buttonToTasks.onclick = function() {
         window.location.href = '/board';
     }
+}
+
+depDirectors.forEach((director)=>{
+    director.addEventListener("click", ()=>{
+        let dep_id = director.getAttribute("data-key");
+        artificialPost(dep_id)
+    })
+})
+
+function artificialPost(dep_id) {
+    var form = document.createElement('form');
+    var input = document.createElement('input');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', '/direct_depart');
+    form.setAttribute('value', dep_id);
+    form.style.display = 'hidden';
+    form.name = "dep_id";
+    form.innerHTML = dep_id;
+    document.body.appendChild(form)
+    form.appendChild(input)
+    input.setAttribute('value', dep_id);
+    input.setAttribute('name', 'dep_id');
+    console.log(form);
+    form.submit();
 }
