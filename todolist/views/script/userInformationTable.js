@@ -199,9 +199,13 @@ function get_users(tableRow){
         let userROLE_ID  = document.querySelector(".role").value;
         let userDEPARTMENT_ID = document.querySelector(".department").value;
         console.log(userROLE_ID + " " + userDEPARTMENT_ID);
-        $.post("/update_worker", {worker_id, fio_new, mail, userROLE_ID, userDEPARTMENT_ID, phone, room}, ()=>{
-            window.location.reload();
-        })
+        if(updArray[0].value !== '' && updArray[1].value !== '' && updArray[2].value !== '' && phone !== '' && room !== '') {
+            $.post("/update_worker", {worker_id, fio_new, mail, userROLE_ID, userDEPARTMENT_ID, phone, room}, ()=>{
+                window.location.reload();
+            })
+        } else {
+            alert('Пожалуйста заполните все элементы таблицы');
+        }
     }) 
 }
 
@@ -245,8 +249,12 @@ function get_tasks(tableRow){
             categories_id = document.querySelector(".categories").value;
             statuses_id = document.querySelector(".statuses").value;
         console.log(worker_id);
-        $.post("/update_task", {task_id, name, desc, deadline, worker_id, categories_id, statuses_id}, ()=>{
-            window.location.reload();
-        })  
+        if(name !== '' && desc !== '' && deadline !== '') {
+            $.post("/update_task", {task_id, name, desc, deadline, worker_id, categories_id, statuses_id}, ()=>{
+                window.location.reload();
+            }) 
+        } else {
+            alert('Пожалуйста заполните все элементы таблицы');
+        }
     }) 
 }

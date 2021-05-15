@@ -66,8 +66,19 @@ let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
 
 let modalNewTaskForEmployee = document.querySelector("#new-task-modal-for-directDepart");
 
+let formItemInput = document.querySelectorAll(".form-item__input");
+
 buttonNewTaskForEmployee.onclick = function() {
     modalNewTaskForEmployee.classList.toggle('hidden');
+    if(!modalNewTaskForEmployee.classList.contains('hidden')) {
+        buttonNTask.onclick = function() {
+            if(formItemInput[0].value !== '' && formItemInput[1].value !== '' && formItemInput[2].value !== '') {
+                saveTask();
+            } else {
+                alert('Пожалуйста заполните все элементы таблицы')
+            }
+        }
+    }
 }
 
 buttonNewTaskForEmployeeClose.onclick = function() {

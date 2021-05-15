@@ -7,7 +7,9 @@ let buttonYesModalAlert = document.querySelector("#yes-modal-alert");
 
 let buttonBulkDelete = document.querySelector(".instruments__button_bg_trash");
 let buttonNTask = document.querySelector(".button_save");
+let buttonSaveChangeTask = document.querySelector(".change_button_save");
 let buttonBulkAdd = document.querySelector(".instruments__button_bg_plus");
+let buttonBulkReport = document.querySelector(".instruments__button_bg_document");
 
 let navItemCurrentUser = document.querySelector(".nav-item-current-user");
 let minProfile = document.querySelector(".nav-item-current-user_after");
@@ -42,22 +44,6 @@ let titleChangeTask = document.querySelector("#change-task-title");
 let exit = document.querySelector(".exit");
 
 setTitleForTitle();
-
-if (buttonNTask !== null){
-    buttonNTask.onclick = function(){
-        let desc = document.querySelector("#new_task_desc"),
-            deadline = document.querySelector("#new_task_deadline"),
-            name = document.querySelector("#new_task_name"),
-            nameValue = name.value,
-            descValue = desc.value,
-            deadlineValue = deadline.value,
-            taskCATEG_ID  = document.querySelector("#new_task_categ").value;
-            taskSTATUS_ID = document.querySelector("#new_task_status").value;
-            $.post("/new_task", {descValue, nameValue ,deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
-                window.location.reload();
-            })
-    }
-}
 
 if (buttonBulkAdd !== null) {
     buttonBulkAdd.onclick = function() {
@@ -202,7 +188,15 @@ function checkForEmptiness() {
             }
         }
     })
-} 
+}
+
+function delDisabledMode(button) {
+    button.removeAttribute('disabled');
+}
+
+function setDisabledMode(button) {
+    button.setAttribute('disabled', '');
+}
 
 function setTitleForTitle() {
     allTitles.forEach((elem)=>{
@@ -210,9 +204,22 @@ function setTitleForTitle() {
     })
 }
 
+function saveTask(){
+    let desc = document.querySelector("#new_task_desc"),
+        deadline = document.querySelector("#new_task_deadline"),
+        name = document.querySelector("#new_task_name"),
+        nameValue = name.value,
+        descValue = desc.value,
+        deadlineValue = deadline.value,
+        taskCATEG_ID  = document.querySelector("#new_task_categ").value;
+        taskSTATUS_ID = document.querySelector("#new_task_status").value;
+        $.post("/new_task", {descValue, nameValue , deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
+            window.location.reload();
+        })
+}
+
 function get_task(tableRow){ // бета тест кое-какой хрени
-    let btn_save = document.querySelector(".change_button_save"),
-        newTaskOPT = document.querySelectorAll("#change-option");
+        let newTaskOPT = document.querySelectorAll("#change-option");
         addedValue = 0;
     if (tableRow.children.length == 8){
         addedValue = 1;
@@ -234,13 +241,20 @@ function get_task(tableRow){ // бета тест кое-какой хрени
             task.selected = true;
         }
     })
-    btn_save.addEventListener("click", ()=>{
-        taskDEADLINE = deadline.value;
-        let taskCATEG_ID  = document.querySelector("#change_task_categ").value;
-        let taskSTATUS_ID = document.querySelector("#change_task_status").value;
-        $.post("/update", {taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID}, ()=>{
-            window.location.reload();
-        })
+    let taskCATEG_ID  = document.querySelector("#change_task_categ").value;
+    let taskSTATUS_ID = document.querySelector("#change_task_status").value;
+    buttonSaveChangeTask.onclick = function() {
+        if(desc.value !== '' && deadline.value !== '') {
+            saveChangeTask(taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID);
+        } else {
+            alert('Пожалуйста заполните все элементы таблицы');
+        }
+    }
+}
+
+function saveChangeTask(taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID) {
+    $.post("/update", {taskID, taskDESC, taskDEADLINE, taskCATEG_ID, taskSTATUS_ID}, ()=>{
+        window.location.reload();
     })
 }
 
@@ -355,25 +369,43 @@ window.onload = function() {
             if(optionsText !== null) {
                 optionsText.textContent = `Выбранных задач: ${checkedCounter}`;
             }
-            // if(checkedCounterNoVisible < 1) {
-            //     allTableCheckbox.classList.remove('table-checkbox_checked');
-            // }
-            // tbodyCheckbox.forEach(()=>{
-            //     if(checkedCounterNoVisible > 0) {
-            //         mainTable.style.animation = 'crawlDown .6s ease-in-out forwards';
-            //         setTimeout(function(){
-            //             options.classList.remove('hidden');
-            //         }, 300)
-            //         setTimeout(function(){
-            //             options.style.animation = 'opacity1 .6s linear forwards'
-            //         }, 310)
-            //     } else {
-            //         options.style.animation = 'opacity0 .4s linear forwards'
-            //         setTimeout(function(){
-            //             options.classList.add('hidden');
-            //         }, 600)
-            //     }
-            // })  
+            if(checkedCounterNoVisible < 1) {
+                allTableCheckbox.classList.remove('table-checkbox_checked');
+            }
+            tbodyCheckbox.forEach(()=>{
+                if(checkedCounterNoVisible > 0) {
+                    if(buttonBulkDelete !== null) {
+                        delDisabledMode(buttonBulkDelete);
+                    }
+                    if(buttonBulkAdd !== null) {
+                        delDisabledMode(buttonBulkAdd);
+                    }
+                    if(buttonBulkReport !== null) {
+                        delDisabledMode(buttonBulkReport);
+                    }
+                    // mainTable.style.animation = 'crawlDown .6s ease-in-out forwards';
+                    // setTimeout(function(){
+                    //     options.classList.remove('hidden');
+                    // }, 300)
+                    // setTimeout(function(){
+                    //     options.style.animation = 'opacity1 .6s linear forwards'
+                    // }, 310)
+                } else {
+                    if(buttonBulkDelete !== null) {
+                        setDisabledMode(buttonBulkDelete);
+                    }
+                    if(buttonBulkAdd !== null) {
+                        setDisabledMode(buttonBulkAdd);
+                    }
+                    if(buttonBulkReport !== null) {
+                        setDisabledMode(buttonBulkReport);
+                    }
+                    // options.style.animation = 'opacity0 .4s linear forwards'
+                    // setTimeout(function(){
+                    //     options.classList.add('hidden');
+                    // }, 600)
+                }
+            })  
         }
     }
 }

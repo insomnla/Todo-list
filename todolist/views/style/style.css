@@ -71,11 +71,20 @@ button:active {
 }
 
 .nav__link {
+    height: 100px;
     font-size: 25px;
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
-.nav-item:hover {
+.nav-item {
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-item:hover, .nav__link:hover {
     background: var(--table-hover);
 }
 
@@ -323,7 +332,7 @@ tbody tr td {
 }
 
 .page-header-header {
-    padding: 40px 0;
+    padding: 10px 0;
 }
 
 .page-header-header-inner {
