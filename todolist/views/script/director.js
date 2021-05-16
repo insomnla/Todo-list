@@ -70,7 +70,7 @@ function artificialPost(dep_id) {
     var form = document.createElement('form');
     var input = document.createElement('input');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', '/direct_depart');
+    form.setAttribute('action', '/direct_depart?id=' + dep_id);
     form.setAttribute('value', dep_id);
     form.style.display = 'hidden';
     form.name = "dep_id";

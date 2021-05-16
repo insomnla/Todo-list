@@ -290,9 +290,9 @@ app.get("/director", ensureAuthenticated, (req,res)=>{
 
 function getDirectDepart(req, res){
     dep_id = req.session.department;
-    if (req.body.dep_id !== undefined){
-        console.log(req.body.dep_id , " ААААААААааа" );
-        dep_id = req.body.dep_id;
+    let urlRequest = url.parse(req.url, true);
+    if (urlRequest.query.id  !== undefined){
+        dep_id = urlRequest.query.id;
     }
     connection.query("select fk_id_department ,id_worker, concat(lname, ' ', fname, ' ', mname) as fio from worker where fk_id_department = ?", [dep_id], function(error, results, fields){
         dep_workers = results;
@@ -529,8 +529,9 @@ function changeWorker(info){
 
 function getProfile(req, res){
     profile_id = req.session.id;
-    if (req.body.profile_id !== undefined){
-        profile_id = req.body.profile_id;
+    let urlRequest = url.parse(req.url, true);
+    if (urlRequest.query.id !== undefined){
+        profile_id = urlRequest.query.id;
     }
     connection.query("select * from categories", function(eror, results, fields){
         categ_name = results;

@@ -112,7 +112,7 @@ function artificialPost(profile_id) {
     var form = document.createElement('form');
     var input = document.createElement('input');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', '/profile');
+    form.setAttribute('action', '/profile?id=' + profile_id);
     form.setAttribute('value', profile_id);
     form.style.display = 'hidden';
     form.name = "dep_id";
