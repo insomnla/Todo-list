@@ -91,7 +91,6 @@ function monthTarget() {
     selectedDate = [];
     selectedDate.push(year.textContent);
     selectedDate.push(getMonthNumber(secondMonth.textContent));
-    console.log(selectedDate)
     creatingHtmlTag(getDayInSelectedDate(selectedDate), selectedDate);
 }
 
@@ -137,7 +136,6 @@ function changeMonths(monthIndex, action) {
         } else {
             monthIndex = +monthIndex + 1;
         }
-        console.log(monthIndex);
         if(monthIndex > 0 && monthIndex < 11) {
             firstMonth.textContent = monthArray[monthIndex - 1];
             secondMonth.textContent = monthArray[monthIndex];
@@ -159,7 +157,6 @@ function changeMonths(monthIndex, action) {
         } else {
             monthIndex = +monthIndex - 1;
         }
-        console.log(monthIndex);
         if(monthIndex > 0 && monthIndex < 11) {
             firstMonth.textContent = monthArray[monthIndex - 1];
             secondMonth.textContent = monthArray[monthIndex];
@@ -187,6 +184,40 @@ function getDayInSelectedDate(selectedDate) {
     return dayInMonth;
 }
 
+function getDayInPrevMonth (selectedDate, day) {
+    let selectedMonth = selectedDate[1];
+    let selectedYear = selectedDate[0];
+    if (selectedMonth !== 0){
+        let date = new Date(selectedYear, selectedMonth - 1, 32);
+        let dayInMonth = 32 - date.getDate();
+        let countForDelet = dayInMonth - day;
+        let arrayDayInMonth = new Array();
+
+        for(let i = 0; i < dayInMonth + 1; i++) {
+            arrayDayInMonth.push(i);
+        }
+
+        for(let i = 0; i < countForDelet + 1; i++) {
+            arrayDayInMonth.shift();
+        }
+        return arrayDayInMonth;
+    } else {
+        let date = new Date(selectedYear - 1, 10, 32);
+        let dayInMonth = 32 - date.getDate();
+        let countForDelet = dayInMonth - day;
+        let arrayDayInMonth = new Array();
+
+        for(let i = 0; i < dayInMonth + 1; i++) {
+            arrayDayInMonth.push(i);
+        }
+
+        for(let i = 0; i < countForDelet + 1; i++) {
+            arrayDayInMonth.shift();
+        }
+        return arrayDayInMonth;
+    }
+}
+
 function changeMonthName(monthIndex) {
     let monthArray = new Array('Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь');
 
@@ -210,13 +241,8 @@ function findDay(year, month) {
 
 function creatingHtmlTag(dayInMonth, selectedDate) {
     let div = document.querySelectorAll('.day-card');
-    let emptyDiv = document.querySelectorAll('.empty-dayCard');
 
     div.forEach((elem)=>{
-        elem.remove();
-    });
-
-    emptyDiv.forEach((elem)=>{
         elem.remove();
     });
 
@@ -234,7 +260,7 @@ function creatingHtmlTag(dayInMonth, selectedDate) {
     let year = selectedDate[0];
     let month = selectedDate[1];
 
-    let counter;
+    let counter, dayCounter = 1;
 
     if (findDay(year, month) == 1) {
         createDiv.classList.add('day-card');
@@ -247,9 +273,12 @@ function creatingHtmlTag(dayInMonth, selectedDate) {
         tuesday.appendChild(createDiv);
         counter = 1;
         for (let i = 0; i < 1; i++){
-            let createEmptyDiv = document.createElement('div');
-            createEmptyDiv.classList.add('empty-dayCard');
-            calendarItem[i].appendChild(createEmptyDiv);
+            let arrayWithPrevDay = getDayInPrevMonth(selectedDate, 1);
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">${arrayWithPrevDay[i]}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-prew-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
         };
     } else if (findDay(year, month) == 3) {
         createDiv.classList.add('day-card');
@@ -257,9 +286,12 @@ function creatingHtmlTag(dayInMonth, selectedDate) {
         wednesday.appendChild(createDiv);
         counter = 2;
         for (let i = 0; i < 2; i++){
-            let createEmptyDiv = document.createElement('div');
-            createEmptyDiv.classList.add('empty-dayCard');
-            calendarItem[i].appendChild(createEmptyDiv);
+            let arrayWithPrevDay = getDayInPrevMonth(selectedDate, 2);
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">${arrayWithPrevDay[i]}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-prew-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
         };
     } else if (findDay(year, month) == 4) {
         createDiv.classList.add('day-card');
@@ -267,9 +299,12 @@ function creatingHtmlTag(dayInMonth, selectedDate) {
         thursday.appendChild(createDiv);
         counter = 3;
         for (let i = 0; i < 3; i++){
-            let createEmptyDiv = document.createElement('div');
-            createEmptyDiv.classList.add('empty-dayCard');
-            calendarItem[i].appendChild(createEmptyDiv);
+            let arrayWithPrevDay = getDayInPrevMonth(selectedDate, 3);
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">${arrayWithPrevDay[i]}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-prew-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
         };
     } else if (findDay(year, month) == 5) {
         createDiv.classList.add('day-card');
@@ -277,9 +312,12 @@ function creatingHtmlTag(dayInMonth, selectedDate) {
         friday.appendChild(createDiv);
         counter = 4;
         for (let i = 0; i < 4; i++){
-            let createEmptyDiv = document.createElement('div');
-            createEmptyDiv.classList.add('empty-dayCard');
-            calendarItem[i].appendChild(createEmptyDiv);
+            let arrayWithPrevDay = getDayInPrevMonth(selectedDate, 4);
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">${arrayWithPrevDay[i]}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-prew-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
         };
     }  else if (findDay(year, month) == 6) {
         createDiv.classList.add('day-card');
@@ -287,9 +325,12 @@ function creatingHtmlTag(dayInMonth, selectedDate) {
         saturday.appendChild(createDiv);
         counter = 5;
         for (let i = 0; i < 5; i++){
-            let createEmptyDiv = document.createElement('div');
-            createEmptyDiv.classList.add('empty-dayCard');
-            calendarItem[i].appendChild(createEmptyDiv);
+            let arrayWithPrevDay = getDayInPrevMonth(selectedDate, 5);
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">${arrayWithPrevDay[i]}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-prew-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
         };
     } else if (findDay(year, month) == 0) {
         createDiv.classList.add('day-card');
@@ -297,9 +338,12 @@ function creatingHtmlTag(dayInMonth, selectedDate) {
         sunday.appendChild(createDiv);
         counter = 6;
         for (let i = 0; i < 6; i++){
-            let createEmptyDiv = document.createElement('div');
-            createEmptyDiv.classList.add('empty-dayCard');
-            calendarItem[i].appendChild(createEmptyDiv);
+            let arrayWithPrevDay = getDayInPrevMonth(selectedDate, 6);
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">${arrayWithPrevDay[i]}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-prew-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
         };
     }
 
@@ -318,5 +362,55 @@ function creatingHtmlTag(dayInMonth, selectedDate) {
         }
         calendarItem[counter + 1].appendChild(createDiv);
         counter ++;
+    }
+
+    if(counter == 0) {
+        for (let i = 1; i < 7; i++){
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">0${dayCounter++}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-next-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
+        };
+    } else if(counter == 1) {
+        for (let i = 2; i < 7; i++){
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">0${dayCounter++}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-next-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
+        };
+    } else if(counter == 2) {
+        for (let i = 3; i < 7; i++){
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">0${dayCounter++}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-next-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
+        };
+    } else if(counter == 3) {
+        for (let i = 4; i < 7; i++){
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">0${dayCounter++}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-next-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
+        };
+    } else if(counter == 4) {
+        for (let i = 5; i < 7; i++){
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">0${dayCounter++}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-next-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
+        };
+    } else if(counter == 5) {
+        for (let i = 6; i < 7; i++){
+            let createAnotherMonthDiv = document.createElement('div');
+            createAnotherMonthDiv.innerHTML = `<div class="day-card-info-another-month">0${dayCounter++}</div>`;
+            createAnotherMonthDiv.classList.add('day-card');
+            createAnotherMonthDiv.classList.add('day-card-next-month');
+            calendarItem[i].appendChild(createAnotherMonthDiv);
+        };
     }
 };

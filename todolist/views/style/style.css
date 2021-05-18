@@ -71,11 +71,20 @@ button:active {
 }
 
 .nav__link {
+    height: 100px;
     font-size: 25px;
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
-.nav-item:hover {
+.nav-item {
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-item:hover, .nav__link:hover {
     background: var(--table-hover);
 }
 
@@ -154,6 +163,10 @@ input[type=checkbox] {
 }
 
 /* Table */
+
+table {
+    width: 100%;
+}
 
 #tasksTable {
     /* animation: crawlDown 1s ease-in-out forwards; */
@@ -319,7 +332,7 @@ tbody tr td {
 }
 
 .page-header-header {
-    padding: 40px 0;
+    padding: 10px 0;
 }
 
 .page-header-header-inner {
@@ -368,7 +381,7 @@ tbody tr td {
     row-gap: 30px;
     position: absolute;
     right: 0;
-    bottom: -400px;
+    bottom: -425px;
     background: var(--main-color);
     padding: 20px;
     z-index: 5;
@@ -544,6 +557,10 @@ tbody tr td {
 
 .instruments__button_bg_todo_list {
     background-image: url(../images/to-do-list.svg);
+}
+
+.instruments__button_bg_directors {
+    background-image: url(../images/leader.svg);
 }
 
 .instruments__button {
@@ -756,9 +773,40 @@ tbody tr td {
     animation: opacity1 2s ease forwards;
 }
 
+.day-card-prew-month {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* padding: 50px 0; */
+    font-size: 50px;
+    /* border: 1px solid var(--border-color);
+    border-left: none;
+    border-right: none; */
+    animation: opacity1 2s ease forwards;
+}
+
+.day-card-next-month {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* padding: 50px 0; */
+    font-size: 50px;
+    /* border: 1px solid var(--border-color);
+    border-left: none;
+    border-right: none; */
+    animation: opacity1 2s ease forwards;
+}
+
 .day-card-info {
     display: inline-block;
     padding: 10px;
+    color: var(--text-color);
+}
+
+.day-card-info-another-month  {
+    display: inline-block;
+    padding: 10px;
+    color: var(--table-hover);
 }
 
 .empty-dayCard {
@@ -794,6 +842,37 @@ tbody tr td {
     flex-wrap: wrap;
 }
 
+.profile-content-title {
+    text-align: center;
+}
+
+.page-main-profile-content {
+    width: 100%;
+    display: flex;
+    column-gap: 50px;
+}
+
+.add-categories, .change-categories {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 50px;
+}
+
+.add-categories-form, .change-categories-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 50px;
+}
+
+.add-categories-form button, .change-categories-form button {
+    width: 50%;
+    background: var(--table-hover);
+}
+
 /* All-tasks */
 
 .buttons-button_bg_arrow_back {
@@ -815,6 +894,10 @@ tbody tr td {
     background-position: left;
     background-position-x: 20px;
     background-size: 24px;
+}
+
+path {
+    pointer-events: none;  /* прячем path чтобы всегда нажимать на svg */
 }
 
 /* Hidden */

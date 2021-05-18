@@ -1,11 +1,10 @@
 $(document).ready(function() {
-    $('#tasksTable').DataTable( {
+    $('#directors-depart').DataTable( {
         "paging":   false,
         "info":     false,
         "order": [[ 1, "asc" ]],
         columnDefs: [
-            { orderable: false, targets: 0 },
-            { orderable: false, targets: 6 }
+            { orderable: false, targets: 0 }
         ],
         language: {
             "loadingRecords": "Загрузка...",
@@ -26,7 +25,6 @@ $(document).ready(function() {
         },
     } );
 } );
-
 
 onloadFunc();
 function onloadFunc() {
@@ -52,46 +50,35 @@ function onloadFunc() {
     }
 }
 
-let buttonToAllTasks = document.querySelector("#to-all-tasks");
-let buttonToDirectDepart = document.querySelector(".instruments__button_bg_todo_list");
-let buttonNewTask = document.querySelector("#new-task-button");
-let buttonNewCloseTask = document.querySelector("#close-new-task-button");
-let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
-let buttonToDirectors = document.querySelector(".instruments__button_bg_directors");
+let buttonToTasks = document.querySelector(".instruments__button_bg_todo_list"),
+    depDirectors = document.querySelectorAll("tr");
 
-let formItemInput = document.querySelectorAll(".form-item__input");
-
-if(buttonToDirectors !== null) {
-    buttonToDirectors.onclick = function() {
-        window.location.href = '/director';
+if(buttonToTasks !== null) {
+    buttonToTasks.onclick = function() {
+        window.location.href = '/board';
     }
 }
 
-if(buttonToDirectDepart !== null) {
-    buttonToDirectDepart.onclick = function() {
-        window.location.href = '/direct_depart';
-    }
-}
+depDirectors.forEach((director)=>{
+    director.addEventListener("click", ()=>{
+        let dep_id = director.getAttribute("data-key");
+        artificialPost(dep_id)
+    })
+})
 
-buttonNewTask.onclick = function() {
-    modalNewTask.classList.toggle('hidden');
-    if(!modalNewTask.classList.contains('hidden')) {
-        buttonNTask.onclick = function() {
-            if(formItemInput[0].value !== '' && formItemInput[1].value !== '' && formItemInput[2].value !== '') {
-                saveTask();
-            } else {
-                alert('Пожалуйста заполните все элементы таблицы')
-            }
-        }
-    }
-}
-buttonNewCloseTask.onclick = function() {
-    modalNewTask.classList.toggle('hidden');
-}
-buttonCloseChangeTask.onclick = function() {
-    modalChangeTask.classList.toggle('hidden');
-}
-
-buttonToAllTasks.onclick = function() {
-    window.location.href = "/department";
+function artificialPost(dep_id) {
+    var form = document.createElement('form');
+    var input = document.createElement('input');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', '/direct_depart?id=' + dep_id);
+    form.setAttribute('value', dep_id);
+    form.style.display = 'hidden';
+    form.name = "dep_id";
+    form.innerHTML = dep_id;
+    document.body.appendChild(form)
+    form.appendChild(input)
+    input.setAttribute('value', dep_id);
+    input.setAttribute('name', 'dep_id');
+    console.log(form);
+    form.submit();
 }

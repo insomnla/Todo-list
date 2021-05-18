@@ -18,7 +18,7 @@
                 <div class="page-header-header-inner">
                     <nav class="nav nav_width_50">
                         <a href="/board" class="nav__link nav__link_color_white">Список задач</a>
-                        <a href="vacation-rework.html" class="nav__link nav__link_color_white">Отпуска</a>
+                        <a href="/vacation" class="nav__link nav__link_color_white">Отпуска</a>
                     </nav>
                     <nav class="nav user_nav nav_width_50">
                         <div class="nav-item nav-item-theme customization">
@@ -100,12 +100,12 @@
                                 </svg>
                             </div>
                             <div class="current-user-user-name">
-                                <% for (var i = 0; i < profile.length; i++){%>
-                                <%= profile[i].lname + " " + profile[i].fname%>
+                                <% for (var i = 0; i < guest_info.length; i++){%>
+                                <%= guest_info[i].lname + " " + guest_info[i].fname%>
                                 <%}%>
                             </div>
                         </div>
-                        <div class="nav-item nav-item-log-out">
+                        <div class="exit nav-item nav-item-log-out">
                             <svg class="fill_white nav__svg" id="light" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m13.5 21h-4c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h4c.827 0 1.5-.673 1.5-1.5v-5c0-.276.224-.5.5-.5s.5.224.5.5v5c0 1.378-1.121 2.5-2.5 2.5z"/></g><g><path d="m23.5 11h-10c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h10c.276 0 .5.224.5.5s-.224.5-.5.5z"/></g><g><path d="m8 24c-.22 0-.435-.037-.638-.109l-5.99-1.997c-.82-.273-1.372-1.035-1.372-1.894v-18c0-1.103.897-2 2-2 .222 0 .438.037.639.11l5.989 1.996c.82.272 1.372 1.034 1.372 1.894v18c0 1.103-.897 2-2 2zm-6-23c-.552 0-1 .449-1 1v18c0 .428.276.808.688.946l6 2c.656.233 1.312-.292 1.312-.946v-18c0-.429-.276-.809-.688-.945l-6-2c-.103-.037-.208-.055-.312-.055z"/></g><g><path d="m15.5 8c-.276 0-.5-.224-.5-.5v-5c0-.827-.673-1.5-1.5-1.5h-11.5c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h11.5c1.379 0 2.5 1.122 2.5 2.5v5c0 .276-.224.5-.5.5z"/></g><g><path d="m19.5 15c-.128 0-.256-.049-.354-.146-.195-.195-.195-.512 0-.707l3.646-3.646-3.646-3.646c-.195-.195-.195-.512 0-.707s.512-.195.707 0l4 4c.195.195.195.512 0 .707l-4 4c-.097.096-.225.145-.353.145z"/></g></svg>
                         </div>
                     </nav>
@@ -127,9 +127,7 @@
                         <caption><div class="title">Личная информация</div></caption>
                         <thead>
                             <tr>
-                                <th class="dt-head-left">Фамилия</th>
-                                <th class="dt-head-left">Имя</th>
-                                <th class="dt-head-left">Отчество</th>
+                                <th class="dt-head-left">ФИО</th>
                                 <th class="dt-head-left">Телефон</th>
                                 <th class="dt-head-left">Почта</th>
                                 <th class="dt-head-left">Должность</th>
@@ -139,15 +137,13 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <% for (var i = 0; i < profile.length; i++){%>
-                                <td><%= profile[i].lname %></td>
-                                <td><%= profile[i].fname %></td>
-                                <td><%= profile[i].mname %></td>
-                                <td>88005353535</td>
-                                <td><%= profile[i].mail %></td>
-                                <td><%= profile[i].role %></td>
-                                <td><%= profile[i].department_name %></td>
-                                <td>218</td>
+                                <% for (var i = 0; i < user_profile.length; i++){%>
+                                <td><%= user_profile[i].lname %> <%= user_profile[i].fname %> <%= user_profile[i].mname %></td>
+                                <td><%= user_profile[i].number%></td>
+                                <td><%= user_profile[i].mail %></td>
+                                <td><%= user_profile[i].role %></td>
+                                <td><%= user_profile[i].department_name %></td>
+                                <td><%= user_profile[i].room %></td>
                                 <%}%>
                             </tr>
                         </tbody>
@@ -155,8 +151,8 @@
                 </div>
                 <div class="user-tasks">
                     <table id="userTasksTable" class="display">
-                        <caption><div class="title">Актуальные задачи                                 <% for (var i = 0; i < profile.length; i++){%>
-                            <%= profile[i].lname + " " + profile[i].fname%>
+                        <caption><div class="title">Актуальные задачи                                 <% for (var i = 0; i < user_profile.length; i++){%>
+                            <%= user_profile[i].lname + " " + user_profile[i].fname%>
                             <%}%></div></caption>
                         <thead>
                             <tr>
@@ -176,7 +172,7 @@
                                 <td><%= tasks[i].id_task%></td>
                                 <td><%= tasks[i].categories%></td>
                                 <td><%= tasks[i].desc%></td>
-                                <td><%= tasks[i].dline%></td>
+                                <td class="date"><%= tasks[i].dline%></td>
                                 <td><%= tasks[i].status%></td>
                                 <td>Не знаю какие добавить</td>
                             </tr>
@@ -187,7 +183,7 @@
             </div>
         </div>
     </section>
-
+    <% if (role == -1){%>
     <section class="page-main">
         <div class="wrapper">
             <div class="page-main-inner page-main-inner-profile">
@@ -197,9 +193,7 @@
                         <thead>
                             <tr>
                                 <th class="dt-head-left">ID</th>
-                                <th class="dt-head-left">Фамилия</th>
-                                <th class="dt-head-left">Имя</th>
-                                <th class="dt-head-left">Отчество</th>
+                                <th class="dt-head-left">ФИО</th>
                                 <th class="dt-head-left">Телефон</th>
                                 <th class="dt-head-left">Почта</th>
                                 <th class="dt-head-left">Должность</th>
@@ -209,19 +203,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% for (var i = 0; i< all_workers.length; i++) {%>
                             <tr>
-                                <td>1</td>
-                                <td>Шило</td>
-                                <td>Сергей</td>
-                                <td>Николаевич</td>
-                                <td>88005553535</td>
-                                <td>shilo@mail.ru</td>
-                                <td>Работник</td>
-                                <td>IT</td>
-                                <td>218</td>
+                                <td><%= all_workers[i].id_worker %></td>
+                                <td><%= all_workers[i].lname %> <%= all_workers[i].fname %> <%= all_workers[i].mname%></td>
+                                
+                                <td><%= all_workers[i].number%></td>
+                                <td><%= all_workers[i].mail%></td>
+                                <td><%= all_workers[i].role %></td>
+                                <td><%= all_workers[i].department_name %></td>
+                                <td><%= all_workers[i].room%></td>
                                 <td>
                                     <div class="actions">
-                                        <div class="actions-item actions-item_disabled change-selected-task" data-id="2" title="Изменить">
+                                        <div class="actions-item actions-item_disabled change-selected-task-for-allUsers" data-id="2" title="Изменить">
                                             <svg style="fill:#509af7" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
                                         </div>
                                         <div class="actions-item delete-selected-task" data-id="2" title="Удалить">
@@ -261,6 +255,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
@@ -287,23 +282,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Название</td>
-                                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus numquam incidunt doloribus consequatur, blanditiis harum repellat soluta enim cumque praesentium eum quae eos tenetur vel vero ad ea, perferendis qui.</td>
-                                <td>20.04.2021 - 29.04.2021</td>
-                                <td>Шило Сергей</td>
-                                <td>Работа</td>
-                                <td>Активно</td>
+                            <% for (var i = 0; i< all_tasks.length; i++) {%>
+                            <tr data-id="<%= all_tasks[i].id_task %>">
+                                <td><%= all_tasks[i].id_task %></td>
+                                <td><%= all_tasks[i].name %></td>
+                                <td><%= all_tasks[i].desc %></td>
+                                <td class="date"><%= all_tasks[i].dline %></td>
+                                <td><%= all_tasks[i].fio %></td>
+                                <td><%= all_tasks[i].categories %></td>
+                                <td><%= all_tasks[i].status %></td>
                                 <td>
                                     <div class="actions">
-                                        <div class="actions-item actions-item_disabled change-selected-task" data-id="2" title="Изменить">
-                                            <svg style="fill:#509af7" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
+                                        <div class="actions-item actions-item_disabled change-selected-task-for-allTasks" data-id="<%= all_tasks[i].id_task %>" title="Изменить">
+                                            <svg data-key="<%= all_tasks[i].id_task %>" style="fill:#509af7" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
                                         </div>
-                                        <div class="actions-item delete-selected-task" data-id="2" title="Удалить">
-                                            <svg  style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
+                                        <div class="actions-item delete-selected-task" data-id="<%= all_tasks[i].id_task %>" title="Удалить">
+                                            <svg data-key="<%= all_tasks[i].id_task %>"  style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
                                         </div>
-                                        <div class="actions-item more" data-id="2" title="Больше">
+                                        <div class="actions-item more" data-id="<%= all_tasks[i].id_task %>" title="Больше">
                                             <svg style="fill:var(--text-color);" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                 viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
                                                 <g>
@@ -322,7 +318,7 @@
                                                     </g>
                                                 </g>
                                             </svg>
-                                            <div class="list-more hidden">
+                                            <div class="list-more hidden" data-id="<%= all_tasks[i].id_task %>">
                                                 <div class="list-more-item">
                                                     Статус: выполненно
                                                 </div>
@@ -337,6 +333,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
@@ -344,29 +341,191 @@
         </div>
     </section>
 
-    <div class="modal hidden" id="change-task-modal">
+    <section class="page-main">
+        <div class="wrapper">
+            <div class="page-main-inner page-main-inner-profile">
+                <div class="title profile-content-title">Управление категориями</div>
+                <div class="page-main-profile-content">
+                    <div class="add-categories">
+                        <div class="text">Добавить категорию</div>
+                        <form action="" class="form add-categories-form">
+                            <input type="text" placeholder="Введите название новой категории">
+                            <button class="button" type="submit">Добавить</button>
+                        </form>
+                    </div>
+                    <div class="change-categories">
+                        <div class="text">Изменить существующие категории</div>
+                        <form action="" class="form change-categories-form">
+                            <div class="subtitle">Выберите категорию для изменения</div>
+                            <select class="select">
+                                <option value="Работа">Работа</option>
+                            </select>
+                            <input type="text" placeholder="Введите новое название для выбранной категории">
+                            <button class="button" type="submit">Изменить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal hidden" id="change-modal-for-allUsers">
         <div class="modal-window">
             <div class="content top-content">
-                <div class="title top-content-title" id="change-task-title">
+                <div class="title top-content-title" id="change-allUsers-title">
                 </div>
             </div>
             <div class="content middle-contnet">
                 <form action="" class="form middle-content-form">
                     <div class="form-item">
                         <div class="text form-item__text">
+                            Фамилия
+                        </div>
+                        <input id="change_task_for_allUsers_lname" type="text" class="form-item__input user">
+                        <div class="subtitle form-item__subtitle">
+                            Введите фамилию
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Имя
+                        </div>
+                        <input id="change_task_for_allUsers_name" type="text" class="form-item__input  user">
+                        <div class="subtitle form-item__subtitle">
+                            Введите имя
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Отчество
+                        </div>
+                        <input id="change_task_for_allUsers_mname" type="text" class="form-item__input  user">
+                        <div class="subtitle form-item__subtitle">
+                            Введите отчество
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Телефон
+                        </div>
+                        <input id="change_task_for_allUsers_number" type="text" class="form-item__input  user">
+                        <div class="subtitle form-item__subtitle">
+                            Введите номер телефона
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Почта
+                        </div>
+                        <input id="change_task_for_allUsers_email" type="text" class="form-item__input  user">
+                        <div class="subtitle form-item__subtitle">
+                            Введите почту
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Должность
+                        </div>
+                        <select class="select role" name="change_task_for_allUsers_role" id="change_task_for_allUsers_role">
+                            <% for(var i=0; i < roles.length; i++) {%>
+                                <option id="role" value="<%= roles[i].id_role%>"><%= roles[i].role %></option>
+                                <%}%>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите должность
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Отделение
+                        </div>
+                        <select class="select department" name="change_task_for_allUsers_department" id="change_task_for_allUsers_department">
+                            <% for(var i=0; i < departments.length; i++) {%>
+                            <option id="department" value="<%= departments[i].id_department%>"><%= departments[i].department_name %></option>
+                            <%}%>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите отделение
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Кабинет
+                        </div>
+                        <input id="change_task_for_allUsers_room" type="text" class="form-item__input user">
+                        <div class="subtitle form-item__subtitle">
+                            Введите кабинет
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-change-allUsers-button">
+                    Закрыть
+                </button>
+                <button id="change_user" class="button bottom-content__button button_save change_button_save">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="change-modal-for-allTasks">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title top-content-title" id="change-allTasks-title">
+                </div>
+            </div>
+            <div class="content middle-contnet">
+                <form action="" class="form middle-content-form">
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Название
+                        </div>
+                        <input id="change_task_for_allTasks_taskName" type="text" class="form-item__input task">
+                        <div class="subtitle form-item__subtitle">
+                            Введите название для задачи
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Описание
+                        </div>
+                        <input id="change_task_for_allTasks_desc" type="text" class="form-item__input task">
+                        <div class="subtitle form-item__subtitle">
+                            Введите описание для задачи
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Сроки
+                        </div>
+                        <input id="change_task_for_allTasks_deadline" type="text" class="form-item__input task">
+                        <div class="subtitle form-item__subtitle">
+                            Введите сроки
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
+                            Сотрудник
+                        </div>
+                        <select class="select workers" name="change_task_for_allTasks_employee" id="change_task_for_allTasks_employee">
+                            <% for (var i = 0; i< all_workers.length; i++) {%>
+                            <option id="workers" value="<%= all_workers[i].id_worker%>"><%= all_workers[i].lname %> <%= all_workers[i].fname %> <%= all_workers[i].mname%></option>
+                            <%}%>
+                        </select>
+                        <div class="subtitle form-item__subtitle">
+                            Выберите сотрудника
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="text form-item__text">
                             Категория
                         </div>
-                        <select name="" id="change_task_categ" class="select form-item-select">
-                            <% for(var i=0; i < categ_name.length; i++) {%>
-                                <% if (categ_name[i].categories == "Государственная"){%>
-                                   <% if (role > 1){ %>
-                                        <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
-                                    <%}%>
-                                <%} else { %>
-                                    <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
-                                <%}%>
-  
-                            <% }%>
+                        <select class="select categories" name="change_task_for_allTasks_categories" id="change_task_for_allTasks_categories">
+                            <% for (var i = 0; i < categories.length ; i++) {%>
+                            <option id="categories" value="<%= categories[i].id_categories%>"><%= categories[i].categories%></option>
+                            <%}%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите категорию
@@ -374,30 +533,12 @@
                     </div>
                     <div class="form-item">
                         <div class="text form-item__text">
-                            Полное описание задачи
-                        </div>
-                        <input id="change_task_desc" type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите полное описание задачи
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Дата окончания
-                        </div>
-                        <input id="change_task_deadline" type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Выберите дату окончания
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
                             Статус
                         </div>
-                        <select name="" id="change_task_status" class="select form-item-select">
-                            <% for(var i=0; i < statuses.length; i++) {%>
-                            <option id="change-option" value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
-                            <% } %>
+                        <select class="select statuses" name="change_task_for_allTasks_status" id="change_task_for_allTasks_status">
+                            <% for (var i = 0; i < statuses.length; i++){%>
+                            <option id="statuses" value="<%= statuses[i].id_status%>"><%= statuses[i].status%></option>
+                            <%}%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите статус
@@ -406,10 +547,10 @@
                 </form>
             </div>
             <div class="content bottom-content">
-                <button class="button bottom-content__button" id="close-change-task-button">
+                <button class="button bottom-content__button" id="close-change-allTasks-button">
                     Закрыть
                 </button>
-                <button class="button bottom-content__button button_save change_button_save">
+                <button id="change_task" class="button bottom-content__button button_save change_button_save">
                     Сохранить
                 </button>
             </div>
@@ -434,7 +575,7 @@
             </div>
         </div>
     </div>
-
+    <%}%>
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
     <script src="./script/userInformationTable.js"></script>
@@ -443,7 +584,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script>
         const socket =  io('http://localhost:3000',{origins:"*"});
-        let id = <%= id%>
+        let id = <%= id%>;
         let notif = document.querySelector(".name-notif");
         socket.on("connect", () => {
             console.log(socket.id);

@@ -3,13 +3,15 @@ let switchTheme = document.querySelector(".customization");
 
 getTheme();
 
-switchTheme.onclick = function() {
-    if(localStorage.getItem('theme') == null || localStorage.getItem('theme') == 'light'){
-        localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.setItem('theme', 'light');
+if(switchTheme !== null) {
+    switchTheme.onclick = function() {
+        if(localStorage.getItem('theme') == null || localStorage.getItem('theme') == 'light'){
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+        getTheme();
     }
-    getTheme();
 }
 
 function getTheme() {

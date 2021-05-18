@@ -60,16 +60,40 @@ function onloadFunc() {
 
 let buttonToAllTasks = document.querySelector("#to-all-tasks");
 let buttonToDirectDepart = document.querySelector(".instruments__button_bg_todo_list");
-let buttonNewTask = document.querySelector("#new-task-button");
-let buttonNewCloseTask = document.querySelector("#close-new-task-button");
+let buttonNewTaskForEmployee = document.querySelector("#new-task-for-directDepart-button");
+let buttonNewTaskForEmployeeClose = document.querySelector("#close-new-task-for-directDepart-button");
 let buttonCloseChangeTask = document.querySelector("#close-change-task-button");
 
-buttonNewTask.onclick = function() {
-    modalNewTask.classList.toggle('hidden');
+let modalNewTaskForEmployee = document.querySelector("#new-task-modal-for-directDepart");
+
+let formItemInput = document.querySelectorAll(".form-item__input");
+
+let profiles = document.querySelectorAll("#profiles");
+
+profiles.forEach((profile)=>{
+    profile.addEventListener("click", ()=>{
+        profile_id = profile.parentNode.getAttribute("value");
+        artificialPost(profile_id);
+    })
+})
+
+buttonNewTaskForEmployee.onclick = function() {
+    modalNewTaskForEmployee.classList.toggle('hidden');
+    if(!modalNewTaskForEmployee.classList.contains('hidden')) {
+        buttonNTask.onclick = function() {
+            if(formItemInput[0].value !== '' && formItemInput[1].value !== '' && formItemInput[2].value !== '') {
+                saveTask();
+            } else {
+                alert('Пожалуйста заполните все элементы таблицы')
+            }
+        }
+    }
 }
-buttonNewCloseTask.onclick = function() {
-    modalNewTask.classList.toggle('hidden');
+
+buttonNewTaskForEmployeeClose.onclick = function() {
+    modalNewTaskForEmployee.classList.toggle('hidden');
 }
+
 buttonCloseChangeTask.onclick = function() {
     modalChangeTask.classList.toggle('hidden');
 }
@@ -82,4 +106,21 @@ if(buttonToDirectDepart !== null) {
 
 buttonToAllTasks.onclick = function() {
     window.location.href = "/department";
+}
+
+function artificialPost(profile_id) {
+    var form = document.createElement('form');
+    var input = document.createElement('input');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', '/profile?id=' + profile_id);
+    form.setAttribute('value', profile_id);
+    form.style.display = 'hidden';
+    form.name = "dep_id";
+    form.innerHTML = profile_id;
+    document.body.appendChild(form)
+    form.appendChild(input)
+    input.setAttribute('value', profile_id);
+    input.setAttribute('name', 'profile_id');
+    console.log(form);
+    form.submit();
 }
