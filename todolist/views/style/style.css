@@ -900,6 +900,32 @@ path {
     pointer-events: none;  /* прячем path чтобы всегда нажимать на svg */
 }
 
+/* щитпостинг */
+
+.notification-menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    position: absolute;
+    right: 0;
+    bottom: -425px;
+    background: var(--main-color);
+    padding: 20px;
+    z-index: 5;
+    border: 1px solid var(--text-color);
+}
+
+.notif_item {
+    width: 100%;
+    color:white;
+    border: 2px black solid;
+    padding: 20px 0;
+    cursor: pointer;
+}
+
+
+
+/* щитпостинг */
 /* Hidden */
 
 .hidden {

@@ -1,3 +1,6 @@
+const socket =  io('http://localhost:3000',{origins:"*"});
+const notif_sound = new Audio("../sounds/notification_sound.wav")
+
 let taskToDelete = 0;
 
 let mainTable = document.querySelector("#tasksTable");
@@ -10,9 +13,11 @@ let buttonNTask = document.querySelector(".button_save");
 let buttonSaveChangeTask = document.querySelector(".change_button_save");
 let buttonBulkAdd = document.querySelector(".instruments__button_bg_plus");
 let buttonBulkReport = document.querySelector(".instruments__button_bg_document");
+let buttonNotif = document.querySelector(".nav-item_notification");
 
 let navItemCurrentUser = document.querySelector(".nav-item-current-user");
 let minProfile = document.querySelector(".nav-item-current-user_after");
+let notifMenu = document.querySelector(".notification-menu");
 
 let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
 let chengeSelectedTask = document.querySelectorAll(".change-selected-task");
@@ -146,6 +151,21 @@ if(deleteSelectedTask !== null) {
     })
 }
 
+if(buttonNotif !== null){
+    buttonNotif.onclick = function(){
+        notifMenu.classList.toggle("hidden");
+    }
+}
+
+socket.on("connect", () => {
+    console.log(socket.id);
+    socket.send(socket.id, id);
+    socket.on("new_task", (data)=>{
+        createNotifElement(data);
+        notif_sound.play();
+    })
+});
+
 if(buttonCloseModalAlert !== null) {
     buttonCloseModalAlert.onclick = function() {
         modalAlertDeletTask.classList.toggle('hidden');
@@ -215,8 +235,8 @@ function saveTask(){
         taskSTATUS_ID = document.querySelector("#new_task_status").value;
         if (employee !== null){
             employee_id = employee.value;
+            socket.emit("new_task", { director_id : id , worker : Number(employee_id), desc : descValue , director : user_info});
         }
-        console.log(employee_id, descValue, nameValue , deadlineValue, taskCATEG_ID, taskSTATUS_ID)
         $.post("/new_task", {employee_id, descValue, nameValue , deadlineValue, taskCATEG_ID, taskSTATUS_ID}, ()=>{
             window.location.reload();
         }) 
@@ -334,6 +354,17 @@ window.addEventListener('click', (event)=> {
 window.onload = function() {
     let allTableCheckbox = document.querySelector("#table-checkbox-all");
     let tbodyCheckbox = document.querySelectorAll(".tbody-checkbox");
+    let allNotif = document.querySelectorAll(".notif_item");
+    let newNotif = false;
+
+    allNotif.forEach((notif)=>{
+        if (notif.getAttribute("value") == 0){
+            newNotif = true;
+        }
+    })
+    if (newNotif == true){
+        console.log("новое");
+    }
 
     if(tbodyCheckbox !== null && allTableCheckbox !== null) {
         ifChacked();
@@ -428,4 +459,17 @@ if (profileLink !== null){
             document.forms['pID'].submit();
         })
     })
+}
+
+
+function createNotifElement(id_notif){
+    let prev_notif = document.querySelector(".notif_item")
+    let notif_item =  document.createElement('div');
+    notif_item.innerHTML = id_notif;
+    notif_item.classList.add("notif_item");
+    if (prev_notif == null){
+        notifMenu.appendChild(notif_item);
+    } else {
+        notifMenu.insertBefore(notif_item, prev_notif)
+    }
 }

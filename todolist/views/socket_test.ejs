@@ -18,7 +18,7 @@
         const socket =  io('http://localhost:3000',{origins:"*"});
         socket.on("connect", () => {
             submit.addEventListener("click", ()=>{
-                socket.emit("notification", Number(text.value));
+                socket.emit("new_task", Number(text.value));
             })  
         });
     </script>

@@ -72,11 +72,12 @@ function artificialPost(dep_id) {
     form.setAttribute('method', 'post');
     form.setAttribute('action', '/direct_depart?id=' + dep_id);
     form.setAttribute('value', dep_id);
-    form.style.display = 'hidden';
+    form.style.display = 'none';
     form.name = "dep_id";
     form.innerHTML = dep_id;
     document.body.appendChild(form)
     form.appendChild(input)
+    input.style.display = 'none';
     input.setAttribute('value', dep_id);
     input.setAttribute('name', 'dep_id');
     console.log(form);

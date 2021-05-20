@@ -15,6 +15,8 @@ const { SSL_OP_NO_QUERY_MTU } = require("constants");
 const passport = require("passport");
 var MySQLStore = require('express-mysql-session')(session);
 const {ensureAuthenticated} = require('./config/auth'); 
+const {ensureDirector} = require('./config/auth'); 
+const {ensureDepDirector} = require('./config/auth'); 
 const { connect } = require("http2");
 const { worker } = require("cluster");
 const { query } = require("express");
@@ -78,13 +80,14 @@ io.on("connection", (socket) => {
     socket.on('message', (socketid,id) =>{
         socket_id[worker_id.indexOf(id)] = socketid;
     })
-    socket.on("notification", (data)=>{
-        console.log(data + " " + socket_id[worker_id.indexOf(data)]);
-        console.log(worker_id.indexOf(data) + " " + worker_id.indexOf(1))
-        socket.to(socket_id[worker_id.indexOf(data)]).emit('notification2', 'howdy'); 
+    socket.on("new_task", (data)=>{
+       // console.log(data + " " + socket_id[worker_id.indexOf(data)]);
+       // console.log(worker_id.indexOf(data) + " " + worker_id.indexOf(1))
+       if (data.worker !== data.director){
+            socket.to(socket_id[worker_id.indexOf(data.worker)]).emit('new_task', data.director + " добавил вам задание " + data.desc); 
+            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message) values (?,?,?)", [data.director_id, data.worker, data.desc]);
+       }
     })
-    console.log(socket_id);
-    console.log(worker_id);
 });
 
 app.use(express.static(__dirname + '/views'));
@@ -275,16 +278,16 @@ app.get("/department", ensureAuthenticated, (req,res)=>{
     getDeparment(req, res);
 })
 
-app.get("/direct_depart", ensureAuthenticated, (req,res)=>{
+app.get("/direct_depart", ensureAuthenticated, ensureDepDirector, (req,res)=>{
     getDirectDepart(req, res);
 })
 
-app.post("/direct_depart", ensureAuthenticated, (req,res)=>{
+app.post("/direct_depart", ensureAuthenticated, ensureDepDirector, (req,res)=>{
     getDirectDepart(req, res);
 })
 
 
-app.get("/director", ensureAuthenticated, (req,res)=>{
+app.get("/director", ensureAuthenticated, ensureDirector, (req,res)=>{
     getDirector(req, res);
 })
 
@@ -294,6 +297,9 @@ function getDirectDepart(req, res){
     if (urlRequest.query.id  !== undefined){
         dep_id = urlRequest.query.id;
     }
+    connection.query("select id_notif, message, lname, fname, mname, checked from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+        notifications = results;
+    })
     connection.query("select fk_id_department ,id_worker, concat(lname, ' ', fname, ' ', mname) as fio from worker where fk_id_department = ?", [dep_id], function(error, results, fields){
         dep_workers = results;
     }) 
@@ -315,6 +321,7 @@ function getDirectDepart(req, res){
             info : req.session.username,
             id: req.session.userid,
             department: req.session.department,
+            notifications : notifications,
             role: req.session.role,
             dep_workers: dep_workers,
             first: 0,
@@ -324,6 +331,9 @@ function getDirectDepart(req, res){
 }
 
 function getDeparment(req, res){
+    connection.query("select id_notif, message, lname, fname, mname, checked from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+        notifications = results;
+    })
     connection.query("select * from categories", function(eror, results, fields){
         categ_name = results;
     })
@@ -337,6 +347,7 @@ function getDeparment(req, res){
          info : req.session.username,
          id: req.session.userid,
          department: req.session.department,
+         notifications : notifications,
          role: req.session.role,
          first: 0,
          statuses : statuses
@@ -345,6 +356,9 @@ function getDeparment(req, res){
 }
 
 function getBoard(req, res){
+    connection.query("select id_notif, message, lname, fname, mname, checked from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+        notifications = results;
+    })
     connection.query("select * from categories", function(eror, results, fields){
         categ_name = results;
     })
@@ -372,6 +386,7 @@ function getBoard(req, res){
             department: req.session.department,
             role: req.session.role,
             dep_workers: dep_workers,
+            notifications : notifications,
             first: 0,
             statuses : statuses
            })
@@ -528,7 +543,7 @@ function changeWorker(info){
 }
 
 function getProfile(req, res){
-    profile_id = req.session.id;
+    profile_id = req.session.userid
     let urlRequest = url.parse(req.url, true);
     if (urlRequest.query.id !== undefined){
         profile_id = urlRequest.query.id;

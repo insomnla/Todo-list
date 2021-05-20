@@ -51,6 +51,11 @@
                                 </g>
                             </svg>
                         </div>
+                        <div class="notification-menu  hidden">
+                            <% for(var i=0; i < notifications.length; i++){%> 
+                                <div value = "<%=notifications[i].checked%>" class="notif_item"><%= notifications[i].fname + ' ' + notifications[i].mname%> добавил вам задание <%=notifications[i].message%></div>
+                                <%}%>
+                        </div>
                         <div class="nav-item nav-item-current-user mini-profile">
                             <div class="current-user-user-name mini-profile">
                                 <%= info %>
@@ -479,24 +484,16 @@
             </div>
         </div>
     </div>
+    <script>
+        let id = <%= id%>;
+        let user_info =  '<%= info %>';
+    </script>
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
     <script src="./script/department.js"></script>
     <script src="./script/theme.js"></script>
     <script src="./script/filters.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script src="./script/main.js"></script>
-    <script>
-    const socket =  io('http://localhost:3000',{origins:"*"});
-    let id = <%= id%>
-    let notif = document.querySelector(".name-notif");
-    socket.on("connect", () => {
-        console.log(socket.id);
-        socket.send(socket.id, id);
-        socket.on("notification2", (data)=>{
-            notif.textContent = data;
-            console.log(data);
-        })
-    });
-    <script>
 </body>
 </html>
