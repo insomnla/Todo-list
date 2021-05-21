@@ -84,10 +84,21 @@ io.on("connection", (socket) => {
        // console.log(data + " " + socket_id[worker_id.indexOf(data)]);
        // console.log(worker_id.indexOf(data) + " " + worker_id.indexOf(1))
        if (data.worker !== data.director){
+            console.log(data);
             socket.to(socket_id[worker_id.indexOf(data.worker)]).emit('new_task', data.director + " добавил вам задание " + data.desc); 
-            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message) values (?,?,?)", [data.director_id, data.worker, data.desc]);
+            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, type) values (?,?,?,0 , 1)", [data.director_id, data.worker, data.desc]);
        }
     })
+    socket.on("plea_upd", (data)=>{ 
+        if (data.respond == "ДА"){
+            socket.to(socket_id[worker_id.indexOf(Number(data.worker))]).emit('plea_upd', "Ваше заявление " + data.desc  + " было принято");
+        } 
+        if (data.respond == "НЕТ"){
+            socket.to(socket_id[worker_id.indexOf(Number(data.worker))]).emit('plea_upd', "Ваше заявление " + data.desc  + " было отказано");
+        }
+        connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, type) values (?,?,?,0 , 2)", [data.sender, data.worker, data.desc]);
+        console.log(data);
+    });
 });
 
 app.use(express.static(__dirname + '/views'));
@@ -178,14 +189,20 @@ app.get('/board', ensureAuthenticated , (req, res) => {
     getBoard(req,res);
 })
 
-app.get("/admin", ensureAuthenticated, (req, res) => {
-    if (req.session.userid == 0){
-        res.render('admin')
-    }
-    else {
-        getBoard(req,res);
-    }
+app.get("/plea", ensureAuthenticated, (req, res) => {
+    getPlea(req,res);
 })
+
+app.get("/all_pleas", ensureAuthenticated, (req, res) => {
+    getAllPleas(req,res);
+})
+
+
+app.post("/new_plea", ensureAuthenticated, (req, res) => {
+    getPlea(req,res);
+    newPlea(req.body.categ_id, req);
+})
+
 
 app.post('/board', ensureAuthenticated , (req, res) => {
     if (typeof req.body.task == "string"){
@@ -274,6 +291,11 @@ app.post("/update_task", ensureAuthenticated, (req, res)=>{
     getProfile(req, res);
 })
 
+app.post("/update_plea", ensureAuthenticated, (req,res)=>{
+    pleaUpd(req.body);
+    getAllPleas(req,res);
+});
+
 app.get("/department", ensureAuthenticated, (req,res)=>{
     getDeparment(req, res);
 })
@@ -356,7 +378,7 @@ function getDeparment(req, res){
 }
 
 function getBoard(req, res){
-    connection.query("select id_notif, message, lname, fname, mname, checked from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications = results;
     })
     connection.query("select * from categories", function(eror, results, fields){
@@ -587,4 +609,67 @@ function getProfile(req, res){
             role : req.session.role
         })
     })
+}
+
+function getAllPleas(req,res){
+    connection.query("select * from plea_categ", function(error, results, fields){
+        plea_categ = results;
+    })
+    connection.query("select * from plea_status", function(error, results, fields){
+        plea_status = results;
+    })
+    connection.query("select id_notif, message, lname, fname, mname, checked from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+        notifications = results;
+    })
+    connection.query("select fk_id_worker, id_plea, plea_categ, plea_status, concat(lname,' ' ,fname,' ', mname) as fio  from pleas inner join plea_categ on fk_id_plea_categ = id_plea_categ inner join plea_status on fk_id_plea_status = id_plea_status inner join worker on fk_id_worker = id_worker", function(error, results, fields) {
+        res.render('all_pleas', {
+            pleas : results,
+            plea_categ : plea_categ,
+            plea_status : plea_status,
+            info : req.session.username,
+            id: req.session.userid,
+            department: req.session.department,
+            role: req.session.role,
+            notifications, notifications,
+            first: 0,
+           })
+    })
+}
+
+function getPlea(req, res){
+    connection.query("select * from plea_categ", function(error, results, fields){
+        plea_categ = results;
+    })
+    connection.query("select * from plea_status", function(error, results, fields){
+        plea_status = results;
+    })
+    connection.query("select id_notif, message, lname, fname, mname, checked from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+        notifications = results;
+    })
+    connection.query("select * from pleas inner join plea_categ on fk_id_plea_categ = id_plea_categ inner join plea_status on fk_id_plea_status = id_plea_status where fk_id_worker = ? ",[req.session.userid], function(error, results, fields) {
+        res.render('plea', {
+            pleas : results,
+            plea_categ : plea_categ,
+            plea_status : plea_status,
+            info : req.session.username,
+            id: req.session.userid,
+            department: req.session.department,
+            role: req.session.role,
+            notifications, notifications,
+            first: 0,
+           })
+    })
+}
+
+function newPlea(categ_id, req){
+    connection.query("insert into pleas (fk_id_worker, fk_id_plea_categ, fk_id_plea_status) values(?,?,1)",[req.session.userid, categ_id]);
+}
+
+function pleaUpd(info){
+    if (info.respond == "ДА"){
+        connection.query("update pleas set fk_id_plea_status = 2 where id_plea = ? ",[info.id]);
+    }
+    if (info.respond == "НЕТ"){
+        connection.query("update pleas set fk_id_plea_status = 3 where id_plea = ? ",[info.id]);
+    }
 }

@@ -923,6 +923,16 @@ path {
     cursor: pointer;
 }
 
+.button_accepted {
+    color: green;
+    text-align: center;
+}
+
+.button_denied {
+    color: red;
+    text-align: center;
+}
+
 
 
 /* щитпостинг */

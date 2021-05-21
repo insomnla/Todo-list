@@ -54,12 +54,7 @@
                         </div>
                         <div class="notification-menu  hidden">
                             <% for(var i=0; i < notifications.length; i++){%> 
-                                <% if (notifications[i].type == 1){%>
-                                    <div value = "<%=notifications[i].checked%>" class="notif_item"><%= notifications[i].fname + ' ' + notifications[i].mname%> добавил вам задание <%=notifications[i].message%></div>
-                                <%}%>
-                                <% if (notifications[i].type == 2){%>
-                                    <div value = "<%=notifications[i].checked%>" class="notif_item"><%=notifications[i].message%></div>
-                                    <%}%>
+                                <div value = "<%=notifications[i].checked%>" class="notif_item"><%= notifications[i].fname + ' ' + notifications[i].mname%> добавил вам задание <%=notifications[i].message%></div>
                                 <%}%>
                         </div>
                         <div class="nav-item nav-item-current-user mini-profile">
@@ -202,9 +197,9 @@
                         <div class="filters-item">
                             <select name="" id="select-categories" class="select filters-item-select">
                                 <option selected value="All">Все</option>
-                                <% for(var i=0; i < categ_name.length; i++) {%>
-                                <option value="<%= categ_name[i].categories%>"><%= categ_name[i].categories%></option>
-                                <% }%>
+                                <% for (var key in plea_categ) { %>
+                                    <option value="<%= plea_categ[key].plea_categ%>"><%= plea_categ[key].plea_categ%></option>
+                                <%}%>
                             </select>
                             <div class="filters-item__subtitle">
                                 Фильтр по категориям
@@ -213,9 +208,9 @@
                         <div class="filters-item">
                             <select name="" id="select-status" class="select filters-item-select">
                                 <option selected value="All">Все</option>
-                                <% for(var i=0; i < statuses.length; i++) {%>
-                                <option value="<%= statuses[i].status %>"><%= statuses[i].status%></option>
-                                <% } %>
+                                <% for (var key in plea_status) { %>
+                                <option value="<%= plea_status[key].plea_status %>"><%= plea_status[key].plea_status%></option>
+                                <%}%>
                             </select>
                             <div class="filters-item__subtitle">
                                 Фильтр по статусу
@@ -226,96 +221,43 @@
                         <button class="button buttons-button buttons-button_theme_winter" id="to-all-tasks">
                             Список задач на отделение
                         </button>
-                        <button class="button buttons-button" id="new-task-button">
-                            Новая задача
+                        <button class="button buttons-button" id="new-plea-button">
+                            Новая заявка
                         </button>
                     </div>
                 </div>
                 <div class="options">
                     <div class="text options__text"></div>
                     <div class="instruments">
-                        <button class="button instruments__button instruments__button_theme_red instruments__button_bg_trash" disabled>
-                            Удалить выбранные задачи
+                        <% if (role == 4){%>
+                        <button id="all_pleas" class="button instruments__button instruments__button_bg_todo_list">
+                            Перейти к заявлениям сотрудников
                         </button>
-                        <% if (role == 2){%>
-                        <button class="button instruments__button instruments__button_bg_todo_list">
-                            Перейти к задачам сотрудников
-                        </button>
-                        <% } if (role == 3) { %>
-                        <button class="button instruments__button instruments__button_bg_directors">
-                            Перейти к списку директоров отделений
-                        </button>
-                        <% }%>
+                        <%}%>
                     </div>
                 </div>
-                <table id="tasksTable" class="display">
+                <table id="pleaTable" class="display">
                     <thead>
                         <tr>
                             <th class="dt-head-left"><div class="table-checkbox" id="table-checkbox-all"></div></th>
                             <th class="dt-head-left">ID</th>
                             <th class="dt-head-left">Категория</th>
-                            <th class="dt-head-left">Описание задачи</th>
-                            <th class="dt-head-left">Дата</th>
-                            <th class="dt-head-left">Статус</th>
-                            <th class="dt-head-left">Действия</th>
+                            <th class="dt-head-left"></th>
+                            <th class="dt-head-left"></th>
+                            <th class="dt-head-left">Статус заявки</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% for (var key in tasks) { %>
-                        <tr data-id="<%= tasks[key].id_task %>">
-                            <td><div value="<%= tasks[key].id_task %>" class="table-checkbox tbody-checkbox"></div></td>
-                            <td><%= tasks[key].id_task %></td>
-                            <td class="categories"><%= tasks[key].categories %></td>
-                            <td><%= tasks[key].desc %></td>
-                            <td class="date"><%= tasks[key].dline %></td>
-                            <td><span style="background-color: <%= tasks[key].color%>;" class="status"><%= tasks[key].status %></span></td>
-                            <td>
-                                <div class="actions">
-                                    <div class="actions-item actions-item_disabled change-selected-task" data-id="2" title="Изменить">
-                                        <% if ((tasks[key].categories == "Государственная" && role > 1) || !(tasks[key].categories == "Государственная" )) { %>
-                                        <svg style="fill:#509af7" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
-                                        <% } else { %>
-                                        <svg style="fill:rgba(80, 154, 247, .2);" viewBox="0 0 492.49284 492" xmlns="http://www.w3.org/2000/svg"><path d="m304.140625 82.472656-270.976563 270.996094c-1.363281 1.367188-2.347656 3.09375-2.816406 4.949219l-30.035156 120.554687c-.898438 3.628906.167969 7.488282 2.816406 10.136719 2.003906 2.003906 4.734375 3.113281 7.527344 3.113281.855469 0 1.730469-.105468 2.582031-.320312l120.554688-30.039063c1.878906-.46875 3.585937-1.449219 4.949219-2.8125l271-270.976562zm0 0"/><path d="m476.875 45.523438-30.164062-30.164063c-20.160157-20.160156-55.296876-20.140625-75.433594 0l-36.949219 36.949219 105.597656 105.597656 36.949219-36.949219c10.070312-10.066406 15.617188-23.464843 15.617188-37.714843s-5.546876-27.648438-15.617188-37.71875zm0 0"/></svg>
-                                        <% }%>
-                                    </div>
-                                    <div class="actions-item delete-selected-task" data-id="2" title="Удалить">
-                                        <svg data-key="<%= tasks[key].id_task %>"  style="fill: #9e353a;" id="Layer_1" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z"/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z"/></g></svg>
-                                    </div>
-                                    <div class="actions-item more" data-id="2" title="Больше">
-                                        <svg style="fill:var(--text-color);" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 384 384" style="enable-background:new 0 0 384 384;" xml:space="preserve">
-                                            <g>
-                                                <g>
-                                                    <circle cx="192" cy="42.667" r="42.667"/>
-                                                </g>
-                                            </g>
-                                            <g>
-                                                <g>
-                                                    <circle cx="192" cy="192" r="42.667"/>
-                                                </g>
-                                            </g>
-                                            <g>
-                                                <g>
-                                                    <circle cx="192" cy="341.333" r="42.667"/>
-                                                </g>
-                                            </g>
-                                        </svg>
-                                        <div class="list-more hidden">
-                                            <div class="list-more-item">
-                                                Статус: выполненно
-                                            </div>
-                                            <div class="list-more-item">
-                                                Статус: выполненно
-                                            </div>
-                                            <div class="list-more-item">
-                                                Статус: выполненно
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <% } %>
+                        <% for (var key in pleas) { %>
+                            <tr data-id="<%= pleas[key].id_plea %>">
+                                <td><div value="<%= pleas[key].id_plea %>" class="table-checkbox tbody-checkbox"></div></td>
+                                <td><%= pleas[key].id_plea %></td>
+                                <td class="categories"><%= pleas[key].plea_categ %></td>
+                                <td></td>
+                                <td></td>
+                                <td><%= pleas[key].plea_status %></td>
+                            </tr>
+                            <% } %>
                     </tbody>
                 </table>
                 <div class="after-table hidden">
@@ -324,12 +266,11 @@
             </div>
         </div>
     </section>
-
-    <div class="modal hidden" id="new-task-modal">
+    <div class="modal hidden" id="new-plea-modal">
         <div class="modal-window">
             <div class="content top-content">
                 <div class="title top-content-title" id="new-task-title">
-                    Создание новой задачи
+                    Создание новой заявки
                 </div>
             </div>
             <div class="content middle-contnet">
@@ -338,161 +279,23 @@
                         <div class="text form-item__text">
                             Категория
                         </div>
-                        <select name="" id="new_task_categ" class="select form-item-select">
-                            <% for(var i=0; i < categ_name.length; i++) {%>
-                                <% if (categ_name[i].categories == "Государственная"){%>
-                                   <% if (role > 1){ %>
-                                        <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
-                                    <%}%>
-                                <%} else { %>
-                                    <option value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
-                                <%}%>
-  
-                            <% }%>
+                        <select name="" id="new_plea_categ" class="select form-item-select">
+                            <% for (var key in plea_categ) { %>
+                                <option value="<%= plea_categ[key].id_plea_categ%>"><%= plea_categ[key].plea_categ%></option>
+                            <%}%>
                         </select>
                         <div class="subtitle form-item__subtitle">
                             Выберите категорию
                         </div>
                     </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Название задачи
-                        </div>
-                        <input id="new_task_name" type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите название задачи
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Полное описание задачи
-                        </div>
-                        <input id="new_task_desc" type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите полное описание задачи
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Дата окончания
-                        </div>
-                        <input id="new_task_deadline" type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Выберите дату окончания
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Статус
-                        </div>
-                        <select name="" id="new_task_status" class="select form-item-select">
-                            <% for(var i=0; i < statuses.length; i++) {%>
-                            <option value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
-                            <% } %>
-                        </select>
-                        <div class="subtitle form-item__subtitle">
-                            Выберите статус
-                        </div>
-                    </div>
                 </form>
             </div>
             <div class="content bottom-content">
-                <button class="button bottom-content__button" id="close-new-task-button">
+                <button class="button bottom-content__button" id="close-new-plea-button">
                     Закрыть
                 </button>
                 <button class="button bottom-content__button button_save">
                     Сохранить
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal hidden" id="change-task-modal">
-        <div class="modal-window">
-            <div class="content top-content">
-                <div class="title top-content-title" id="change-task-title">
-                </div>
-            </div>
-            <div class="content middle-contnet">
-                <form action="" class="form middle-content-form">
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Категория
-                        </div>
-                        <select name="" id="change_task_categ" class="select form-item-select">
-                            <% for(var i=0; i < categ_name.length; i++) {%>
-                                <% if (categ_name[i].categories == "Государственная"){%>
-                                   <% if (role > 1){ %>
-                                        <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
-                                    <%}%>
-                                <%} else { %>
-                                    <option id="change-option" value="<%= categ_name[i].id_categories%>"><%= categ_name[i].categories%></option>
-                                <%}%>
-  
-                            <% }%>
-                        </select>
-                        <div class="subtitle form-item__subtitle">
-                            Выберите категорию
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Полное описание задачи
-                        </div>
-                        <input id="change_task_desc" type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Введите полное описание задачи
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Дата окончания
-                        </div>
-                        <input id="change_task_deadline" type="text" class="form-item__input">
-                        <div class="subtitle form-item__subtitle">
-                            Выберите дату окончания
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="text form-item__text">
-                            Статус
-                        </div>
-                        <select name="" id="change_task_status" class="select form-item-select">
-                            <% for(var i=0; i < statuses.length; i++) {%>
-                            <option id="change-option" value="<%= statuses[i].id_status %>"><%= statuses[i].status%></option>
-                            <% } %>
-                        </select>
-                        <div class="subtitle form-item__subtitle">
-                            Выберите статус
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="content bottom-content">
-                <button class="button bottom-content__button" id="close-change-task-button">
-                    Закрыть
-                </button>
-                <button class="button bottom-content__button button_save change_button_save">
-                    Сохранить
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal hidden" id="delete-task-modal-alert">
-        <div class="modal-window">
-            <div class="content top-content">
-                <div class="title">Удаление задачи</div>
-            </div>
-            <div class="content middle-content">
-                <div class="text">Вы уверены что хотите удалить эту задачу?</div>
-            </div>
-            <div class="content bottom-content">
-                <button class="button bottom-content__button" id="close-modal-alert">
-                    Отмена
-                </button>
-                <button class="button bottom-content__button" id="yes-modal-alert">
-                    Удалить
                 </button>
             </div>
         </div>
@@ -503,10 +306,9 @@
     </script>
     <script src="./script/jquery.min.js"></script>
     <script src="./script/DataTables/datatables.min.js"></script>
-    <script src="./script/board.js"></script>
     <script src="./script/theme.js"></script>
     <script src="./script/filters.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-    <script src="./script/main.js"></script>
+    <script src="./script/plea.js"></script>
 </body>
 </html>

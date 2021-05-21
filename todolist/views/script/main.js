@@ -164,6 +164,10 @@ socket.on("connect", () => {
         createNotifElement(data);
         notif_sound.play();
     })
+    socket.on("plea_upd", (data)=>{
+        createNotifElement(data);
+        notif_sound.play();
+    })
 });
 
 if(buttonCloseModalAlert !== null) {
