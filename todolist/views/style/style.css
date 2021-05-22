@@ -626,8 +626,12 @@ tbody tr td {
 
 .after-header {
     width: 100%;
+}
+
+.after-header__inner {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    align-items: center;
 }
 
 .select-year {
@@ -639,6 +643,8 @@ tbody tr td {
     border: 2px solid var(--border-color);
     border-top: none;
     position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .select-year::before {
@@ -659,7 +665,73 @@ tbody tr td {
     font-size: 50px;
 }
 
-.before-months {
+.days-counter {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.months {
+    display: flex;
+    flex-direction: column;
+    row-gap: 100px;
+}
+
+.month {
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+}
+
+.month__text {
+    text-align: center;
+}
+
+.months__item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 50px;
+}
+
+.month__days {
+    display: flex;
+    /* align-items: center; */
+    /* column-gap: 50px;
+    row-gap: 50px; */
+}
+
+.day__name {
+    display: flex;
+    flex-direction: column;
+    /* row-gap: 50px; */
+}
+
+.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.day {
+    min-width: 68px;
+    min-height: 66px;
+    padding: 20px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.empty-day {
+    min-width: 68px;
+    min-height: 66px;
+    padding: 20px;
+}
+
+.day:hover {
+    border: 1px solid var(--text-color);
+}
+
+/*.before-months {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -755,49 +827,49 @@ tbody tr td {
     width: calc(14.285%);
     display: flex;
     flex-direction: column;
-    row-gap: 50px;
+    row-gap: 50px; */
     /* border: 1px solid var(--border-color);
     border-top: none;
     border-bottom: none; */
-}
+/* } */
 
-.day-card {
+/* .day-card {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: center; */
     /* padding: 50px 0; */
-    font-size: 50px;
+    /* font-size: 50px; */
     /* border: 1px solid var(--border-color);
     border-left: none;
     border-right: none; */
-    animation: opacity1 2s ease forwards;
-}
+    /* animation: opacity1 2s ease forwards; */
+/* } */
 
-.day-card-prew-month {
+/* .day-card-prew-month {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: center; */
     /* padding: 50px 0; */
-    font-size: 50px;
+    /* font-size: 50px; */
     /* border: 1px solid var(--border-color);
     border-left: none;
     border-right: none; */
-    animation: opacity1 2s ease forwards;
-}
+    /* animation: opacity1 2s ease forwards;
+} */
 
-.day-card-next-month {
+/* .day-card-next-month {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: center; */
     /* padding: 50px 0; */
-    font-size: 50px;
+    /* font-size: 50px; */
     /* border: 1px solid var(--border-color);
     border-left: none;
     border-right: none; */
-    animation: opacity1 2s ease forwards;
-}
+    /* animation: opacity1 2s ease forwards;
+} */
 
-.day-card-info {
+/* .day-card-info {
     display: inline-block;
     padding: 10px;
     color: var(--text-color);
@@ -811,10 +883,10 @@ tbody tr td {
 
 .empty-dayCard {
     width: 100px;
-    height: 82px;
+    height: 82px; */
     /* margin: 50px 0; */
-    background: transparent;
-}
+    /* background: transparent;
+} */
 
 /* Profile */
 
@@ -934,8 +1006,6 @@ path {
 }
 
 
-
-/* щитпостинг */
 /* Hidden */
 
 .hidden {

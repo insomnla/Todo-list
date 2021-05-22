@@ -1,5 +1,5 @@
-const socket =  io('http://localhost:3000',{origins:"*"});
-const notif_sound = new Audio("../sounds/notification_sound.wav")
+// const socket =  io('http://localhost:3000',{origins:"*"});
+// const notif_sound = new Audio("../sounds/notification_sound.wav")
 
 let taskToDelete = 0;
 
@@ -157,18 +157,18 @@ if(buttonNotif !== null){
     }
 }
 
-socket.on("connect", () => {
-    console.log(socket.id);
-    socket.send(socket.id, id);
-    socket.on("new_task", (data)=>{
-        createNotifElement(data);
-        notif_sound.play();
-    })
-    socket.on("plea_upd", (data)=>{
-        createNotifElement(data);
-        notif_sound.play();
-    })
-});
+// socket.on("connect", () => {
+//     console.log(socket.id);
+//     socket.send(socket.id, id);
+//     socket.on("new_task", (data)=>{
+//         createNotifElement(data);
+//         notif_sound.play();
+//     })
+//     socket.on("plea_upd", (data)=>{
+//         createNotifElement(data);
+//         notif_sound.play();
+//     })
+// });
 
 if(buttonCloseModalAlert !== null) {
     buttonCloseModalAlert.onclick = function() {
