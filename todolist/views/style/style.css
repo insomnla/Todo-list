@@ -719,6 +719,7 @@ tbody tr td {
     padding: 20px;
     border: 1px solid transparent;
     cursor: pointer;
+    animation: opacity1 2s ease forwards;
 }
 
 .empty-day {
@@ -729,6 +730,60 @@ tbody tr td {
 
 .day:hover {
     border: 1px solid var(--text-color);
+}
+
+.day_active {
+    background: var(--table-hover);
+    border: 1px solid var(--text-color);
+}
+
+.day_holiday {
+    background: #9e353a;
+    color: var(--text-color-white);
+    cursor: default;
+}
+
+.day_holiday:hover {
+    border: 1px solid transparent;
+}
+
+@keyframes bgToTransparent {
+    0%
+    {
+        background: var(--table-hover);
+        border: 1px solid var(--text-color);
+    }
+    100%
+    {
+        background: transparent;
+    }
+}
+
+@keyframes transparentToBg {
+    0%
+    {
+        background: transparent;
+        border: 1px solid transparent;
+    }
+    100%
+    {
+        background: var(--table-hover);
+        border: 1px solid var(--text-color);
+    }
+}
+
+.min-modal {
+    width: 900px;
+    background: var(--table-hover);
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    padding: 20px;
+    position: absolute;
+}
+
+.min-modal__buttons {
+    width: 100%;
 }
 
 /*.before-months {

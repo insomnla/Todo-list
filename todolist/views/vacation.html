@@ -214,7 +214,7 @@
                     </div>
                 </div>
                 <div class="days-counter">
-                    <div class="text">Можите забить на работу на: <em>30</em> дней</div>
+                    <div class="text">Можите забить на работу на: <em id="rest-days">30</em> дней</div>
                 </div>
             </div>
         </div>
@@ -223,7 +223,7 @@
     <section class="page-main">
         <div class="wrapper">
             <div class="page-main-inner">
-                <div class="months">
+                <div class="months" data-holidays="1.1,1.2,10.2,1.3,10.3,9.5,27.10">
                     <div class="months__item">
                         <div class="month">
                             <div class="text month__text">
@@ -572,6 +572,31 @@
             </div>
         </div>
     </section>
+
+    <div class="min-modal hidden">
+        <div class="text min-modal__text"></div>
+        <hr class="nav-item-current-user_after__hr">
+        <div class="buttons min-modal__buttons">
+            <button class="button min-modal__button-confirm">Подтвердить</button>
+            <button class="button min-modal__button-cancel">Отменить</button>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="error-day-alert">
+        <div class="modal-window">
+            <div class="content top-content">
+                <div class="title error-day-alert__title"></div>
+            </div>
+            <div class="content middle-content">
+                <div class="text error-day-alert__text"></div>
+            </div>
+            <div class="content bottom-content">
+                <button class="button bottom-content__button" id="close-error-day-alert">
+                    Понял
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script src="./script/vacation20.js"></script>
     <script src="./script/theme.js"></script>
