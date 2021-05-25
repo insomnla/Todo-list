@@ -130,9 +130,13 @@ app.get('/socket_test', (req, res) => {
 
 
 app.get('/vacation',  ensureAuthenticated, (req, res) => {
-    res.render('vacation', {
-        info: req.session.username
-    })
+    getVacation(req,res);
+})
+
+app.post('/vacation',  ensureAuthenticated, (req, res) => {
+    console.log(req.body);
+    newVacation(req.body, req.session.userid);
+    getVacation(req,res);
 })
 
 app.get("/exit", (req, res) =>{
@@ -444,6 +448,23 @@ function getDirector(req, res){
     })
 }
 
+function getVacation(req,res){
+    connection.query("select this_year_holydays as holydays from holydays", function(error, results, field){
+        holydays = results;
+    })
+    connection.query("select start_date, end_date from vacation where fk_id_worker = ?",[req.session.userid], function(error, results, field){
+        vacation_duration = results;
+    })
+    connection.query("select vacation_left from worker where id_worker = ?",[req.session.userid], function(error, results, field){
+        res.render('vacation', {
+            holydays : holydays,
+            vac_left : results,
+            info: req.session.username,
+            vac_dur : vacation_duration
+        })
+    })
+}
+
 function addTask(task, user){
     console.log(typeof(task));
     console.log(task)
@@ -672,4 +693,9 @@ function pleaUpd(info){
     if (info.respond == "НЕТ"){
         connection.query("update pleas set fk_id_plea_status = 3 where id_plea = ? ",[info.id]);
     }
+}
+
+function newVacation(info, user){
+    connection.query("insert into vacation(start_date,end_date, fk_id_worker) values(?,?,?)", [info.start, info.end, user]);
+    connection.query("update worker set vacation_left = vacation_left - ? where id_worker = ?", [info.days, user]);
 }

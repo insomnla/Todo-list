@@ -4,6 +4,10 @@ let months = document.querySelector(".months");
 
 let restDays = document.querySelector("#rest-days");
 
+let start_date = "";
+let end_date = ""
+let vacation_days = 0;
+
 let minModal = document.querySelector(".min-modal");
 let minModalText = document.querySelector(".min-modal__text");
 let minModalConfirmButton = document.querySelector(".min-modal__button-confirm");
@@ -86,6 +90,8 @@ months.addEventListener('click', (elem) => {
                     if(selectedDateLastArray[1] == 10 || selectedDateLastArray[1] == 11 || selectedDateLastArray[1] == 12) {
                         minModal.style.top = `${elem.pageY - 175}px`;
                     }
+                    start_date = selectedDateFirst;
+                    end_date =  selectedDateLast;
                     minModalText.innerHTML = `Вы уверенны что хотите запросить отпуск в этот промежуток времени:<br> ${selectedDateFirstArray[0]}.${selectedDateFirstArray[1]}.${selectedYear} - ${selectedDateLastArray[0]}.${selectedDateLastArray[1]}.${selectedYear} ?`;
                     minModal.style.animation = 'opacity1 .6s linear forwards';
                     minModal.classList.remove('hidden');
@@ -105,12 +111,16 @@ months.addEventListener('click', (elem) => {
 if(minModalConfirmButton !== null) {
     minModalConfirmButton.onclick = function() {
         console.log('Подтвержденно');
-        getDelColorDays();
+       // getDelColorDays();
         minModal.style.animation = 'opacity0 .6s linear forwards';
         setTimeout(() => {
             minModal.classList.add('hidden');
         }, 600)
         firstElement = undefined, lastElement = undefined, selectedDateFirst = undefined, selectedDateLast = undefined;
+        console.log(vacation_days, start_date, end_date);
+        $.post("/vacation",{days : vacation_days, start: start_date, end : end_date}, function(){
+            window.location.reload();
+        }) 
     }
 }
 
@@ -133,7 +143,7 @@ if(errorDayAlertCloseButton !== null) {
 }
 
 function getColoredSelectedDays(firstDate, lastDate) {
-
+    console.log(firstDate, lastDate);
     let day = document.querySelectorAll(".day");
 
     let firstDateArray = firstDate.split('.');
@@ -158,7 +168,7 @@ function getColoredSelectedDays(firstDate, lastDate) {
     } else if(firstMonth == lastMonth) {
         numberSelectedDays = ((lastDay - firstDay) + 1) - Number(holidays);
     }
-
+    vacation_days = numberSelectedDays;
     console.log(numberSelectedDays)
 
     if(numberSelectedDays <= restDays.textContent) {
