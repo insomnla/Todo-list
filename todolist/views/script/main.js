@@ -1,5 +1,5 @@
-// const socket =  io('http://localhost:3000',{origins:"*"});
-// const notif_sound = new Audio("../sounds/notification_sound.wav")
+ const socket =  io('http://localhost:3000',{origins:"*"});
+ const notif_sound = new Audio("../sounds/notification_sound.wav")
 
 let taskToDelete = 0;
 
@@ -19,6 +19,7 @@ let buttonBackPage = document.querySelector(".location-button");
 let navItemCurrentUser = document.querySelector(".nav-item-current-user");
 let minProfile = document.querySelector(".nav-item-current-user_after");
 let notifMenu = document.querySelector(".notification-menu");
+let notifItems = document.querySelectorAll(".subtitle")
 let notificationMore = document.querySelector(".notification-more");
 let notificationActions = document.querySelector(".notification-more_actions");
 let messageItemSubtitleNotChecked = document.querySelector(".message-item-subtitle_not_checked");
@@ -196,18 +197,18 @@ if(messageItemSubtitleChecked !== null) {
     }
 }
 
-// socket.on("connect", () => {
-//     console.log(socket.id);
-//     socket.send(socket.id, id);
-//     socket.on("new_task", (data)=>{
-//         createNotifElement(data);
-//         notif_sound.play();
-//     })
-//     socket.on("plea_upd", (data)=>{
-//         createNotifElement(data);
-//         notif_sound.play();
-//     })
-// });
+ socket.on("connect", () => {
+     console.log(socket.id);
+     socket.send(socket.id, id);
+    socket.on("new_task", (data)=>{
+         createNotifElement(data);
+        notif_sound.play();
+     })
+     socket.on("plea_upd", (data)=>{
+         createNotifElement(data);
+        notif_sound.play();
+     })
+ });
 
 if(buttonCloseModalAlert !== null) {
     buttonCloseModalAlert.onclick = function() {
@@ -238,6 +239,15 @@ if(chengeSelectedTask !== null) {
         })
     })
 }
+
+notifItems.forEach((notif)=>{
+    notif.addEventListener("click", ()=>{
+        console.log(notif.getAttribute("value"));
+        $.post("/notif_check", { id : notif.getAttribute("value")},function (){
+            window.location.reload();
+        })
+    })
+})
 
 function checkForEmptiness() {
     let counter = 0;
@@ -513,13 +523,17 @@ if (profileLink !== null){
 
 
 function createNotifElement(id_notif){
-    let prev_notif = document.querySelector(".notif_item")
+    let notif_menu = document.querySelector(".message_not_checked__content")
+    let prev_notif = document.querySelector(".message-item")
     let notif_item =  document.createElement('div');
-    notif_item.innerHTML = id_notif;
-    notif_item.classList.add("notif_item");
+    let notif_item_value =  document.createElement('div');
+    notif_item.classList.add("message-item");
     if (prev_notif == null){
-        notifMenu.appendChild(notif_item);
+        notif_menu.appendChild(notif_item)
     } else {
-        notifMenu.insertBefore(notif_item, prev_notif)
+        notif_menu.insertBefore(notif_item ,prev_notif);
     }
+    notif_item_value.classList.add("subtitle")
+    notif_item_value.innerHTML = id_notif;
+    notif_item.appendChild(notif_item_value);
 }

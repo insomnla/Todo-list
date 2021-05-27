@@ -90,30 +90,38 @@
                                 <div class="message_not_checked">
                                     <div class="subtitle message-item-subtitle message-item-subtitle_not_checked">Не прочитанно</div>
                                     <div class="message_not_checked__content">
+                                        <% for (key in notifications_unchecked){%>
                                         <div class="message-item">
-                                            <div value="" class="subtitle">message</div>
+                                            <% if (notifications_unchecked[key].type == 1){%>
+                                            <div value="<%= notifications_unchecked[key].id_notif%>" class="subtitle"><%= notifications_unchecked[key].fname%> <%= notifications_unchecked[key].mname%> добавил(а) вам задачу <%= notifications_unchecked[key].message%></div>
+                                            <%} if (notifications_unchecked[key].type == 2){%>
+                                            <div value="<%= notifications_unchecked[key].id_notif%>" class="subtitle">Ваша справка <%= notifications_unchecked[key].message%> готова</div>
+                                            <%} if (notifications_unchecked[key].type == 3){%>
+                                            <div value="<%= notifications_unchecked[key].id_notif%>" class="subtitle">В справке <%= notifications_unchecked[key].message%> было отказано </div>
+                                            <%} if (notifications_unchecked[key].type == 4){%>
+                                            <div value="<%= notifications_unchecked[key].id_notif%>" class="subtitle">Ваша справка <%= notifications_unchecked[key].message%> принята на рассмотрение </div>
+                                            <%}%>
                                         </div>
-                                        <div class="message-item">
-                                            <div value="" class="subtitle">message</div>
-                                        </div>
-                                        <div class="message-item">
-                                            <div value="" class="subtitle">message</div>
-                                        </div>
+                                        <%}%>
                                     </div>
                                 </div>
                                 <hr class="nav-item-current-user_after__hr">
                                 <div class="message_checked">
                                     <div class="subtitle message-item-subtitle message-item-subtitle_checked">Прочитанно</div>
                                     <div class="message_checked__content">
-                                        <div class="message-item">
-                                            <div value="" class="subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus incidunt at quia nobis cum, ducimus nisi quis vitae fugit amet dolores. Recusandae incidunt quidem repellendus sed. Porro ullam ex cumque.</div>
-                                        </div>
-                                        <div class="message-item">
-                                            <div value="" class="subtitle">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis temporibus vitae consectetur ut tempora quas pariatur nostrum laboriosam, expedita doloremque beatae dolore non libero velit repudiandae iste accusamus repellat id?</div>
-                                        </div>
-                                        <div class="message-item">
-                                            <div value="" class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. At illo tenetur explicabo ab doloremque nihil consectetur. Recusandae deserunt earum a quidem dignissimos pariatur at porro, veritatis optio quae quos ullam?</div>
-                                        </div>
+                                        <% for (key in notifications_checked){%>
+                                            <div class="message-item">
+                                                <% if (notifications_checked[key].type == 1){%>
+                                                <div value="<%= notifications_checked[key].id_notif%>" class="subtitle"><%= notifications_checked[key].fname%> <%= notifications_checked[key].mname%> добавил(а) вам задачу <%= notifications_checked[key].message%></div>
+                                                <%} if (notifications_checked[key].type == 2){%>
+                                                <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">Ваша справка <%= notifications_checked[key].message%> готова</div>
+                                                <%} if (notifications_checked[key].type == 3){%>
+                                                <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">В справке <%= notifications_checked[key].message%> было отказано </div>
+                                                <%} if (notifications_checked[key].type == 4){%>
+                                                <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">Ваша справка <%= notifications_checked[key].message%> была принята на рассмотрение </div>
+                                                <%}%>
+                                            </div>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>

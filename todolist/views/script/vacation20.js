@@ -459,3 +459,68 @@ function createDayCard(selectedYear, selectedMonth, parentElement, dayInMonth) {
 
     getHoliday();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getColoredSelectedDaysBD(firstDate, lastDate) { // Тут полное повторение функции getColoredSelectedDays только без проверки на количество дней, сделано рофла ради, работает кстати, можешь удалить если хочешь
+    console.log(firstDate, lastDate);
+    let day = document.querySelectorAll(".day");
+
+    let firstDateArray = firstDate.split('.');
+    let lastDateArray = lastDate.split('.');
+
+    let firstDay = firstDateArray[0];
+    let firstMonth = firstDateArray[1];
+
+    let lastDay = lastDateArray[0];
+    let lastMonth = lastDateArray[1];
+
+    let numberSelectedDays;
+
+    let checkHolidaysArray = checkHolidays(firstDate, lastDate);
+
+    let holidays = checkHolidaysArray[0];
+
+    console.log(checkHolidaysArray[1])
+
+    if(lastMonth - firstMonth == 1) {
+        numberSelectedDays = ((getDayInMonth(selectedYear, firstMonth - 1) - firstDay) + +lastDay + 1) - Number(holidays);
+    } else if(firstMonth == lastMonth) {
+        numberSelectedDays = ((lastDay - firstDay) + 1) - Number(holidays);
+    }
+    vacation_days = numberSelectedDays;
+    console.log(numberSelectedDays)
+        day.forEach((elem, index) => {
+            // console.log(checkHolidaysArray);
+            let elemDateArray = elem.dataset['day'].split('.');
+            if(elemDateArray[1] == firstMonth && elemDateArray[1] == lastMonth) {
+                if(Number(elemDateArray[0]) >= Number(firstDay) && Number(elemDateArray[0]) <= Number(lastDay) && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1) {
+                    elem.style.animation = `transparentToBg .${index}s linear forwards`;
+                    elem.classList.add('day_active');
+                }
+            } else if(elemDateArray[1] == firstMonth) {
+                if(Number(elemDateArray[0]) <= Number(getDayInMonth(selectedYear, firstMonth - 1)) && Number(elemDateArray[0]) >= firstDay && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1) {
+                    elem.style.animation = `transparentToBg .${index}s linear forwards`;
+                    elem.classList.add('day_active');
+                }
+            } else if(elemDateArray[1] == lastMonth) {
+                if(Number(elemDateArray[0]) <= Number(lastDay) && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1) {
+                    elem.style.animation = `transparentToBg .${index}s linear forwards`;
+                    elem.classList.add('day_active');
+                }
+            }
+        })
+}

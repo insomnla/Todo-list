@@ -56,6 +56,7 @@ let allRowWithStatus = document.querySelectorAll(".status");
 
 let buttonAccepted = document.querySelectorAll(".button_accepted")
 let buttonDenied= document.querySelectorAll(".button_denied")
+let buttonAwaits= document.querySelectorAll(".button_awaits")
 
 
 let buttonNPlea = document.querySelector("#new-plea-button");
@@ -112,4 +113,18 @@ if (buttonDenied !== null){
             }); 
         })
     });
+}
+
+if (buttonAwaits !== null){
+    buttonAwaits.forEach((button) =>{
+        button.addEventListener("click", (elem)=>{
+            plea_id = elem.target.parentNode.getAttribute("data-id");
+            worker_id = elem.target.parentNode.children[1].getAttribute("value");
+            categ = elem.target.parentNode.children[2].textContent;
+            socket.emit("plea_upd",{ worker : worker_id, desc : categ, sender : id, respond : "РАССМОТРЕНИЕ"});
+            $.post("/update_plea",{  worker : worker_id, id : plea_id, respond : "РАССМОТРЕНИЕ"}, ()=>{
+                window.location.reload();
+            }); 
+        })
+    })
 }
