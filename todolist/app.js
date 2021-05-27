@@ -256,8 +256,10 @@ app.get("/profile", ensureAuthenticated, (req, res)=>{
 })
 
 app.post("/deadline_check", ensureAuthenticated, (req,res)=>{
-    for (var i = 0; i < req.body.idArray.length; i++){
-        connection.query("update task set fk_id_status = 3 where id_task = ?", [req.body.idArray[i]]);
+    if (req.body.idArray !== null){
+        for (var i = 0; i < req.body.idArray.length; i++){
+            connection.query("update task set fk_id_status = 3 where id_task = ?", [req.body.idArray[i]]);
+        }
     }
 })
 
