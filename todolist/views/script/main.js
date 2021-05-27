@@ -14,10 +14,17 @@ let buttonSaveChangeTask = document.querySelector(".change_button_save");
 let buttonBulkAdd = document.querySelector(".instruments__button_bg_plus");
 let buttonBulkReport = document.querySelector(".instruments__button_bg_document");
 let buttonNotif = document.querySelector(".nav-item_notification");
+let buttonBackPage = document.querySelector(".location-button");
 
 let navItemCurrentUser = document.querySelector(".nav-item-current-user");
 let minProfile = document.querySelector(".nav-item-current-user_after");
 let notifMenu = document.querySelector(".notification-menu");
+let notificationMore = document.querySelector(".notification-more");
+let notificationActions = document.querySelector(".notification-more_actions");
+let messageItemSubtitleNotChecked = document.querySelector(".message-item-subtitle_not_checked");
+let messageItemSubtitleChecked = document.querySelector(".message-item-subtitle_checked");
+let messageContentNotChecked = document.querySelector(".message_not_checked__content");
+let messageContentChecked = document.querySelector(".message_checked__content");
 
 let deleteSelectedTask = document.querySelectorAll(".delete-selected-task");
 let chengeSelectedTask = document.querySelectorAll(".change-selected-task");
@@ -49,6 +56,12 @@ let titleChangeTask = document.querySelector("#change-task-title");
 let exit = document.querySelector(".exit");
 
 setTitleForTitle();
+
+if(buttonBackPage !== null) {
+    buttonBackPage.onclick = function() {
+        window.history.back();
+    }
+}
 
 if (buttonBulkAdd !== null) {
     buttonBulkAdd.onclick = function() {
@@ -99,12 +112,14 @@ if(hrefOnProfile !== null) {
 
 if(navItemCurrentUser !== null) {
     navItemCurrentUser.onclick = function() {
-        if(minProfile.classList.contains('hidden')) {
-            minProfile.classList.remove('hidden');
-            minProfile.style.animation = 'opacity1 .3s linear forwards';
-        } else {
-            minProfile.style.animation = 'opacity0 .3s linear forwards';
-            setTimeout(()=> minProfile.classList.add('hidden'), 300);
+        if(minProfile !== null) {
+            if(minProfile.classList.contains('hidden')) {
+                minProfile.classList.remove('hidden');
+                minProfile.style.animation = 'opacity1 .3s linear forwards';
+            } else {
+                minProfile.style.animation = 'opacity0 .3s linear forwards';
+                setTimeout(()=> minProfile.classList.add('hidden'), 300);
+            }
         }
     }
 }
@@ -153,7 +168,31 @@ if(deleteSelectedTask !== null) {
 
 if(buttonNotif !== null){
     buttonNotif.onclick = function(){
-        notifMenu.classList.toggle("hidden");
+        if(notifMenu.classList.contains('hidden')) {
+            notifMenu.classList.remove('hidden');
+            notifMenu.style.animation = 'opacity1 .3s linear forwards';
+        } else {
+            notifMenu.style.animation = 'opacity0 .3s linear forwards';
+            setTimeout(()=> notifMenu.classList.add('hidden'), 300);
+        }
+    }
+}
+
+if(notificationMore !== null) {
+    notificationMore.onclick = function() {
+        notificationActions.classList.toggle('hidden');
+    }
+}
+
+if(messageItemSubtitleNotChecked !== null) {
+    messageItemSubtitleNotChecked.onclick = function() {
+        messageContentNotChecked.classList.toggle('hidden');
+    }
+}
+
+if(messageItemSubtitleChecked !== null) {
+    messageItemSubtitleChecked.onclick = function() {
+        messageContentChecked.classList.toggle('hidden');
     }
 }
 
@@ -351,6 +390,13 @@ window.addEventListener('click', (event)=> {
         if(minProfile !== null) {
             minProfile.style.animation = 'opacity0 .3s linear forwards';
             setTimeout(()=> minProfile.classList.add('hidden'), 300);
+        }
+    }
+
+    if(!event.target.classList.contains('notification-menu') && !event.target.classList.contains('nav-item_notification') && !event.target.classList.contains('fill_white') && !event.target.classList.contains('notification-menu__header') && !event.target.classList.contains('text') && !event.target.classList.contains('notification-more') && !event.target.classList.contains('notification-more_actions') && !event.target.classList.contains('notif-actions-item') && !event.target.classList.contains('notification-menu__content') && !event.target.classList.contains('subtitle')  && !event.target.classList.contains('nav-item-current-user_after__hr') && !event.target.classList.contains('message_not_checked') && !event.target.classList.contains('message_not_checked__content') && !event.target.classList.contains('message-item') && !event.target.classList.contains('message_checked') && !event.target.classList.contains('message_checked__content')) {
+        if(notifMenu !== null) {
+            notifMenu.style.animation = 'opacity0 .3s linear forwards';
+            setTimeout(()=> notifMenu.classList.add('hidden'), 300);
         }
     }
 })

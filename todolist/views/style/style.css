@@ -354,8 +354,97 @@ tbody tr td {
     background-size: cover;
 }
 
-.nav-item_notification {
+.location {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 30px;
+    padding: 0 10px;
+}
 
+.location-button {
+    background: var(--border-color);
+    background-image: url(../images/left-arrow-long.svg);
+    background-repeat: no-repeat;
+    background-position: 10px;
+    padding-left: 60px;
+    font-size: 17px;
+    color: var(--text-color-white);
+}
+
+.nav-item_notification {
+    position: relative;
+}
+
+.notification-menu {
+    width: 400px;
+    height: 500px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    position: absolute;
+    right: 260px;
+    bottom: -512px;
+    background: var(--main-color);
+    border: 1px solid var(--text-color);
+    padding: 20px;
+    z-index: 6;
+}
+
+.notification-menu__header {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.notification-more {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 0;
+}
+
+.notification-more_actions {
+    width: 150px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: var(--table-hover);
+    padding: 10px;
+    z-index: 7;
+}
+
+.notification-menu__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.message_not_checked, .message_checked, .message_not_checked__content, .message_checked__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.message-item-subtitle {
+    text-align: center;
+    background-image: url(../images/down-arrow.svg);
+    background-repeat: no-repeat;
+    background-position: right;
+    cursor: pointer;
+}
+
+.message-item {
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.message-item:hover {
+    background: var(--table-hover);
 }
 
 .nav-item-current-user {
@@ -363,6 +452,7 @@ tbody tr td {
     align-items: center;
     column-gap: 10px;
     cursor: pointer;
+    position: relative;
 }
 
 .current-user-user-name {
@@ -1026,40 +1116,6 @@ tbody tr td {
 path {
     pointer-events: none;  /* прячем path чтобы всегда нажимать на svg */
 }
-
-/* щитпостинг */
-
-.notification-menu {
-    display: flex;
-    flex-direction: column;
-    row-gap: 30px;
-    position: absolute;
-    right: 0;
-    bottom: -425px;
-    background: var(--main-color);
-    padding: 20px;
-    z-index: 5;
-    border: 1px solid var(--text-color);
-}
-
-.notif_item {
-    width: 100%;
-    color:white;
-    border: 2px black solid;
-    padding: 20px 0;
-    cursor: pointer;
-}
-
-.button_accepted {
-    color: green;
-    text-align: center;
-}
-
-.button_denied {
-    color: red;
-    text-align: center;
-}
-
 
 /* Hidden */
 
