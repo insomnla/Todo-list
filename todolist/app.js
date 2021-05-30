@@ -86,24 +86,37 @@ io.on("connection", (socket) => {
        if (data.worker !== data.director){
             console.log(data);
             socket.to(socket_id[worker_id.indexOf(data.worker)]).emit('new_task', data.director + " добавил(а) вам задание " + data.desc); 
-            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, type) values (?,?,?,0 , 1)", [data.director_id, data.worker, data.desc]);
+            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, fk_id_notif_type) values (?,?,?,0 , 1)", [data.director_id, data.worker, data.desc]);
        }
     })
     socket.on("plea_upd", (data)=>{ 
         if (data.respond == "ДА"){
             socket.to(socket_id[worker_id.indexOf(Number(data.worker))]).emit('plea_upd', "Ваша справка " + data.desc  + " готова");
-            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, type) values (?,?,?,0 , 2)", [data.sender, data.worker, data.desc]);
+            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, fk_id_notif_type) values (?,?,?,0 , 2)", [data.sender, data.worker, data.desc]);
         } 
         if (data.respond == "НЕТ"){
             socket.to(socket_id[worker_id.indexOf(Number(data.worker))]).emit('plea_upd', "В справке " + data.desc  + " было отказано");
-            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, type) values (?,?,?,0 , 3)", [data.sender, data.worker, data.desc]);
+            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, fk_id_notif_type) values (?,?,?,0 , 3)", [data.sender, data.worker, data.desc]);
         }
         if (data.respond == "РАССМОТРЕНИЕ"){
             socket.to(socket_id[worker_id.indexOf(Number(data.worker))]).emit('plea_upd', "Ваша справка " + data.desc  + " принята на рассмотрение");
-            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, type) values (?,?,?,0 , 4)", [data.sender, data.worker, data.desc]);
+            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, fk_id_notif_type) values (?,?,?,0 , 4)", [data.sender, data.worker, data.desc]);
         }
-
-        console.log(data);
+        if (data.respond == "ДА_ОТПУСК"){
+            socket.to(socket_id[worker_id.indexOf(Number(data.worker))]).emit('vac_upd', "Ваш " + data.desc  + " был принят");
+            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, fk_id_notif_type) values (?,?,?,0 , 5)", [data.sender, data.worker, data.desc]);
+        } 
+        if (data.respond == "НЕТ_ОТПУСК"){
+            socket.to(socket_id[worker_id.indexOf(Number(data.worker))]).emit('vac_upd', "В " + data.desc  + " было отказано");
+            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, fk_id_notif_type) values (?,?,?,0 , 6)", [data.sender, data.worker, data.desc]);
+        }
+        if (data.respond == "РАССМОТРЕНИЕ_ОТПУСК"){
+            socket.to(socket_id[worker_id.indexOf(Number(data.worker))]).emit('vac_upd', "Ваш " + data.desc  + " принят на рассмотрение");
+            connection.query("INSERT INTO notification (fk_id_sender, fk_id_receiver, message, checked, fk_id_notif_type) values (?,?,?,0 , 7)", [data.sender, data.worker, data.desc]);
+        }
+    });
+    socket.on("new_vacation", (data)=>{
+        newPlea("3", data.worker, data.start + " - " + data.end);
     });
 });
 
@@ -140,7 +153,6 @@ app.get('/vacation',  ensureAuthenticated, (req, res) => {
 })
 
 app.post('/vacation',  ensureAuthenticated, (req, res) => {
-    console.log(req.body);
     newVacation(req.body, req.session.userid);
     getVacation(req,res);
 })
@@ -336,10 +348,10 @@ function getDirectDepart(req, res){
     if (urlRequest.query.id  !== undefined){
         dep_id = urlRequest.query.id;
     }
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_unchecked = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
     connection.query("select fk_id_department ,id_worker, concat(lname, ' ', fname, ' ', mname) as fio from worker where fk_id_department = ?", [dep_id], function(error, results, fields){
@@ -374,10 +386,10 @@ function getDirectDepart(req, res){
 }
 
 function getDeparment(req, res){
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_unchecked = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
     connection.query("select * from categories", function(eror, results, fields){
@@ -403,10 +415,10 @@ function getDeparment(req, res){
 }
 
 function getBoard(req, res){
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_unchecked = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
     connection.query("select * from categories", function(eror, results, fields){
@@ -450,13 +462,13 @@ function getDirector(req, res){
     connection.query("select * from status", function(error, results, field){
         statuses = results;
     })
-    connection.query("select count(*) as counter, department_name from worker join department on fk_id_department = id_department  where fk_id_department <> 0 group by fk_id_department", function(error, results, field){
+    connection.query("select count(*) as counter, department_name from worker join department on fk_id_department = id_department  where fk_id_department <> 0 and fk_id_role <> 2 group by fk_id_department", function(error, results, field){
         dep_count = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_unchecked = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
     if (!(req.body.taskName == undefined)){
@@ -487,16 +499,17 @@ function getVacation(req,res){
     connection.query("select start_date, end_date from vacation where fk_id_worker = ?",[req.session.userid], function(error, results, field){
         vacation_duration = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_unchecked = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
     connection.query("select vacation_left from worker where id_worker = ?",[req.session.userid], function(error, results, field){
         res.render('vacation', {
             holydays : holydays,
             vac_left : results,
+            id : req.session.userid,
             info: req.session.username,
             notifications_unchecked: notifications_unchecked,
             notifications_checked : notifications_checked,
@@ -652,10 +665,10 @@ function getProfile(req, res){
     connection.query("select lname, fname, mname, mail, role, department_name, number, room from worker inner join role on id_role = fk_id_role inner join department on id_department = fk_id_department where id_worker = ? ", [profile_id], function(error,results,fields){
         user_profile = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_unchecked = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
     connection.query("select id_task, task.name, task.desc, CAST(deadline AS CHAR) as dline, concat(lname, ' ', fname, ' ' , mname) as fio, categories, status from task inner join categories on fk_id_categories = id_categories inner join status on id_status = fk_id_status inner join worker on id_worker = fk_id_worker", function(error, results, fields) {
@@ -687,13 +700,13 @@ function getAllPleas(req,res){
     connection.query("select * from plea_status", function(error, results, fields){
         plea_status = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_unchecked = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
-    connection.query("select fk_id_worker, id_plea, plea_categ, plea_status, concat(lname,' ' ,fname,' ', mname) as fio, id_plea_status  from pleas inner join plea_categ on fk_id_plea_categ = id_plea_categ inner join plea_status on fk_id_plea_status = id_plea_status inner join worker on fk_id_worker = id_worker", function(error, results, fields) {
+    connection.query("select fk_id_worker, id_plea, plea_categ, plea_status, extra, concat(lname,' ' ,fname,' ', mname) as fio, id_plea_status  from pleas inner join plea_categ on fk_id_plea_categ = id_plea_categ inner join plea_status on fk_id_plea_status = id_plea_status inner join worker on fk_id_worker = id_worker", function(error, results, fields) {
         res.render('all_pleas', {
             pleas : results,
             plea_categ : plea_categ,
@@ -716,10 +729,10 @@ function getPlea(req, res){
     connection.query("select * from plea_status", function(error, results, fields){
         plea_status = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_unchecked = results;
     })
-    connection.query("select id_notif, message, lname, fname, mname, checked, type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
+    connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
     connection.query("select * from pleas inner join plea_categ on fk_id_plea_categ = id_plea_categ inner join plea_status on fk_id_plea_status = id_plea_status where fk_id_worker = ? ",[req.session.userid], function(error, results, fields) {
@@ -738,8 +751,12 @@ function getPlea(req, res){
     })
 }
 
-function newPlea(categ_id, req){
-    connection.query("insert into pleas (fk_id_worker, fk_id_plea_categ, fk_id_plea_status) values(?,?,1)",[req.session.userid, categ_id]);
+function newPlea(categ_id, req, extra){
+    if (extra !== ""){
+        connection.query("insert into pleas (fk_id_worker, fk_id_plea_categ, fk_id_plea_status, extra) values(?,?,0,?)",[req, categ_id, extra]);
+    } else {
+        connection.query("insert into pleas (fk_id_worker, fk_id_plea_categ, fk_id_plea_status) values(?,?,0)",[req.session.userid, categ_id]);
+    }
 }
 
 function pleaUpd(info){

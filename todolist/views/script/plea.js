@@ -93,10 +93,18 @@ if (buttonAccepted !== null){
             plea_id = elem.target.parentNode.getAttribute("data-id");
             worker_id = elem.target.parentNode.children[1].getAttribute("value");
             categ = elem.target.parentNode.children[2].textContent;
+            console.log(categ);
+            if (categ.substring(0,6) == "Отпуск"){
+                socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "ДА_ОТПУСК"});
+                $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "ДА"}, ()=>{
+                window.location.reload();
+            }); 
+            } else {
             socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "ДА"});
             $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "ДА"}, ()=>{
                 window.location.reload();
             }); 
+        }
         })
     });
 }
@@ -107,10 +115,17 @@ if (buttonDenied !== null){
             plea_id = elem.target.parentNode.getAttribute("data-id");
             worker_id = elem.target.parentNode.children[1].getAttribute("value");
             categ = elem.target.parentNode.children[2].textContent;
-            socket.emit("plea_upd",{ worker : worker_id, desc : categ, sender : id, respond : "НЕТ"});
-            $.post("/update_plea",{  worker : worker_id, id : plea_id, respond : "НЕТ"}, ()=>{
+            if (categ.substring(0,6) == "Отпуск"){
+                socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "НЕТ_ОТПУСК"});
+                $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "НЕТ"}, ()=>{
                 window.location.reload();
             }); 
+            } else {
+            socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "ДА"});
+            $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "ДА"}, ()=>{
+                window.location.reload();
+            }); 
+        }
         })
     });
 }
@@ -121,10 +136,17 @@ if (buttonAwaits !== null){
             plea_id = elem.target.parentNode.getAttribute("data-id");
             worker_id = elem.target.parentNode.children[1].getAttribute("value");
             categ = elem.target.parentNode.children[2].textContent;
-            socket.emit("plea_upd",{ worker : worker_id, desc : categ, sender : id, respond : "РАССМОТРЕНИЕ"});
-            $.post("/update_plea",{  worker : worker_id, id : plea_id, respond : "РАССМОТРЕНИЕ"}, ()=>{
+            if (categ.substring(0,6) == "Отпуск"){
+                socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "РАССМОТРЕНИЕ_ОТПУСК"});
+                $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "РАССМОТРЕНИЕ"}, ()=>{
                 window.location.reload();
             }); 
+            } else {
+            socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "РАССМОТРЕНИЕ"});
+            $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "РАССМОТРЕНИЕ"}, ()=>{
+                window.location.reload();
+            }); 
+        }
         })
     })
 }

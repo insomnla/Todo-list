@@ -208,6 +208,10 @@ if(messageItemSubtitleChecked !== null) {
          createNotifElement(data);
         notif_sound.play();
      })
+     socket.on("vac_upd", (data)=>{
+        createNotifElement(data);
+       notif_sound.play();
+    })
  });
 
 if(buttonCloseModalAlert !== null) {
@@ -242,7 +246,6 @@ if(chengeSelectedTask !== null) {
 
 notifItems.forEach((notif)=>{
     notif.addEventListener("click", ()=>{
-        console.log(notif.getAttribute("value"));
         $.post("/notif_check", { id : notif.getAttribute("value")},function (){
             window.location.reload();
         })

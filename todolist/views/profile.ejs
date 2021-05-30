@@ -102,6 +102,12 @@
                                             <div value="<%= notifications_unchecked[key].id_notif%>" class="subtitle">В справке <%= notifications_unchecked[key].message%> было отказано </div>
                                             <%} if (notifications_unchecked[key].type == 4){%>
                                             <div value="<%= notifications_unchecked[key].id_notif%>" class="subtitle">Ваша справка <%= notifications_unchecked[key].message%> принята на рассмотрение </div>
+                                            <%} if (notifications_unchecked[key].type == 5){%>
+                                                <div value="<%= notifications_unchecked[key].id_notif%>" class="subtitle">Ваш <%= notifications_unchecked[key].message%> был принят</div>
+                                            <%} if (notifications_unchecked[key].type == 6){%>
+                                                <div value="<%= notifications_unchecked[key].id_notif%>" class="subtitle">В <%= notifications_unchecked[key].message%> было отказано</div>
+                                            <%} if (notifications_unchecked[key].type == 7){%>
+                                               <div value="<%= notifications_unchecked[key].id_notif%>" class="subtitle">Ваш <%= notifications_unchecked[key].message%> принят на рассмотрение</div>
                                             <%}%>
                                         </div>
                                         <%}%>
@@ -114,13 +120,19 @@
                                         <% for (key in notifications_checked){%>
                                             <div class="message-item">
                                                 <% if (notifications_checked[key].type == 1){%>
-                                                <div value="<%= notifications_checked[key].id_notif%>" class="subtitle"><%= notifications_checked[key].fname%> <%= notifications_checked[key].mname%> добавил(а) вам задачу <%= notifications_checked[key].message%></div>
+                                                    <div value="<%= notifications_checked[key].id_notif%>" class="subtitle"><%= notifications_checked[key].fname%> <%= notifications_checked[key].mname%> добавил(а) вам задачу <%= notifications_checked[key].message%></div>
                                                 <%} if (notifications_checked[key].type == 2){%>
-                                                <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">Ваша справка <%= notifications_checked[key].message%> готова</div>
+                                                    <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">Ваша справка <%= notifications_checked[key].message%> готова</div>
                                                 <%} if (notifications_checked[key].type == 3){%>
-                                                <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">В справке <%= notifications_checked[key].message%> было отказано </div>
+                                                    <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">В справке <%= notifications_checked[key].message%> было отказано </div>
                                                 <%} if (notifications_checked[key].type == 4){%>
-                                                <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">Ваша справка <%= notifications_checked[key].message%> была принята на рассмотрение </div>
+                                                    <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">Ваша справка <%= notifications_checked[key].message%> была принята на рассмотрение </div>
+                                                <%} if (notifications_checked[key].type == 5){%>
+                                                    <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">Ваш <%= notifications_checked[key].message%> был принят</div>
+                                                <%} if (notifications_checked[key].type == 6){%>
+                                                    <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">В <%= notifications_checked[key].message%> было отказано</div>
+                                                <%} if (notifications_checked[key].type == 7){%>
+                                                    <div value="<%= notifications_checked[key].id_notif%>" class="subtitle">Ваш <%= notifications_checked[key].message%> принят на рассмотрение</div>
                                                 <%}%>
                                             </div>
                                         <%}%>
