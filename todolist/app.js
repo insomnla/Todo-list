@@ -462,7 +462,7 @@ function getDirector(req, res){
     connection.query("select * from status", function(error, results, field){
         statuses = results;
     })
-    connection.query("select count(*) as counter, department_name from worker join department on fk_id_department = id_department  where fk_id_department <> 0 and fk_id_role <> 2 group by fk_id_department", function(error, results, field){
+    connection.query("select count(*) as counter, department_name from worker join department on fk_id_department = id_department  where fk_id_department <> 0 and fk_id_role <> 3 group by fk_id_department", function(error, results, field){
         dep_count = results;
     })
     connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
