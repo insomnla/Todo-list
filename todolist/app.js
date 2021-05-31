@@ -752,11 +752,11 @@ function getPlea(req, res){
 }
 
 function newPlea(categ_id, req, extra){
-    if (extra !== ""){
+    if (extra !== undefined){
         connection.query("insert into pleas (fk_id_worker, fk_id_plea_categ, fk_id_plea_status, extra) values(?,?,0,?)",[req, categ_id, extra]);
     } else {
         connection.query("insert into pleas (fk_id_worker, fk_id_plea_categ, fk_id_plea_status) values(?,?,0)",[req.session.userid, categ_id]);
-    }
+    } 
 }
 
 function pleaUpd(info){
