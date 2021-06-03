@@ -129,7 +129,7 @@ CREATE TABLE `notification` (
   PRIMARY KEY (`id_notif`),
   KEY `fk_id_notif_type_idx` (`fk_id_notif_type`),
   CONSTRAINT `fk_id_notif_type` FOREIGN KEY (`fk_id_notif_type`) REFERENCES `notif_type` (`id_notif_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,6 +138,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+INSERT INTO `notification` VALUES (59,1,1,'Отпуск',1,7),(60,1,1,'Отпуск',1,6),(61,1,1,'Отпуск',1,5),(62,1,1,'Отпуск',0,5),(63,1,1,'Отпуск',0,6),(64,1,1,'Отпуск',1,6),(65,1,1,'Отпуск',1,5),(66,1,1,'Отпуск',1,6),(67,1,1,'Отпуск',1,7),(68,1,1,'Отпуск',1,6),(69,1,1,'Отпуск',1,7),(70,1,1,'Отпуск',1,5);
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +210,7 @@ CREATE TABLE `pleas` (
   CONSTRAINT `fk_id_plea_categ` FOREIGN KEY (`fk_id_plea_categ`) REFERENCES `plea_categ` (`id_plea_categ`),
   CONSTRAINT `fk_id_plea_status` FOREIGN KEY (`fk_id_plea_status`) REFERENCES `plea_status` (`id_plea_status`),
   CONSTRAINT `pleas_ibfk_1` FOREIGN KEY (`fk_id_worker`) REFERENCES `worker` (`id_worker`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,6 +219,7 @@ CREATE TABLE `pleas` (
 
 LOCK TABLES `pleas` WRITE;
 /*!40000 ALTER TABLE `pleas` DISABLE KEYS */;
+INSERT INTO `pleas` VALUES (31,1,3,3,'1.2.2021 - 26.2.2021'),(32,1,3,2,'1.2.2021 - 26.2.2021');
 /*!40000 ALTER TABLE `pleas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,6 +332,30 @@ INSERT INTO `task` VALUES (5,'номер 5','описание номера 5вы
 UNLOCK TABLES;
 
 --
+-- Table structure for table `vac_status`
+--
+
+DROP TABLE IF EXISTS `vac_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vac_status` (
+  `id_vac_status` int NOT NULL AUTO_INCREMENT,
+  `vac_status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_vac_status`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vac_status`
+--
+
+LOCK TABLES `vac_status` WRITE;
+/*!40000 ALTER TABLE `vac_status` DISABLE KEYS */;
+INSERT INTO `vac_status` VALUES (1,'В процессе'),(2,'Подтверждено');
+/*!40000 ALTER TABLE `vac_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `vacation`
 --
 
@@ -341,10 +367,13 @@ CREATE TABLE `vacation` (
   `fk_id_worker` int DEFAULT NULL,
   `start_date` varchar(10) DEFAULT NULL,
   `end_date` varchar(10) DEFAULT NULL,
+  `fk_id_vac_status` int DEFAULT NULL,
   PRIMARY KEY (`id_vacation`),
   KEY `fk_id_worker_idx` (`fk_id_worker`),
+  KEY `fk_id_vac_status_idx` (`fk_id_vac_status`),
+  CONSTRAINT `fk_id_vac_status` FOREIGN KEY (`fk_id_vac_status`) REFERENCES `vac_status` (`id_vac_status`),
   CONSTRAINT `vacation_ibfk_1` FOREIGN KEY (`fk_id_worker`) REFERENCES `worker` (`id_worker`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,6 +382,7 @@ CREATE TABLE `vacation` (
 
 LOCK TABLES `vacation` WRITE;
 /*!40000 ALTER TABLE `vacation` DISABLE KEYS */;
+INSERT INTO `vacation` VALUES (69,1,'1.2.2021','26.2.2021',2);
 /*!40000 ALTER TABLE `vacation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -390,7 +420,7 @@ CREATE TABLE `worker` (
 
 LOCK TABLES `worker` WRITE;
 /*!40000 ALTER TABLE `worker` DISABLE KEYS */;
-INSERT INTO `worker` VALUES (1,'Саморуков','Александр','Александрович','samor','123','samor@mail.ru',4,3,'321321','222',28),(2,'Петро','Мид','Никитич','petrov','321','petrovich2@mail.ru',2,1,'321123','521',NULL),(3,'Самосбор','Кроватов','Лагович','samosb','222','samosb@mail.ru',4,3,'46431','135',NULL),(5,'Елисеев',' Александр','Васильевич','eliseev','321123','eliseev@mail.ru',1,2,'32145','213',NULL),(6,'Лапин','Родион','Алексеевич','lapin','321123','lapin@mail.ru',2,2,'38052','012',NULL),(7,'Сидоров','Наум',' Степанович','sidorov','321123','sidorov@mail.ru',3,2,'90901','014',NULL),(8,'Шаров','Платон','Владленович','sharov','321123','sharov@mail.ru',1,3,'09914','019',NULL),(9,'Кабанов','Аверьян','Артемович','kabanov','09132','kabanov@mail.ru',2,3,'02134','314',NULL),(10,'admin','admin','admin','admin','admin','admin',-1,0,'3331','42',NULL),(11,'Воронов ','Евгений','Артемович','voronov','32145','voronov@mail.ru',3,3,'5921','302',NULL);
+INSERT INTO `worker` VALUES (1,'Саморуков','Александр','Александрович','samor','123','samor@mail.ru',3,3,'321321','222',2),(2,'Петро','Мид','Никитич','petrov','321','petrovich2@mail.ru',2,1,'321123','521',NULL),(3,'Самосбор','Кроватов','Лагович','samosb','222','samosb@mail.ru',4,3,'46431','135',NULL),(5,'Елисеев',' Александр','Васильевич','eliseev','321123','eliseev@mail.ru',1,2,'32145','213',NULL),(6,'Лапин','Родион','Алексеевич','lapin','321123','lapin@mail.ru',2,2,'38052','012',NULL),(7,'Сидоров','Наум',' Степанович','sidorov','321123','sidorov@mail.ru',3,2,'90901','014',NULL),(8,'Шаров','Платон','Владленович','sharov','321123','sharov@mail.ru',1,3,'09914','019',NULL),(9,'Кабанов','Аверьян','Артемович','kabanov','09132','kabanov@mail.ru',2,3,'02134','314',NULL),(10,'admin','admin','admin','admin','admin','admin',-1,0,'3331','42',NULL),(11,'Воронов ','Евгений','Артемович','voronov','32145','voronov@mail.ru',3,3,'5921','302',NULL);
 /*!40000 ALTER TABLE `worker` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -403,4 +433,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-30 20:58:18
+-- Dump completed on 2021-06-03 20:58:41
