@@ -496,7 +496,7 @@ function getVacation(req,res){
     connection.query("select this_year_holydays as holydays from holydays", function(error, results, field){
         holydays = results;
     })
-    connection.query("select start_date, end_date from vacation where fk_id_worker = ?",[req.session.userid], function(error, results, field){
+    connection.query("select start_date, end_date, vac_status from vacation inner join vac_status on fk_id_vac_status = id_vac_status where fk_id_worker = ?",[req.session.userid], function(error, results, field){
         vacation_duration = results;
     })
     connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 0 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
@@ -513,7 +513,8 @@ function getVacation(req,res){
             info: req.session.username,
             notifications_unchecked: notifications_unchecked,
             notifications_checked : notifications_checked,
-            vac_dur : vacation_duration
+            vac_dur : vacation_duration,
+            role : req.session.role
         })
     })
 }
@@ -706,7 +707,7 @@ function getAllPleas(req,res){
     connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
-    connection.query("select fk_id_worker, id_plea, plea_categ, plea_status, extra, concat(lname,' ' ,fname,' ', mname) as fio, id_plea_status  from pleas inner join plea_categ on fk_id_plea_categ = id_plea_categ inner join plea_status on fk_id_plea_status = id_plea_status inner join worker on fk_id_worker = id_worker", function(error, results, fields) {
+    connection.query("select fk_id_worker, id_plea, plea_categ, plea_status, extra, concat(lname,' ' ,fname,' ', mname) as fio, id_plea_status  from pleas inner join plea_categ on fk_id_plea_categ = id_plea_categ inner join plea_status on fk_id_plea_status = id_plea_status inner join worker on fk_id_worker = id_worker  ORDER BY id_plea DESC", function(error, results, fields) {
         res.render('all_pleas', {
             pleas : results,
             plea_categ : plea_categ,
@@ -760,18 +761,28 @@ function newPlea(categ_id, req, extra){
 }
 
 function pleaUpd(info){
-    if (info.respond == "ДА"){
+    console.log(info);
+    if (info.respond == "ДА" && info.dates == undefined){
         connection.query("update pleas set fk_id_plea_status = 2 where id_plea = ? ",[info.id]);
     }
-    if (info.respond == "НЕТ"){
+    if (info.respond == "НЕТ" && info.days == undefined){
         connection.query("update pleas set fk_id_plea_status = 3 where id_plea = ? ",[info.id]);
     }
     if (info.respond == "РАССМОТРЕНИЕ"){
         connection.query("update pleas set fk_id_plea_status = 1 where id_plea = ? ",[info.id]);
     }
+    if (info.days !== undefined && info.respond == "НЕТ"){
+        connection.query("update worker set vacation_left = vacation_left + ? where id_worker = ?",[info.days, info.worker])
+        connection.query("delete from vacation where fk_id_worker = ? and start_date = ? and end_date = ? ",[info.worker, info.dates[0], info.dates[1]])
+        connection.query("update pleas set fk_id_plea_status = 3 where id_plea = ? ",[info.id]);
+    }
+    if (info.dates !== undefined && info.respond == "ДА"){
+        connection.query("update vacation set fk_id_vac_status = 2 where start_date = ? and end_date = ? and fk_id_worker = ?",[info.dates[0], info.dates[1], info.worker])
+        connection.query("update pleas set fk_id_plea_status = 2 where id_plea = ? ",[info.id]);
+    }
 }
 
 function newVacation(info, user){
-    connection.query("insert into vacation(start_date,end_date, fk_id_worker) values(?,?,?)", [info.start, info.end, user]);
+    connection.query("insert into vacation(start_date,end_date, fk_id_worker, fk_id_vac_status) values(?,?,?,?)", [info.start, info.end, user, info.status]);
     connection.query("update worker set vacation_left = vacation_left - ? where id_worker = ?", [info.days, user]);
 }

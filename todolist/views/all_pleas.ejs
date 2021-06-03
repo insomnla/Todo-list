@@ -293,7 +293,10 @@
                             <select name="" id="select-status" class="select filters-item-select">
                                 <option selected value="All">Все</option>
                                 <% for (var key in plea_status) { %>
-                                <option value="<%= plea_status[key].plea_status %>"><%= plea_status[key].plea_status%></option>
+                                    <% if (plea_status[key].plea_status  == null){%>
+                                <%} else {%>
+                                    <option value="<%= plea_status[key].plea_status %>"><%= plea_status[key].plea_status%></option>
+                                    <%}%>
                                 <%}%>
                             </select>
                             <div class="filters-item__subtitle">
@@ -345,7 +348,7 @@
                                             </g>
                                         </svg>
                                     </div>
-                                    <%} else {%>
+                                    <%} if (pleas[key].id_plea_status == 1) {%>
                                     <div class="actions-item button_accepted" title="Принять">
                                         <svg class="fill_white" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                             viewBox="0 0 372.09 372.09" style="enable-background:new 0 0 372.09 372.09;" xml:space="preserve">
@@ -356,7 +359,6 @@
                                             </g>
                                         </svg>
                                     </div>
-                                    <% } %>
                                     <div class="actions-item button_denied" title="Отказать">
                                         <svg class="fill_white" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                             viewBox="0 0 587.91 587.91" style="enable-background:new 0 0 587.91 587.91;"
@@ -414,6 +416,7 @@
                                             </g>
                                         </svg>
                                     </div>
+                                    <% } %>
                                 </td>
                             </tr>
                             <% } %>

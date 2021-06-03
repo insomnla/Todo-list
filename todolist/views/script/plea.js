@@ -107,48 +107,75 @@ let buttonDenied= document.querySelectorAll(".button_denied")
 let buttonAwaits= document.querySelectorAll(".button_awaits")
 
 let pleaDate = document.querySelectorAll(".date-pleas");
+  
+  
+let buttonNPlea = document.querySelector("#new-plea-button");
+let buttonCloseModalPlea = document.querySelector("#close-new-plea-button");
+let buttonSavePlea = document.querySelector(".button_save");
+let buttonAllPlea = document.querySelector("#all_pleas");
+
+let modalNewPlea = document.querySelector("#new-plea-modal");
+
+
+if (buttonNPlea !== null){
+buttonNPlea.addEventListener("click", ()=>{
+    modalNewPlea.classList.toggle('hidden');
+})
+}
+
+if (buttonCloseModalPlea !== null){
+buttonCloseModalPlea.addEventListener("click", ()=>{
+    modalNewPlea.classList.toggle("hidden");
+})
+}
+
 
 changeDate();
+
 
 if (buttonAccepted !== null){
     buttonAccepted.forEach((button) => {
         button.addEventListener("click",(elem)=>{
-            plea_id = elem.target.parentNode.getAttribute("data-id");
+            plea_id = elem.target.parentNode.parentNode.parentNode.getAttribute("data-id");
             worker_id = elem.target.parentNode.parentNode.parentNode.children[0].getAttribute("value");
             categ = elem.target.parentNode.parentNode.parentNode.children[1].textContent;
-            console.log(categ);
+            date = elem.target.parentNode.parentNode.parentNode.children[2].textContent;
             if (categ.substring(0,6) == "Отпуск"){
+                let dates = vacationDate(date);
                 socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "ДА_ОТПУСК"});
-                $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "ДА"}, ()=>{
+                $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "ДА", dates : dates }, ()=>{
                 window.location.reload();
             }); 
             } else {
             socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "ДА"});
             $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "ДА"}, ()=>{
-                window.location.reload();
+               window.location.reload();
             }); 
-        }
-        })
+        }  
+        }) 
     });
 }
 
 if (buttonDenied !== null){
     buttonDenied.forEach((button) => {
         button.addEventListener("click",(elem)=>{
-            plea_id = elem.target.parentNode.getAttribute("data-id");
+            plea_id = elem.target.parentNode.parentNode.parentNode.getAttribute("data-id");
             worker_id = elem.target.parentNode.parentNode.parentNode.children[0].getAttribute("value");
             categ = elem.target.parentNode.parentNode.parentNode.children[1].textContent;
+            date = elem.target.parentNode.parentNode.parentNode.children[2].textContent;
             if (categ.substring(0,6) == "Отпуск"){
+                let dates = vacationDate(date);
+                days = datesDifference(date);
                 socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "НЕТ_ОТПУСК"});
-                $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "НЕТ"}, ()=>{
+                $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "НЕТ", dates : dates,  days : days }, ()=>{
                 window.location.reload();
             }); 
-            } else {
-            socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "ДА"});
-            $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "ДА"}, ()=>{
+            } else { 
+            socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "НЕТ"});
+            $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "НЕТ"}, ()=>{
                 window.location.reload();
             }); 
-        }
+        } 
         })
     });
 }
@@ -156,9 +183,10 @@ if (buttonDenied !== null){
 if (buttonAwaits !== null){
     buttonAwaits.forEach((button) =>{
         button.addEventListener("click", (elem)=>{
-            plea_id = elem.target.parentNode.getAttribute("data-id");
+            plea_id = elem.target.parentNode.parentNode.parentNode.getAttribute("data-id");
             worker_id = elem.target.parentNode.parentNode.parentNode.children[0].getAttribute("value");
             categ = elem.target.parentNode.parentNode.parentNode.children[1].textContent;
+            console.log(plea_id, worker_id, categ);
             if (categ.substring(0,6) == "Отпуск"){
                 socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "РАССМОТРЕНИЕ_ОТПУСК"});
                 $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "РАССМОТРЕНИЕ"}, ()=>{
@@ -168,8 +196,8 @@ if (buttonAwaits !== null){
             socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "РАССМОТРЕНИЕ"});
             $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "РАССМОТРЕНИЕ"}, ()=>{
                 window.location.reload();
-            }); 
-        }
+            });  
+        } 
         })
     })
 }
@@ -205,4 +233,22 @@ function changeDate() {
 
         console.log(firstDay, firstMonth, lastYear, firstDay, lastMonth, lastYear)
     })
+}
+
+function datesDifference(date){
+    dates = date.split("-");
+    e_date = dates[0].split(".");
+    s_date = dates[1].split(".");
+    date_start = new Date(Number(e_date[2]), Number(e_date[1]), Number(e_date[0]))
+    date_end = new Date(Number(s_date[2]), Number(s_date[1]), Number(s_date[0]))
+    return ((date_end - date_start)/1000/86400) + 1
+}
+
+function vacationDate(date){
+    dates = date.split("-");
+    e_date = dates[0].split(".");
+    s_date = dates[1].split(".");
+    a = Number(e_date[0]) + "." + Number(e_date[1]) + "." + Number(e_date[2]);
+    b = Number(s_date[0]) + "." + Number(s_date[1]) + "." + Number(s_date[2]);
+    return [a, b]
 }

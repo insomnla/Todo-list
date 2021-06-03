@@ -166,7 +166,7 @@ if(minModalConfirmButton !== null) {
         firstElement = undefined, lastElement = undefined, selectedDateFirst = undefined, selectedDateLast = undefined;
         console.log(vacation_days, start_date, end_date);
         socket.emit("new_vacation",{ worker : id, start : start_date, end : end_date});
-        $.post("/vacation",{days : vacation_days, start: start_date, end : end_date}, function(){
+        $.post("/vacation",{days : vacation_days, start: start_date, end : end_date, status : 1}, function(){
             window.location.reload();
         }) 
     }

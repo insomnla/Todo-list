@@ -15,6 +15,7 @@ let buttonBulkAdd = document.querySelector(".instruments__button_bg_plus");
 let buttonBulkReport = document.querySelector(".instruments__button_bg_document");
 let buttonNotif = document.querySelector(".nav-item_notification");
 let buttonBackPage = document.querySelector(".location-button");
+let buttonCheckAll = document.querySelector("#check_everything");
 
 let navItemCurrentUser = document.querySelector(".nav-item-current-user");
 let minProfile = document.querySelector(".nav-item-current-user_after");
@@ -243,6 +244,15 @@ if(chengeSelectedTask !== null) {
         })
     })
 }
+
+buttonCheckAll.addEventListener("click", ()=>{
+    notifItems.forEach((notif)=>{
+        let value = notif.getAttribute("value");
+        $.post("/notif_check", { id : value},function (){
+        })
+    })
+   // window.location.reload();
+})
 
 notifItems.forEach((notif)=>{
     notif.addEventListener("click", ()=>{
