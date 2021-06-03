@@ -11,42 +11,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <section class="main-content">
-        <section class="login">
-            <div class="title">
-                Авторизоваться
+    <div class="bg_glass">
+        <section class="main-content">
+            <section class="login">
+                <div class="title">
+                    Авторизоваться
+                </div>
+                <form action="/login" class="form-login" method="POST">
+                    <div class="input-box">
+                        <input type="text" name="login" class="form-login__input tex" required="">
+                        <label for="form-login__input" class="form-login__label text">
+                            Введите email
+                        </label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="password" class="form-login__input text" required="">
+                        <label for="form-login__input" class="form-login__label text">
+                            Введите пароль
+                        </label>
+                    </div>
+                    <button class="form-login__submit" type="submit">
+                        Войти
+                    </button>
+                    <label class="form-login__error"><%- include ('./partials/messages')%></label>
+                </form>
+            </section>
+            <div class="on-reg">
+                <div class="on-reg-img">
+                    <img src="./images/logo-white.png" alt="">
+                </div>
+                <div class="text">
+                    Ещё не зарегистрированы?
+                </div>
+                <a href="/register">
+                    <button class="on-reg-button">
+                        Зарегистрироваться
+                    </button>
+                </a>
             </div>
-            <form action="/login" class="form-login" method="POST">
-                <div class="input-box">
-                    <input type="text" name="login" class="form-login__input tex" required="">
-                    <label for="form-login__input" class="form-login__label text">
-                        Введите email
-                    </label>
-                </div>
-                <div class="input-box">
-                    <input type="password" name="password" class="form-login__input text" required="">
-                    <label for="form-login__input" class="form-login__label text">
-                        Введите пароль
-                    </label>
-                </div>
-                <button class="form-login__submit" type="submit">
-                    Войти
-                </button>
-                <label class="form-login__error"><%- include ('./partials/messages')%></label>
-            </form>
         </section>
-        <div class="on-reg">
-            <div class="text">
-                Ещё не зарегистрированы?
-            </div>
-            <a href="/register">
-                <button class="on-reg-button">
-                    Зарегистрироваться
-                </button>
-            </a>
-        </div>
-    </section>
-
-    <script src="./script/theme.js"></script>
+    </div>
+    <div class="bg_img">
+        <img class="bg_img-img" src="./images/logo.png" alt="">
+    </div>
 </body>
 </html>

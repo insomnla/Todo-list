@@ -26,7 +26,7 @@
                     </nav>
                     <div class="location">
                         <button class="button location-button">Назад</button>
-                        <div class="text location-text">Вы сейчас на странице: Список задач</div>
+                        <div class="text location-text">Вы сейчас на странице: Список директоров</div>
                     </div>
                     <nav class="nav user_nav nav_width_50">
                         <div class="nav-item nav-item_notification">
@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="notification-more_actions hidden">
                                     <div class="notif-actions-item">
-                                        <div class="subtitle">Отметить всё прочитанным</div>
+                                        <div id="check_everything" class="subtitle">Отметить всё прочитанным</div>
                                     </div>
                                 </div>
                             </div>
@@ -301,18 +301,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="buttons">
-                        <button class="button buttons-button buttons-button_theme_winter" id="to-all-tasks">
-                            Список задач на отделение
-                        </button>
-                    </div>
                 </div>
                 <div class="options">
                     <div class="text options__text"></div>
                     <div class="instruments">
-                        <button class="button instruments__button instruments__button_theme_red instruments__button_bg_trash">
-                            Удалить выбранные задачи
-                        </button>
                         <% if (role >1){%>
                         <button class="button instruments__button instruments__button_bg_todo_list">
                             Перейти к своим задачам
@@ -323,7 +315,7 @@
                 <table id="directors-depart" class="display">
                     <thead>
                         <tr>
-                            <th class="dt-head-left"><div class="table-checkbox" id="table-checkbox-all"></div></th>
+                            <!-- <th class="dt-head-left"><div class="table-checkbox" id="table-checkbox-all"></div></th> -->
                             <th class="dt-head-left">ID</th>
                             <th class="dt-head-left">Фамилия</th>
                             <th class="dt-head-left">Имя</th>
@@ -335,7 +327,7 @@
                     <tbody>
                         <% for(var i=0; i < dep_directors.length; i++) {%>
                         <tr data-key = "<%= dep_directors[i].id_department%>">
-                            <td><div value="" class="table-checkbox tbody-checkbox"></div></td>
+                            <!-- <td><div value="" class="table-checkbox tbody-checkbox"></div></td> -->
                             <td><%= dep_directors[i].id_worker%></td>
                             <td><%= dep_directors[i].lname%></td>
                             <td><%= dep_directors[i].fname%></td>

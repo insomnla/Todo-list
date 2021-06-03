@@ -2,10 +2,7 @@ $(document).ready(function() {
     $('#directors-depart').DataTable( {
         "paging":   false,
         "info":     false,
-        "order": [[ 1, "asc" ]],
-        columnDefs: [
-            { orderable: false, targets: 0 }
-        ],
+        "order": [[ 0, "asc" ]],
         language: {
             "loadingRecords": "Загрузка...",
             "processing":     "В процессе...",
@@ -45,7 +42,7 @@ function onloadFunc() {
 
         let div = document.createElement('div');
         div.classList.add('filters-item__subtitle');
-        div.textContent = 'Поиск по задачам';
+        div.textContent = 'Поиск по сотрудникам';
         searchForm.appendChild(div);
     }
 }

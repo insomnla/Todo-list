@@ -1,96 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="./style/reg.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Oswald:wght@300;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
+    <title>Зарегистрироваться</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/reg.css">
 </head>
 <body>
-    <section class="main-content">
-        <section class="reg">
-            <h2 class="title">
-                Зарегистрироваться
-            </h2>
-            <form action="/register" class="form-reg" method="POST">
-                <div class="input-box">
-                    <input type="text" id="login" class="form-reg__input error" required='' name="login">
-                    <label for="form-reg__input" class="form-reg__label">
-                        Введите логин
-                    </label>
-                    <label for="form-login__input" class="form-login__error">
-                        Введите коректный логин
-                    </label>
+    <div class="bg_glass">
+        <section class="main-content">
+            <section class="reg">
+                <h2 class="title">
+                    Зарегистрироваться
+                </h2>
+                <form action="/register" class="form-reg" method="POST">
+                    <div class="input-box">
+                        <input type="text" id="login" class="form-reg__input" required='' name="login">
+                        <label for="form-reg__input" class="form-reg__label">
+                            Введите логин
+                        </label>
+                        <label for="form-login__input" class="form-login__error hidden">
+                            Введите коректный логин
+                        </label>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="reg" class="form-reg__input" required='' name="mail">
+                        <label for="form-reg__input" class="form-reg__label">
+                            Введите email
+                        </label>
+                        <label for="form-login__input" class="form-login__error hidden">
+                            Введите коректный email
+                        </label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="password" class="form-reg__input" required='' name="pass">
+                        <label for="form-reg__input" class="form-reg__label">
+                            Придумайте пароль
+                        </label>
+                        <label for="form-login__input" class="form-login__error hidden">
+                            Введите коректный пароль
+                        </label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="validPass" class="form-reg__input" required='' name="validPass">
+                        <label for="form-reg__input" class="form-reg__label">
+                            Повторите пароль
+                        </label>
+                        <label for="form-login__input" class="form-login__error hidden">
+                            Пароли не совпадают
+                        </label>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="fname" class="form-reg__input" required='' name="fname">
+                        <label for="form-reg__input" class="form-reg__label">
+                            Введите имя
+                        </label>
+                        <label for="form-login__input" class="form-login__error hidden">
+                            Введите коректное имя
+                        </label>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="lname" class="form-reg__input" required='' name="lname">
+                        <label for="form-reg__input" class="form-reg__label">
+                            Введите фамилию
+                        </label>
+                        <label for="form-login__input" class="form-login__error hidden">
+                            Введите коректную фамилию
+                        </label>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="mname" class="form-reg__input" required='' name="mname">
+                        <label for="form-reg__input" class="form-reg__label">
+                            Введите отчество
+                        </label>
+                        <label for="form-login__input" class="form-login__error hidden">
+                            Введите коректное отчество
+                        </label>
+                    </div>
+                    <%- include ('./partials/messages') %>
+                    <input class="form-reg__submit" type="submit" value="Войти">
+                </form>
+            </section>
+            <div class="subtitle">
+                <div class="subtitle-img">
+                    <img src="./images/logo.png" alt="">
                 </div>
-                <div class="input-box">
-                    <input type="text" id="reg" class="form-reg__input error" required='' name="mail">
-                    <label for="form-reg__input" class="form-reg__label">
-                        Введите email
-                    </label>
-                    <label for="form-login__input" class="form-login__error">
-                        Введите коректный email
-                    </label>
+                <div class="title">
+                    Уже<br> зарегистрированы?
                 </div>
-                <div class="input-box">
-                    <input type="password" id="password" class="form-reg__input error" required='' name="pass">
-                    <label for="form-reg__input" class="form-reg__label">
-                        Придумайте пароль
-                    </label>
-                    <label for="form-login__input" class="form-login__error">
-                        Введите коректный пароль
-                    </label>
-                </div>
-                <div class="input-box">
-                    <input type="password" id="validPass" class="form-reg__input error" required='' name="validPass">
-                    <label for="form-reg__input" class="form-reg__label">
-                        Повторите пароль
-                    </label>
-                    <label for="form-login__input" class="form-login__error">
-                        Пароли не совпадают
-                    </label>
-                </div>
-                <div class="input-box">
-                    <input type="text" id="fname" class="form-reg__input error" required='' name="fname">
-                    <label for="form-reg__input" class="form-reg__label">
-                        Введите имя
-                    </label>
-                    <label for="form-login__input" class="form-login__error">
-                        Введите коректное имя
-                    </label>
-                </div>
-                <div class="input-box">
-                    <input type="text" id="lname" class="form-reg__input error" required='' name="lname">
-                    <label for="form-reg__input" class="form-reg__label">
-                        Введите фамилию
-                    </label>
-                    <label for="form-login__input" class="form-login__error">
-                        Введите коректную фамилию
-                    </label>
-                </div>
-                <div class="input-box">
-                    <input type="text" id="mname" class="form-reg__input error" required='' name="mname">
-                    <label for="form-reg__input" class="form-reg__label">
-                        Введите отчество
-                    </label>
-                    <label for="form-login__input" class="form-login__error">
-                        Введите коректное отчество
-                    </label>
-                </div>
-                <%- include ('./partials/messages') %>
-                <input class="form-reg__submit" type="submit" value="Войти">
-            </form>
-        </section>
-        <div class="subtitle">
-            <div class="title">
-                Уже<br> зарегистрированы?
+                <a href="/login">
+                    <button class="subtitle-button">
+                        Авторизоваться
+                    </button>
+                </a>
             </div>
-            <a href="/login">
-                <button class="subtitle-button">
-                    Авторизоваться
-                </button>
-            </a>
-        </div>
-    </section>
+        </section>
+    </div>
+    <div class="bg_img">
+        <img class="bg_img-img" src="./images/logo.png" alt="">
+    </div>
 </body>
 </html>
