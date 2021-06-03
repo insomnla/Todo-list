@@ -33,3 +33,11 @@ table.dataTable thead .sorting_desc {
 .select-year {
     border-color: var(--text-color) !important;
 }
+
+.overflowON::after {
+    background-image: url(../images/down-arrow-dark.svg) !important;
+}
+
+.overflowOFF::after {
+    background-image: url(../images/up-arrow-dark.svg) !important;
+}

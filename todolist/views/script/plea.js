@@ -1,11 +1,10 @@
 $(document).ready(function() {
-    $('#pleaTable').DataTable( {
+    $('#pleaTableAll').DataTable( {
         "paging":   false,
         "info":     false,
-        "order": [[ 1, "asc" ]],
+        "order": [[ 0, "asc" ]],
         columnDefs: [
-            { orderable: false, targets: 0 },
-            { orderable: false, targets: 5 }
+            { orderable: false, targets: 4 }
         ],
         language: {
             "loadingRecords": "Загрузка...",
@@ -27,8 +26,57 @@ $(document).ready(function() {
     } );
 } );
 
-const socket =  io('http://localhost:3000',{origins:"*"});
-let rowsOnTable = document.querySelectorAll("tbody>tr");
+$(document).ready(function() {
+    $('#pleaTable').DataTable( {
+        "paging":   false,
+        "info":     false,
+        "order": [[ 0, "asc" ]],
+        language: {
+            "loadingRecords": "Загрузка...",
+            "processing":     "В процессе...",
+            "search":         "Поиск:",
+            "emptyTable":     "Список задач пуст",
+            "zeroRecords":    "По вашему запросу ничего не найдено",
+            "paginate": {
+                "first":      "Первый",
+                "last":       "Последний",
+                "next":       "Следующий",
+                "previous":   "Предыдущий"
+            },
+            "aria": {
+                "sortAscending":  ": активирована сортировка колонок по возврастанию",
+                "sortDescending": ": активирована сортировка колонок по убыванию"
+            }
+        },
+    } );
+} );
+
+onloadFunc();
+function onloadFunc() {
+    let searchForm = document.querySelector(".dataTables_filter");
+    if(searchForm == null) {
+        setTimeout(onloadFunc, 100);
+    } else {
+        let filters = document.querySelector(".filters");
+        let searchInput = document.querySelector("input[type=search]");
+        let searchFormLable = document.querySelector('.dataTables_filter>label');
+
+        
+        filters.appendChild(searchForm);
+        searchForm.appendChild(searchInput);
+        searchForm.removeChild(searchFormLable);
+        searchForm.classList.add('filters-item');
+        searchInput.classList.add('filter-item__input');
+
+        let div = document.createElement('div');
+        div.classList.add('filters-item__subtitle');
+        div.textContent = 'Поиск по задачам';
+        searchForm.appendChild(div);
+    }
+}
+
+// const socket =  io('http://localhost:3000',{origins:"*"});
+// let rowsOnTable = document.querySelectorAll("tbody>tr");
 
 socket.on("connect", () => {
     console.log(socket.id);
@@ -51,48 +99,23 @@ function checkForEmptiness() {
     })
 }
 
-let allRowWithCategories = document.querySelectorAll(".categories");
-let allRowWithStatus = document.querySelectorAll(".status");
+// let allRowWithCategories = document.querySelectorAll(".categories");
+// let allRowWithStatus = document.querySelectorAll(".status");
 
 let buttonAccepted = document.querySelectorAll(".button_accepted")
 let buttonDenied= document.querySelectorAll(".button_denied")
 let buttonAwaits= document.querySelectorAll(".button_awaits")
 
+let pleaDate = document.querySelectorAll(".date-pleas");
 
-let buttonNPlea = document.querySelector("#new-plea-button");
-let buttonCloseModalPlea = document.querySelector("#close-new-plea-button");
-let buttonSavePlea = document.querySelector(".button_save");
-let buttonAllPlea = document.querySelector("#all_pleas");
-
-let modalNewPlea = document.querySelector("#new-plea-modal");
-
-buttonNPlea.addEventListener("click", ()=>{
-    modalNewPlea.classList.toggle('hidden');
-})
-
-buttonCloseModalPlea.addEventListener("click", ()=>{
-    modalNewPlea.classList.toggle("hidden");
-})
-
-buttonSavePlea.addEventListener("click", ()=>{
-    categ_id = document.querySelector("#new_plea_categ").value;
-    $.post("/new_plea", {categ_id}, ()=>{
-        window.location.reload();
-    }) 
-})
-
-if (buttonAllPlea !== null){
-    buttonAllPlea.addEventListener("click", ()=>{
-        window.location.href = "/all_pleas"
-    })
-}
+changeDate();
 
 if (buttonAccepted !== null){
     buttonAccepted.forEach((button) => {
         button.addEventListener("click",(elem)=>{
             plea_id = elem.target.parentNode.getAttribute("data-id");
-            worker_id = elem.target.parentNode.children[1].getAttribute("value");
-            categ = elem.target.parentNode.children[2].textContent;
+            worker_id = elem.target.parentNode.parentNode.parentNode.children[0].getAttribute("value");
+            categ = elem.target.parentNode.parentNode.parentNode.children[1].textContent;
             console.log(categ);
             if (categ.substring(0,6) == "Отпуск"){
                 socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "ДА_ОТПУСК"});
@@ -113,8 +136,8 @@ if (buttonDenied !== null){
     buttonDenied.forEach((button) => {
         button.addEventListener("click",(elem)=>{
             plea_id = elem.target.parentNode.getAttribute("data-id");
-            worker_id = elem.target.parentNode.children[1].getAttribute("value");
-            categ = elem.target.parentNode.children[2].textContent;
+            worker_id = elem.target.parentNode.parentNode.parentNode.children[0].getAttribute("value");
+            categ = elem.target.parentNode.parentNode.parentNode.children[1].textContent;
             if (categ.substring(0,6) == "Отпуск"){
                 socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "НЕТ_ОТПУСК"});
                 $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "НЕТ"}, ()=>{
@@ -134,8 +157,8 @@ if (buttonAwaits !== null){
     buttonAwaits.forEach((button) =>{
         button.addEventListener("click", (elem)=>{
             plea_id = elem.target.parentNode.getAttribute("data-id");
-            worker_id = elem.target.parentNode.children[1].getAttribute("value");
-            categ = elem.target.parentNode.children[2].textContent;
+            worker_id = elem.target.parentNode.parentNode.parentNode.children[0].getAttribute("value");
+            categ = elem.target.parentNode.parentNode.parentNode.children[1].textContent;
             if (categ.substring(0,6) == "Отпуск"){
                 socket.emit("plea_upd",{worker : worker_id, desc : categ, sender : id, respond :  "РАССМОТРЕНИЕ_ОТПУСК"});
                 $.post("/update_plea",{ worker : worker_id, id : plea_id, respond :  "РАССМОТРЕНИЕ"}, ()=>{
@@ -148,5 +171,38 @@ if (buttonAwaits !== null){
             }); 
         }
         })
+    })
+}
+
+function changeDate() {
+    pleaDate.forEach((elem) => {
+        let pleaDateArray = elem.dataset['date'].split(' ');
+
+        let firstDateArray = pleaDateArray[0].split('.');
+        let lastDateArray = pleaDateArray[2].split('.');
+
+        let firstDay = firstDateArray[0];
+        let firstMonth = firstDateArray[1];
+        let firstYear = firstDateArray[2];
+
+        let lastDay = lastDateArray[0];
+        let lastMonth = lastDateArray[1];
+        let lastYear = lastDateArray[2];
+
+        if(firstDay < 10) {
+            firstDay = `0${firstDay}`;
+        }
+        if(firstMonth < 10) {
+            firstMonth = `0${firstMonth}`;
+        }
+        if(lastDay < 10) {
+            lastDay = `0${lastDay}`;
+        }
+        if(lastMonth < 10) {
+            lastMonth = `0${lastMonth}`;
+        }
+        elem.textContent = `${firstDay}.${firstMonth}.${firstYear} - ${lastDay}.${lastMonth}.${lastYear}`
+
+        console.log(firstDay, firstMonth, lastYear, firstDay, lastMonth, lastYear)
     })
 }

@@ -71,11 +71,13 @@ button:active {
 }
 
 .nav__link {
+    width: auto;
     height: 100px;
     font-size: 25px;
     text-decoration: none;
     display: flex;
     align-items: center;
+    white-space: nowrap;
 }
 
 .nav-item {
@@ -721,10 +723,93 @@ tbody tr td {
 .after-header__inner {
     width: 100%;
     display: flex;
+    justify-content: space-between;
+    column-gap: 50px;
+}
+
+.vacations, .vacation-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.vacations {
+    padding-top: 20px;
+}
+
+.vacation-list {
+    row-gap: 20px;
+}
+
+.overflowON {
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+}
+
+.overflowON::after {
+    content: "Посмотреть все";
+    width: 50%;
+    height: 25px;
+    color: var(--text-color);
+    position: absolute;
+    top: 135px;
+    left: 0;
+    background-image: url(../images/down-arrow.svg);
+    background-repeat: no-repeat;
+    background-position: 160px;
+    background-size: 24px;
+    cursor: pointer;
+}
+
+.overflowON .vacation-list__item:nth-child(2) {
+    margin-bottom: 40px;
+}
+
+.overflowOFF {
+    max-height: 100%;
+    overflow: visible;
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.overflowOFF::after {
+    content: "Свернуть";
+    width: 50%;
+    height: 25px;
+    color: var(--text-color);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-image: url(../images/up-arrow.svg);
+    background-repeat: no-repeat;
+    background-position: 100px;
+    background-size: 24px;
+    cursor: pointer;
+}
+
+.vacation-list__item {
+    display: flex;
     align-items: center;
+    column-gap: 20px;
+}
+
+.vacation-list__item-subtitle {
+    width: 50%;
+    white-space: nowrap;
+}
+
+.vacation-list__item__action-icon {
+    width: 50%;
+}
+
+.vacation-list-item__action-icon svg{
+    width: 40px;
+    height: 40px;
 }
 
 .select-year {
+    max-height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -733,8 +818,6 @@ tbody tr td {
     border: 2px solid var(--border-color);
     border-top: none;
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 .select-year::before {
@@ -756,9 +839,7 @@ tbody tr td {
 }
 
 .days-counter {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+    padding-top: 20px;
 }
 
 .months {
@@ -810,6 +891,9 @@ tbody tr td {
     border: 1px solid transparent;
     cursor: pointer;
     animation: opacity1 2s ease forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .empty-day {
@@ -825,6 +909,18 @@ tbody tr td {
 .day_active {
     background: var(--table-hover);
     border: 1px solid var(--text-color);
+}
+
+.day_confirmed {
+    background: #1f4929 !important;
+    border: 1px solid var(--text-color-white) !important;
+    color: var(--text-color-white);
+}
+
+.day_in_process {
+    background: #D49606 !important;
+    border: 1px solid var(--text-color-white) !important;
+    color: var(--text-color-white);
 }
 
 .day_holiday {
@@ -870,6 +966,7 @@ tbody tr td {
     row-gap: 20px;
     padding: 20px;
     position: absolute;
+    z-index: 6;
 }
 
 .min-modal__buttons {
@@ -1121,4 +1218,12 @@ path {
 
 .hidden {
     display: none;
+}
+
+
+@media (max-width: 1800px) {
+
+    .nav__link, .location-text, .notification-menu__header, .current-user-user-name {
+        font-size: 20px;
+    }
 }

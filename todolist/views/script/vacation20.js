@@ -27,11 +27,15 @@ let selectedYear, selectedMonth;
 
 let firstElement, lastElement, selectedDateFirst, selectedDateLast;
 
+let vacationList = document.querySelector(".vacation-list");
+let vacationListSubtitle = document.querySelectorAll(".vacation-list__item-subtitle");
+
 year.textContent = getCurrentYear();
 
 selectedYear = year.textContent;
 
 monthArray();
+getHolidaysDateOfBd();
 
 
 prevYearButton.onclick = function() {
@@ -40,6 +44,7 @@ prevYearButton.onclick = function() {
     selectedYear = '';
     selectedYear = year.textContent;
     monthArray();
+    getHolidaysDateOfBd();
 }
 
 nextYearButton.onclick = function() {
@@ -48,7 +53,49 @@ nextYearButton.onclick = function() {
     selectedYear = '';
     selectedYear = year.textContent;
     monthArray();
+    getHolidaysDateOfBd();
 }
+
+document.querySelector("#vacations-counter").textContent = vacationListSubtitle.length;
+vacationListSubtitle.forEach((elem) => {
+    let dateElemArray = elem.dataset['date'].split('-');
+
+    let firstDateArray = dateElemArray[0].split('.');
+    let lastDateArray = dateElemArray[1].split('.');
+
+    let firstDay = firstDateArray[0];
+    let firstMonth = firstDateArray[1];
+    let firstYear = firstDateArray[2];
+
+    let lastDay = lastDateArray[0];
+    let lastMonth = lastDateArray[1];
+    let lastYear = lastDateArray[2];
+    console.log(firstDateArray, lastDateArray);
+
+    if(firstDay < 10) {
+        firstDay = `0${firstDay}`;
+    }
+    if(firstMonth < 10) {
+        firstMonth = `0${firstMonth}`;
+    }
+    if(lastDay < 10) {
+        lastDay = `0${lastDay}`;
+    }
+    if(lastMonth < 10) {
+        lastMonth = `0${lastMonth}`;
+    }
+    elem.textContent = `${firstDay}.${firstMonth}.${firstYear} - ${lastDay}.${lastMonth}.${lastYear}`
+})
+
+vacationList.addEventListener('click', () => {
+    if(vacationList.classList.contains('overflowON')) {
+        vacationList.classList.remove('overflowON');
+        vacationList.classList.add('overflowOFF');
+    } else {
+        vacationList.classList.remove('overflowOFF');
+        vacationList.classList.add('overflowON');
+    }
+})
 
 months.addEventListener('click', (elem) => {
     if (elem.target.classList.contains('day') && !elem.target.classList.contains('day_holiday')) {
@@ -92,7 +139,7 @@ months.addEventListener('click', (elem) => {
                     }
                     start_date = selectedDateFirst;
                     end_date =  selectedDateLast;
-                    minModalText.innerHTML = `Вы уверенны что хотите запросить отпуск в этот промежуток времени:<br> ${selectedDateFirstArray[0]}.${selectedDateFirstArray[1]}.${selectedYear} - ${selectedDateLastArray[0]}.${selectedDateLastArray[1]}.${selectedYear} ?`;
+                    minModalText.innerHTML = `Вы уверенны что хотите запросить отпуск в этот промежуток времени:<br> ${selectedDateFirstArray[0]}.${selectedDateFirstArray[1]}.${selectedDateFirstArray[2]} - ${selectedDateLastArray[0]}.${selectedDateLastArray[1]}.${selectedDateLastArray[2]} ?`;
                     minModal.style.animation = 'opacity1 .6s linear forwards';
                     minModal.classList.remove('hidden');
                 }
@@ -111,7 +158,7 @@ months.addEventListener('click', (elem) => {
 if(minModalConfirmButton !== null) {
     minModalConfirmButton.onclick = function() {
         console.log('Подтвержденно');
-       // getDelColorDays();
+       getDelColorDays();
         minModal.style.animation = 'opacity0 .6s linear forwards';
         setTimeout(() => {
             minModal.classList.add('hidden');
@@ -143,6 +190,18 @@ if(errorDayAlertCloseButton !== null) {
     }
 }
 
+function getHolidaysDateOfBd() {
+    vacationListSubtitle.forEach((elem) => {
+        let dateElemArray = elem.dataset['date'].split('-');
+        let firstDate = dateElemArray[0];
+        let lastDate = dateElemArray[1];
+
+        let action = elem.dataset['action'];
+        
+        getColoredSelectedDaysBD(firstDate, lastDate, action);
+    })
+}
+
 function getColoredSelectedDays(firstDate, lastDate) {
     console.log(firstDate, lastDate);
     let day = document.querySelectorAll(".day");
@@ -152,9 +211,11 @@ function getColoredSelectedDays(firstDate, lastDate) {
 
     let firstDay = firstDateArray[0];
     let firstMonth = firstDateArray[1];
+    let firstYear = firstDateArray[2];
 
     let lastDay = lastDateArray[0];
     let lastMonth = lastDateArray[1];
+    let lastYear = lastDateArray[2];
 
     let numberSelectedDays;
 
@@ -162,19 +223,29 @@ function getColoredSelectedDays(firstDate, lastDate) {
 
     let holidays = checkHolidaysArray[0];
 
-    console.log(checkHolidaysArray[1])
+    console.log(firstDay, lastDay)
 
     if(lastMonth - firstMonth == 1) {
         numberSelectedDays = ((getDayInMonth(selectedYear, firstMonth - 1) - firstDay) + +lastDay + 1) - Number(holidays);
-    } else if(firstMonth == lastMonth) {
+    } else if(firstMonth == lastMonth && firstDay < lastDay) {
         numberSelectedDays = ((lastDay - firstDay) + 1) - Number(holidays);
+    } else if(firstYear < lastYear && firstMonth == 12 && lastMonth == 1) {
+        numberSelectedDays = ((getDayInMonth(selectedYear, firstMonth - 1) - firstDay) + +lastDay + 1) - Number(holidays);
+    } else {
+        firstElement = undefined, lastElement = undefined, selectedDateFirst = '', selectedDateLast = '';
+        day.forEach((elem) => {
+            elem.classList.remove('day_active');
+        })
+        errorDayAlertText.textContent = 'Выбирете сначала первый день отпуска, затем последний';
+        errorDayAlertTitel.textContent = 'Ошибка. Неправильная последовательность действий';
+        errorDayAlert.classList.remove('hidden');
+        return false;
     }
     vacation_days = numberSelectedDays;
     console.log(numberSelectedDays)
 
     if(numberSelectedDays <= restDays.textContent) {
         day.forEach((elem, index) => {
-            // console.log(checkHolidaysArray);
             let elemDateArray = elem.dataset['day'].split('.');
             if(elemDateArray[1] == firstMonth && elemDateArray[1] == lastMonth) {
                 if(Number(elemDateArray[0]) >= Number(firstDay) && Number(elemDateArray[0]) <= Number(lastDay) && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1) {
@@ -221,8 +292,9 @@ function getHoliday() {
     let day = document.querySelectorAll(".day");
 
     day.forEach((elem) => {
-        let elemDate = elem.dataset['day'];
-        if (arrayHolidays.indexOf(elemDate) !== -1) {
+        let elemDateArray = elem.dataset['day'].split('.');
+        let dayAndMonth = `${elemDateArray[0]}.${elemDateArray[1]}`
+        if (arrayHolidays.indexOf(dayAndMonth) !== -1) {
             elem.classList.add('day_holiday');
         }
     })
@@ -355,14 +427,14 @@ function createDayCard(selectedYear, selectedMonth, parentElement, dayInMonth) {
     if(findFirstDayName(selectedYear, selectedMonth) == 1) {
         createDiv.classList.add('day');
         createDiv.classList.add('subtitle');
-        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}`);
+        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}.${selectedYear}`);
         createDiv.innerHTML = `01`;
         parentElement[0].appendChild(createDiv);
         counter = 0;
     } else if (findFirstDayName(selectedYear, selectedMonth) == 2) {
         createDiv.classList.add('day');
         createDiv.classList.add('subtitle');
-        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}`);
+        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}.${selectedYear}`);
         createDiv.innerHTML = `01`;
         parentElement[1].appendChild(createDiv);
         counter = 1;
@@ -375,7 +447,7 @@ function createDayCard(selectedYear, selectedMonth, parentElement, dayInMonth) {
     } else if (findFirstDayName(selectedYear, selectedMonth) == 3) {
         createDiv.classList.add('day');
         createDiv.classList.add('subtitle');
-        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}`);
+        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}.${selectedYear}`);
         createDiv.innerHTML = `01`;
         parentElement[2].appendChild(createDiv);
         counter = 2;
@@ -388,7 +460,7 @@ function createDayCard(selectedYear, selectedMonth, parentElement, dayInMonth) {
     } else if (findFirstDayName(selectedYear, selectedMonth) == 4) {
         createDiv.classList.add('day');
         createDiv.classList.add('subtitle');
-        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}`);
+        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}.${selectedYear}`);
         createDiv.innerHTML = `01`;
         parentElement[3].appendChild(createDiv);
         counter = 3;
@@ -401,7 +473,7 @@ function createDayCard(selectedYear, selectedMonth, parentElement, dayInMonth) {
     } else if (findFirstDayName(selectedYear, selectedMonth) == 5) {
         createDiv.classList.add('day');
         createDiv.classList.add('subtitle');
-        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}`);
+        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}.${selectedYear}`);
         createDiv.innerHTML = `01`;
         parentElement[4].appendChild(createDiv);
         counter = 4;
@@ -414,7 +486,7 @@ function createDayCard(selectedYear, selectedMonth, parentElement, dayInMonth) {
     }  else if (findFirstDayName(selectedYear, selectedMonth) == 6) {
         createDiv.classList.add('day');
         createDiv.classList.add('subtitle');
-        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}`);
+        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}.${selectedYear}`);
         createDiv.innerHTML = `01`;
         parentElement[5].appendChild(createDiv);
         counter = 5;
@@ -427,7 +499,7 @@ function createDayCard(selectedYear, selectedMonth, parentElement, dayInMonth) {
     } else if (findFirstDayName(selectedYear, selectedMonth) == 0) {
         createDiv.classList.add('day');
         createDiv.classList.add('subtitle');
-        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}`);
+        createDiv.setAttribute('data-day', `1.${selectedMonth + 1}.${selectedYear}`);
         createDiv.innerHTML = `01`;
         parentElement[6].appendChild(createDiv);
         counter = 6;
@@ -443,7 +515,7 @@ function createDayCard(selectedYear, selectedMonth, parentElement, dayInMonth) {
         let createDiv = document.createElement('div');
         createDiv.classList.add('day');
         createDiv.classList.add('subtitle');
-        createDiv.setAttribute('data-day', `${i}.${selectedMonth + 1}`);
+        createDiv.setAttribute('data-day', `${i}.${selectedMonth + 1}.${selectedYear}`);
 
         if (i < 10) {
             createDiv.innerHTML = `${'0' + i}`;
@@ -473,11 +545,8 @@ function createDayCard(selectedYear, selectedMonth, parentElement, dayInMonth) {
 
 
 
-
-
-
-function getColoredSelectedDaysBD(firstDate, lastDate) { // Тут полное повторение функции getColoredSelectedDays только без проверки на количество дней, сделано рофла ради, работает кстати, можешь удалить если хочешь
-    console.log(firstDate, lastDate);
+function getColoredSelectedDaysBD(firstDate, lastDate, action) { // Тут полное повторение функции getColoredSelectedDays только без проверки на количество дней, сделано рофла ради, работает кстати, можешь удалить если хочешь
+    console.log(action);
     let day = document.querySelectorAll(".day");
 
     let firstDateArray = firstDate.split('.');
@@ -485,9 +554,11 @@ function getColoredSelectedDaysBD(firstDate, lastDate) { // Тут полное 
 
     let firstDay = firstDateArray[0];
     let firstMonth = firstDateArray[1];
+    let firstYear = firstDateArray[2];
 
     let lastDay = lastDateArray[0];
     let lastMonth = lastDateArray[1];
+    let lastYear = lastDateArray[2];
 
     let numberSelectedDays;
 
@@ -503,25 +574,45 @@ function getColoredSelectedDaysBD(firstDate, lastDate) { // Тут полное 
         numberSelectedDays = ((lastDay - firstDay) + 1) - Number(holidays);
     }
     vacation_days = numberSelectedDays;
-    console.log(numberSelectedDays)
+    if(action == 'Подтверждено') {
         day.forEach((elem, index) => {
-            // console.log(checkHolidaysArray);
+            let elemDateArray = elem.dataset['day'].split('.');
+            if(elemDateArray[1] == firstMonth && elemDateArray[1] == lastMonth) {
+                if(Number(elemDateArray[0]) >= Number(firstDay) && Number(elemDateArray[0]) <= Number(lastDay) && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1 && Number(elemDateArray[2]) == Number(firstYear)) {
+                    elem.style.animation = `transparentToBg .${index}s linear forwards`;
+                    elem.classList.add('day_confirmed');
+                }
+            } else if(elemDateArray[1] == firstMonth) {
+                if(Number(elemDateArray[0]) <= Number(getDayInMonth(selectedYear, firstMonth - 1)) && Number(elemDateArray[0]) >= firstDay && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1 && Number(elemDateArray[2]) == Number(firstYear)) {
+                    elem.style.animation = `transparentToBg .${index}s linear forwards`;
+                    elem.classList.add('day_confirmed');
+                }
+            } else if(elemDateArray[1] == lastMonth) {
+                if(Number(elemDateArray[0]) <= Number(lastDay) && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1 && Number(elemDateArray[2]) == Number(lastYear)) {
+                    elem.style.animation = `transparentToBg .${index}s linear forwards`;
+                    elem.classList.add('day_confirmed');
+                }
+            }
+        })
+    } else {
+        day.forEach((elem, index) => {
             let elemDateArray = elem.dataset['day'].split('.');
             if(elemDateArray[1] == firstMonth && elemDateArray[1] == lastMonth) {
                 if(Number(elemDateArray[0]) >= Number(firstDay) && Number(elemDateArray[0]) <= Number(lastDay) && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1) {
                     elem.style.animation = `transparentToBg .${index}s linear forwards`;
-                    elem.classList.add('day_active');
+                    elem.classList.add('day_in_process');
                 }
             } else if(elemDateArray[1] == firstMonth) {
-                if(Number(elemDateArray[0]) <= Number(getDayInMonth(selectedYear, firstMonth - 1)) && Number(elemDateArray[0]) >= firstDay && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1) {
+                if(Number(elemDateArray[0]) <= Number(getDayInMonth(selectedYear, firstMonth - 1)) && Number(elemDateArray[0]) >= firstDay && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1 && Number(elemDateArray[2]) == Number(firstYear)) {
                     elem.style.animation = `transparentToBg .${index}s linear forwards`;
-                    elem.classList.add('day_active');
+                    elem.classList.add('day_in_process');
                 }
             } else if(elemDateArray[1] == lastMonth) {
-                if(Number(elemDateArray[0]) <= Number(lastDay) && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1) {
+                if(Number(elemDateArray[0]) <= Number(lastDay) && checkHolidaysArray[1].indexOf(elem.dataset['day']) == -1 && Number(elemDateArray[2]) == Number(lastYear)) {
                     elem.style.animation = `transparentToBg .${index}s linear forwards`;
-                    elem.classList.add('day_active');
+                    elem.classList.add('day_in_process');
                 }
             }
         })
+    }
 }

@@ -1,5 +1,5 @@
- const socket =  io('http://localhost:3000',{origins:"*"});
- const notif_sound = new Audio("../sounds/notification_sound.wav")
+const socket =  io('http://localhost:3000',{origins:"*"});
+const notif_sound = new Audio("../sounds/notification_sound.wav");
 
 let taskToDelete = 0;
 

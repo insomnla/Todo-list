@@ -19,11 +19,14 @@
                     <nav class="nav nav_width_50">
                         <a href="/board" class="nav__link nav__link_color_white">Список задач</a>
                         <a href="/vacation" class="nav__link nav__link_color_white">Отпуска</a>
-                        <a href="/plea" class="nav__link nav__link_color_white">Заявления</a>
+                        <a href="/plea" class="nav__link nav__link_color_white">Мои заявления</a>
+                        <% if (role == 4){%>
+                        <a href="/all_pleas" class="nav__link nav__link_color_white">Все заявления</a>
+                        <%}%>
                     </nav>
                     <div class="location">
                         <button class="button location-button">Назад</button>
-                        <div class="text location-text">Вы сейчас на странице: Заявление</div>
+                        <div class="text location-text">Вы сейчас на странице: Список задач</div>
                     </div>
                     <nav class="nav user_nav nav_width_50">
                         <div class="nav-item nav-item_notification">
@@ -299,43 +302,26 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <button class="button buttons-button buttons-button_theme_winter" id="to-all-tasks">
-                            Список задач на отделение
-                        </button>
                         <button class="button buttons-button" id="new-plea-button">
                             Новая заявка
                         </button>
                     </div>
                 </div>
-                <div class="options">
-                    <div class="text options__text"></div>
-                    <div class="instruments">
-                        <% if (role == 4){%>
-                        <button id="all_pleas" class="button instruments__button instruments__button_bg_todo_list">
-                            Перейти к заявлениям сотрудников
-                        </button>
-                        <%}%>
-                    </div>
-                </div>
                 <table id="pleaTable" class="display">
                     <thead>
                         <tr>
-                            <th class="dt-head-left"><div class="table-checkbox" id="table-checkbox-all"></div></th>
+                            <!-- <th class="dt-head-left"><div class="table-checkbox" id="table-checkbox-all"></div></th> -->
                             <th class="dt-head-left">ID</th>
                             <th class="dt-head-left">Категория</th>
-                            <th class="dt-head-left"></th>
-                            <th class="dt-head-left"></th>
                             <th class="dt-head-left">Статус заявки</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% for (var key in pleas) { %>
                             <tr data-id="<%= pleas[key].id_plea %>">
-                                <td><div value="<%= pleas[key].id_plea %>" class="table-checkbox tbody-checkbox"></div></td>
+                                <!-- <td><div value="<%= pleas[key].id_plea %>" class="table-checkbox tbody-checkbox"></div></td> -->
                                 <td><%= pleas[key].id_plea %></td>
                                 <td class="categories"><%= pleas[key].plea_categ %></td>
-                                <td></td>
-                                <td></td>
                                 <td><%= pleas[key].plea_status %></td>
                             </tr>
                             <% } %>
@@ -390,7 +376,7 @@
     <script src="./script/theme.js"></script>
     <script src="./script/filters.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-    <script src="./script/plea.js"></script>
     <script src="./script/main.js"></script>
+    <script src="./script/plea.js"></script>
 </body>
 </html>

@@ -19,11 +19,14 @@
                     <nav class="nav nav_width_50">
                         <a href="/board" class="nav__link nav__link_color_white">Список задач</a>
                         <a href="/vacation" class="nav__link nav__link_color_white">Отпуска</a>
-                        <a href="/plea" class="nav__link nav__link_color_white">Заявления</a>
+                        <a href="/plea" class="nav__link nav__link_color_white">Мои заявления</a>
+                        <% if (role == 4){%>
+                        <a href="/all_pleas" class="nav__link nav__link_color_white">Все заявления</a>
+                        <%}%>
                     </nav>
                     <div class="location">
                         <button class="button location-button">Назад</button>
-                        <div class="text location-text">Вы сейчас на странице: Задачи для отделения</div>
+                        <div class="text location-text">Вы сейчас на странице: Список задач</div>
                     </div>
                     <nav class="nav user_nav nav_width_50">
                         <div class="nav-item nav-item_notification">
