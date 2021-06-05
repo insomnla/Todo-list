@@ -17,5 +17,11 @@ module.exports = {
             return next();
         }
         res.redirect('/board');
+    },
+    ensureAdmin : function(req,res,next) {
+        if(req.session.role == -1) {
+            return next();
+        }
+        res.redirect('/profile');
     }
 }

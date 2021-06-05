@@ -282,7 +282,9 @@
                             <select name="" id="select-categories" class="select filters-item-select">
                                 <option selected value="All">Все</option>
                                 <% for (var key in plea_categ) { %>
+                                    <% if (plea_categ[key].plea_categ == "Отпуск"){} else {%>
                                     <option value="<%= plea_categ[key].plea_categ%>"><%= plea_categ[key].plea_categ%></option>
+                                    <%}%>
                                 <%}%>
                             </select>
                             <div class="filters-item__subtitle">
@@ -293,7 +295,9 @@
                             <select name="" id="select-status" class="select filters-item-select">
                                 <option selected value="All">Все</option>
                                 <% for (var key in plea_status) { %>
+                                    <% if (plea_status[key].plea_status == null) {} else {%>
                                 <option value="<%= plea_status[key].plea_status %>"><%= plea_status[key].plea_status%></option>
+                                <%}%>
                                 <%}%>
                             </select>
                             <div class="filters-item__subtitle">

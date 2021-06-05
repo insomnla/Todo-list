@@ -17,6 +17,7 @@ var MySQLStore = require('express-mysql-session')(session);
 const {ensureAuthenticated} = require('./config/auth'); 
 const {ensureDirector} = require('./config/auth'); 
 const {ensureDepDirector} = require('./config/auth'); 
+const {ensureAdmin} = require('./config/auth'); 
 const { connect } = require("http2");
 const { worker } = require("cluster");
 const { query } = require("express");
@@ -222,7 +223,8 @@ app.get("/all_pleas", ensureAuthenticated, (req, res) => {
 
 app.post("/new_plea", ensureAuthenticated, (req, res) => {
     getPlea(req,res);
-    newPlea(req.body.categ_id, req);
+    console.log(req.body);
+    newPlea(req.body.categ_id, req.session.userid, req.body.extra);
 })
 
 app.post("/notif_check", ensureAuthenticated, (req,res)=>{
@@ -324,6 +326,16 @@ app.post("/update_plea", ensureAuthenticated, (req,res)=>{
     pleaUpd(req.body);
     getAllPleas(req,res);
 });
+
+app.post("/new_categ", ensureAdmin, (req,res)=>{
+    connection.query("insert into categories(categories) values(?)",[req.body.categ]);
+    res.redirect("/profile");
+})
+
+app.post("/change_categ", ensureAdmin, (req,res)=>{
+    connection.query("update categories set categories = ? where id_categories = ?",[req.body.new, req.body.old]);
+    res.redirect("/profile");
+})
 
 app.get("/department", ensureAuthenticated, (req,res)=>{
     getDeparment(req, res);
@@ -535,13 +547,11 @@ function addTask(task, user){
 
 function deleteTask(task){
     if (typeof(task) == "object"){
-        console.log("object");
         for (var i = 0;i < task.length; i++){
             connection.query("update task set fk_id_worker = null where id_task = ?", [task[i]]);
         }
     } 
     if (typeof(task) == "string"){
-        console.log("string");
         connection.query("update task set fk_id_worker = null where id_task = ?", [task]);
     }
 }
@@ -736,7 +746,7 @@ function getPlea(req, res){
     connection.query("select id_notif, message, lname, fname, mname, checked, fk_id_notif_type as type from notification inner join worker on fk_id_sender = id_worker where fk_id_receiver = ? and checked = 1 ORDER BY id_notif DESC", [req.session.userid], function(error, results, fields){
         notifications_checked = results;
     })
-    connection.query("select * from pleas inner join plea_categ on fk_id_plea_categ = id_plea_categ inner join plea_status on fk_id_plea_status = id_plea_status where fk_id_worker = ? ",[req.session.userid], function(error, results, fields) {
+    connection.query("select * from pleas inner join plea_categ on fk_id_plea_categ = id_plea_categ inner join plea_status on fk_id_plea_status = id_plea_status where fk_id_worker = ?  ORDER BY id_plea DESC",[req.session.userid], function(error, results, fields) {
         res.render('plea', {
             pleas : results,
             plea_categ : plea_categ,
@@ -753,11 +763,7 @@ function getPlea(req, res){
 }
 
 function newPlea(categ_id, req, extra){
-    if (extra !== undefined){
-        connection.query("insert into pleas (fk_id_worker, fk_id_plea_categ, fk_id_plea_status, extra) values(?,?,0,?)",[req, categ_id, extra]);
-    } else {
-        connection.query("insert into pleas (fk_id_worker, fk_id_plea_categ, fk_id_plea_status) values(?,?,0)",[req.session.userid, categ_id]);
-    } 
+    connection.query("insert into pleas (fk_id_worker, fk_id_plea_categ, fk_id_plea_status, extra) values(?,?,0,?)",[req, categ_id, extra]);
 }
 
 function pleaUpd(info){

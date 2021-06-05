@@ -129,6 +129,19 @@ buttonCloseModalPlea.addEventListener("click", ()=>{
 })
 }
 
+if (buttonSavePlea !== null){
+    buttonSavePlea.addEventListener("click", ()=>{
+        var today = new Date();
+        var date = today.getDate() + '.' + (today.getMonth()+1)+ '.' + today.getFullYear();
+        categ_id = document.querySelector("#new_plea_categ").value;
+        $.post("/new_plea", {categ_id, extra : date}, ()=>{
+            window.location.reload();
+        }) 
+    })
+    
+}
+
+
 
 changeDate();
 
