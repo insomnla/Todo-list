@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const saltRounds = 2;
 const url = require('url');
 const fs = require("file-saver");
 const docx = require("docx");
@@ -189,10 +191,10 @@ app.post('/register', (req, res) => {
         errors.push({msg : "Пароли должны совпадать"})
     }
     connection.query("SELECT * from worker where mail = (?)", [info.mail],  function (err, result, fields){
-        if (result.length > 0){
+      /*  if (result.length > 0){
             errors.push({msg: "Почта уже зарегистрирована"})
             console.log("ПРОВЕРКА ПОЧТЫ " + errors.length)
-        }
+        } */
     })
     setTimeout( function(){
     if (errors.length > 0){
@@ -205,7 +207,9 @@ app.post('/register', (req, res) => {
         res.render('welcome')
     }
     }, 100)
-    connection.query("INSERT INTO worker (lname, fname, mname, pass, mail, fk_id_role, fk_id_department, login) VALUES(?,?,?,?,?,0,0,?)", [req.body.lname, req.body.fname, req.body.mname, req.body.pass, req.body.mail, req.body.login]);
+    bcrypt.hash(info.pass, saltRounds, function(err, hash) {
+        connection.query("INSERT INTO worker (lname, fname, mname, pass, mail, fk_id_role, fk_id_department, login) VALUES(?,?,?,?,?,0,0,?)", [req.body.lname, req.body.fname, req.body.mname, hash, req.body.mail, req.body.login]);
+    });
 })
 
 app.get('/board', ensureAuthenticated , (req, res) => {
@@ -255,19 +259,26 @@ app.post('/login', (req, res) => {
     var password = req.body.password;
     console.log(login, password)
     if (login && password) {
-		connection.query("SELECT * FROM worker WHERE mail = ? AND pass = ? ", [login, password], function(error, results, fields) {
-			if (results.length > 0) {
-				req.session.loggedin = true;
-                req.session.username = results[0].fname + " " +results[0].mname ;
-                worker_single = req.session.userid = results[0].id_worker;
-                req.session.department = results[0].fk_id_department;
-                req.session.role = results[0].fk_id_role;
-                worker_id.push(req.session.userid);
-				res.redirect('/board');
-			} else {
-                req.flash('error_msg' , 'Введите правильную почту и пароль');
-                res.redirect('/login');
-			}			
+		connection.query("SELECT * FROM worker WHERE mail = ?", [login], function(error, results, fields) {
+            bcrypt.compare(password, results[0].pass, function(err, result) {
+                if (result == true){
+                    if (results.length > 0) {
+                        req.session.loggedin = true;
+                        req.session.username = results[0].fname + " " +results[0].mname ;
+                        worker_single = req.session.userid = results[0].id_worker;
+                        req.session.department = results[0].fk_id_department;
+                        req.session.role = results[0].fk_id_role;
+                        worker_id.push(req.session.userid);
+                        res.redirect('/board');
+                    } else {
+                        req.flash('error_msg' , 'Введите правильную почту и пароль');
+                        res.redirect('/login');
+                    }	
+                }else {
+                    req.flash('error_msg' , 'Введите правильную почту и пароль');
+                    res.redirect('/login');
+                }	
+            });		
 		});
 	} else {
         req.flash('error_msg' , 'Введите почту и пароль');
