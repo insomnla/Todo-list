@@ -303,7 +303,8 @@ app.post("/add_task", ensureAuthenticated, (req, res)=>{
 })
 
 app.post("/delete", ensureAuthenticated, (req, res)=>{
-    deleteTask(req.body.taskToDelete);
+    page = req.rawHeaders.includes('http://localhost:3000/department');
+    deleteTask(req.body.taskToDelete, page);
     getBoard(req, res);
 })
 
@@ -380,7 +381,7 @@ function getDirectDepart(req, res){
         console.log("TRUE")
         connection.query("INSERT INTO task (task.name, task.desc, deadline, fk_id_worker, fk_id_categories) VALUES(?,?,?,?,?)", [req.body.taskName, req.body.taskDesc, req.body.taskDeadline, req.session.userid, req.body.categories]);
     }
-    connection.query("select id_worker, id_task, concat(lname,' ' ,fname,' ', mname) as fio, categories.categories, task.name, task.desc, CAST(deadline AS CHAR) as dline , status from task inner join worker on fk_id_worker = id_worker inner join categories on fk_id_categories = id_categories inner join status on fk_id_status = id_status inner join department on fk_id_department = id_department where fk_id_department = ?", [dep_id], function(error, results, fields) {
+    connection.query("select id_worker, id_task, concat(lname,' ' ,fname,' ', mname) as fio, categories.categories, task.name, task.desc, CAST(deadline AS CHAR) as dline , status from task inner join worker on fk_id_worker = id_worker inner join categories on fk_id_categories = id_categories inner join status on fk_id_status = id_status inner join department on worker.fk_id_department = id_department where worker.fk_id_department = ?", [dep_id], function(error, results, fields) {
         res.render('direct_depart', {
             categ_name : categ_name,
             tasks : results,
@@ -410,7 +411,7 @@ function getDeparment(req, res){
     connection.query("select * from status", function(error, results, field){
         statuses = results;
     })
-    connection.query("select task.id_task, task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline, status.status , status.status_color as color from task inner join categories on fk_id_categories = categories.id_categories inner join status on fk_id_status = status.id_status where fk_id_categories = 3 and fk_id_worker is null",  function(error, results, fields) {
+    connection.query("select task.id_task, task.name, task.desc, categories.categories, CAST(deadline AS CHAR) as dline, status.status , status.status_color as color from task inner join categories on fk_id_categories = categories.id_categories inner join status on fk_id_status = status.id_status where fk_id_categories = 3 and fk_id_worker is null and fk_id_department = ? or fk_id_department = 0",[req.session.department],  function(error, results, fields) {
      res.render("department",{
          categ_name : categ_name,
          tasks : results,
@@ -545,7 +546,17 @@ function addTask(task, user){
     }
 }
 
-function deleteTask(task){
+function deleteTask(task, page){
+    if (page == true){
+        if (typeof(task) == "object"){
+            for (var i = 0;i < task.length; i++){
+                connection.query("delete from task where id_task = ?", [task[i]]);
+            }
+        } 
+        if (typeof(task) == "string"){
+            connection.query("delete from task where id_task = ?", [task]);
+        }
+    } else {
     if (typeof(task) == "object"){
         for (var i = 0;i < task.length; i++){
             connection.query("update task set fk_id_worker = null where id_task = ?", [task[i]]);
@@ -555,11 +566,12 @@ function deleteTask(task){
         connection.query("update task set fk_id_worker = null where id_task = ?", [task]);
     }
 }
+}
 function newTask(info){
     if (info.body.employee_id == -1){
-        connection.query("insert into task(task.name, task.desc,deadline, fk_id_status, fk_id_categories, fk_id_worker) values(?,?,?,?,?,?)", [info.body.nameValue ,info.body.descValue, info.body.deadlineValue, info.body.taskCATEG_ID, info.body.taskSTATUS_ID, info.session.userid]);
+        connection.query("insert into task(task.name, task.desc,deadline, fk_id_status, fk_id_categories, fk_id_worker, fk_id_department) values(?,?,?,?,?,?,?)", [info.body.nameValue ,info.body.descValue, info.body.deadlineValue, info.body.taskCATEG_ID, info.body.taskSTATUS_ID, info.session.userid, info.session.department]);
     } else {
-        connection.query("insert into task(task.name, task.desc,deadline, fk_id_status, fk_id_categories, fk_id_worker) values(?,?,?,?,?,?)", [info.body.nameValue ,info.body.descValue, info.body.deadlineValue, info.body.taskCATEG_ID, info.body.taskSTATUS_ID, info.body.employee_id]);
+        connection.query("insert into task(task.name, task.desc,deadline, fk_id_status, fk_id_categories, fk_id_worker, fk_id_department) values(?,?,?,?,?,?,?)", [info.body.nameValue ,info.body.descValue, info.body.deadlineValue, info.body.taskCATEG_ID, info.body.taskSTATUS_ID, info.body.employee_id,  info.session.department]);
     }
 }
 function changeTask(info){
