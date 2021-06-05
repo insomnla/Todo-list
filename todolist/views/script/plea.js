@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#pleaTableAll').DataTable( {
         "paging":   false,
         "info":     false,
-        "order": [[ 0, "asc" ]],
+        "order": [[ 0, "desc" ]],
         columnDefs: [
             { orderable: false, targets: 4 }
         ],
@@ -30,7 +30,7 @@ $(document).ready(function() {
     $('#pleaTable').DataTable( {
         "paging":   false,
         "info":     false,
-        "order": [[ 0, "asc" ]],
+        "order": [[ 0, "desc" ]],
         language: {
             "loadingRecords": "Загрузка...",
             "processing":     "В процессе...",

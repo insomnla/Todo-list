@@ -135,32 +135,40 @@ let modalChangeAllTasks = document.querySelector("#change-modal-for-allTasks");
 let titleChangeAllUsers = document.querySelector("#change-allUsers-title");
 let titleChangeAllTasks = document.querySelector("#change-allTasks-title");
 
-buttonChangeAllUsers.forEach((elem) => {
-    elem.onclick = function() {
-        let tableRow = elem.parentNode.parentNode.parentNode;
-        let newTitle = `${tableRow.children[1].textContent}`;
-        titleChangeAllUsers.textContent = `Изменение данных сотрудника: ${newTitle}`;
-        modalChangeAllUsers.classList.toggle('hidden');
-        get_users(tableRow);
-    }
-})
-
-buttonCloseChangeAllUsers.onclick = function() {
-    modalChangeAllUsers.classList.toggle('hidden');
+if(buttonChangeAllUsers !== null) {
+    buttonChangeAllUsers.forEach((elem) => {
+        elem.onclick = function() {
+            let tableRow = elem.parentNode.parentNode.parentNode;
+            let newTitle = `${tableRow.children[1].textContent}`;
+            titleChangeAllUsers.textContent = `Изменение данных сотрудника: ${newTitle}`;
+            modalChangeAllUsers.classList.toggle('hidden');
+            get_users(tableRow);
+        }
+    })
 }
 
-buttonChangeAllTasks.forEach((elem) => {
-    elem.onclick = function() {
-        let tableRow = elem.parentNode.parentNode.parentNode;
-        let newTitle = tableRow.children[1].textContent;
-        titleChangeAllTasks.textContent = `Изменение задачи: ${newTitle}`;
-        modalChangeAllTasks.classList.toggle('hidden');
-        get_tasks(tableRow);
+if(buttonCloseChangeAllUsers !== null) {
+    buttonCloseChangeAllUsers.onclick = function() {
+        modalChangeAllUsers.classList.toggle('hidden');
     }
-})
+}
 
-buttonCloseChangeAllTasks.onclick = function() {
-    modalChangeAllTasks.classList.toggle('hidden');
+if(buttonChangeAllTasks !== null) {
+    buttonChangeAllTasks.forEach((elem) => {
+        elem.onclick = function() {
+            let tableRow = elem.parentNode.parentNode.parentNode;
+            let newTitle = tableRow.children[1].textContent;
+            titleChangeAllTasks.textContent = `Изменение задачи: ${newTitle}`;
+            modalChangeAllTasks.classList.toggle('hidden');
+            get_tasks(tableRow);
+        }
+    })
+}
+
+if(buttonCloseChangeAllTasks !== null) {
+    buttonCloseChangeAllTasks.onclick = function() {
+        modalChangeAllTasks.classList.toggle('hidden');
+    }
 }
 
 function get_users(tableRow){ 

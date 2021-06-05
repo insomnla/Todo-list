@@ -328,7 +328,7 @@
                                     <td class="categories"><%= pleas[key].plea_categ%></td>
                                     <td>NONE</td> <!--Но должна быть! Если будет прикрути статус date-pleas-->
                                 <%}%>
-                                <td><%= pleas[key].plea_status %></td>
+                                <td><div class="status status-plea"><%= pleas[key].plea_status %></div></td>
                                 <td class="actions">
                                     <% if (pleas[key].id_plea_status == 0){%>
                                     <div class="actions-item button_awaits" title="Принять на рассмотрение">
