@@ -48,10 +48,10 @@ app.use(passport.session())
 
 const connection = mysql.createConnection({
     connectionLimit: 5,
-    password: 'password',
+    password: 'root',
     host: "localhost",
     user: "root",
-    database: "test"
+    database: "sys"
 });
 
 var sessionStore = new MySQLStore({
